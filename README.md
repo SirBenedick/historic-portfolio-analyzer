@@ -9,6 +9,10 @@
 * Heatmap for daily/weekly/montly return
 * Add loading indicator (Backdrop)
 * Add card performance weighted compared to single asset and market
+* Add configuration page to enter API keys
+* Add different Backends to call stock data from different sources
+* Clean up README.md: Add UCs, szenarios, technoglogies...
+
 
 ### Known Bugs/Issues
 * Switch for default/percent graph style is bugged
