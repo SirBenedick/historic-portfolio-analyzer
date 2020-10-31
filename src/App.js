@@ -21,9 +21,9 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import HomeIcon from '@material-ui/icons/Home';
 
 // Content
-import Chart from "./components/Chart"
 import dataStore from "./stores/DataStore"
-import SelectedSymbolsBar from "./components/SelectedSymbolsBar"
+import ChartingPage from "./pages/ChartingPage"
+
 
 const drawerWidth = 240;
 
@@ -167,8 +167,7 @@ function App() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <SelectedSymbolsBar dataStore={dataStore} />
-        <Chart/>
+        <ChartingPage dataStore={dataStore}/>
         <Typography>
           Aint even this shit working
           {JSON.stringify(dataStore.allData)}

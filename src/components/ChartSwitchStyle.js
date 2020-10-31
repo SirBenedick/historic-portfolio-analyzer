@@ -22,6 +22,9 @@ export default function ChartSwitchStyle(props) {
         <Button variant="contained" onClick={props.refreshDataAllData}>
           Fetch  all data
         </Button>
+        <Button variant="contained" onClick={props.createGraphForSelectedSymbols}>
+          Display selected
+        </Button>
       <FormControlLabel
         control={<Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />}
         label={props.selectedChartStyleType}

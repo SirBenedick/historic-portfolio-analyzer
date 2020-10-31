@@ -1,6 +1,5 @@
 ## To-Do:
-* Draw multiple lines inside graph
-* Calculate average growth
+* Calculate average growth ("All"-line)
 * Make Graph Data reactive
 * Refactor Chart Component
 * Search for symbols (maybe hardcode Ticker-Name-List)

@@ -15,55 +15,78 @@ export default class Chart extends React.Component {
     };
     this.myRef = React.createRef();
     this.chart = {};
-    this.lineSeries = {};
-    this.lineSeries2 = {};
+    this.lineSeriesObj = {};
+
+    this.renderChart = this.renderChart.bind(this);
     this.refreshData = this.refreshData.bind(this);
     this.switchStyle = this.switchStyle.bind(this);
+    this.createGraphForSelectedSymbols = this.createGraphForSelectedSymbols.bind(this);
+    this.addLineSeriesData = this.addLineSeriesData.bind(this);
   }
 
   componentDidMount() {
     this.renderChart();
-    fetchDataService.fetchApple().then((res) => {
-      console.log("fetched data");
-      this.refreshData();
-    });
   }
 
   renderChart() {
-    console.log("first");
-    console.log(this.myRef.current.firstChild);
+    console.log("renderChart");
     if (this.myRef.current.firstChild) {
       this.myRef.current.removeChild(this.myRef.current.firstChild);
       this.chart = null;
     }
     this.chart = createChart(this.myRef.current, this.state.selectedChartStyle);
-    console.log(this.myRef.current.firstChild);
 
-    this.lineSeries = this.chart.addLineSeries();
-    this.lineSeries2 = this.chart.addLineSeries();
+    console.log(this.chart);
     this.refreshData();
   }
 
   refreshData() {
-    console.log("refres");
-    this.setState({ data: dataStore.appleData });
-    this.lineSeries.setData(dataStore.appleData);
-    this.lineSeries2.setData(dataStore.appleData.map((entry) => ({ time: entry.time, value: entry.value + 10 })));
+    console.log("Does nothing");
   }
 
   switchStyle() {
-    console.log("switched");
+    // TODO change to apply options
+    console.log("switched style");
     if (this.state.selectedChartStyleType === "default") {
       this.setState({ selectedChartStyleType: "percent", selectedChartStyle: stylePercent });
     } else {
       this.setState({ selectedChartStyleType: "default", selectedChartStyle: styleDefault });
     }
-    console.log(this.state.selectedChartStyleType);
     this.renderChart();
   }
 
   refreshDataAllData() {
     fetchDataService.fetchDataForAllSymbols().then((res) => console.log(`Fetched: ${res}`));
+  }
+
+  async createGraphForSelectedSymbols() {
+    console.log("createGraphForSelectedSymbols");
+
+    dataStore.symbols.forEach((symbolSet) => {
+      if (symbolSet.isVisible) {
+        this.addLineSeriesData(symbolSet);
+      } else {
+        if (this.lineSeriesObj[symbolSet.symbolTicker]) {
+          let tempLineSeries = this.lineSeriesObj[symbolSet.symbolTicker];
+          this.chart.removeSeries(tempLineSeries);
+          this.lineSeriesObj[symbolSet.symbolTicker] = null;
+        }
+      }
+    });
+  }
+
+  addLineSeriesData(symbolSet) {
+		console.log("addLineSeriesData");
+		// TODO: Update existing series
+
+		let tempLineSeries = this.lineSeriesObj[symbolSet.symbolTicker];
+		if(!tempLineSeries){
+			const dataForSymbol = dataStore.dataForSymbolTicker(symbolSet.symbolTicker).data;
+			tempLineSeries = this.chart.addLineSeries();
+			tempLineSeries.setData(dataForSymbol);
+			
+			this.lineSeriesObj[symbolSet.symbolTicker] = tempLineSeries;
+		}
   }
 
   render() {
@@ -74,6 +97,7 @@ export default class Chart extends React.Component {
           switchStyle={this.switchStyle}
           selectedChartStyleType={this.state.selectedChartStyleType === "default" ? "percent" : "default"}
           refreshDataAllData={this.refreshDataAllData}
+          createGraphForSelectedSymbols={this.createGraphForSelectedSymbols}
         />
         <div ref={this.myRef} id="here"></div>
       </Paper>
