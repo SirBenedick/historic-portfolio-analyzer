@@ -1,3 +1,17 @@
+## To-Do:
+* Draw multiple lines inside graph
+* Calculate average growth
+* Make Graph Data reactive
+* Refactor Chart Component
+* Search for symbols (maybe hardcode Ticker-Name-List)
+* Selected diffrent % of porttfolio for each symbol
+* Heatmap for daily/weekly/montly return
+* Add loading indicator (Backdrop)
+* Choose time of entry for each position
+
+### Known Bugs/Issues
+* Switch for default/percent graph style is bugged
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
