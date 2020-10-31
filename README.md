@@ -1,12 +1,14 @@
 ## To-Do:
 * Calculate average growth ("All"-line)
 * Make Graph Data reactive
+* Add diffrent color for each line
 * Refactor Chart Component
 * Search for symbols (maybe hardcode Ticker-Name-List)
-* Selected diffrent % of porttfolio for each symbol
+* Selected different % of porttfolio for each symbol
+* Choose time of entry for each position
 * Heatmap for daily/weekly/montly return
 * Add loading indicator (Backdrop)
-* Choose time of entry for each position
+* Add card performance weighted compared to single asset and market
 
 ### Known Bugs/Issues
 * Switch for default/percent graph style is bugged

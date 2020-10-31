@@ -10,7 +10,6 @@ export default class Chart extends React.Component {
     super(props);
     this.state = {
       data: [],
-      selectedChartStyle: styleDefault,
       selectedChartStyleType: "default",
     };
     this.myRef = React.createRef();
@@ -34,7 +33,7 @@ export default class Chart extends React.Component {
       this.myRef.current.removeChild(this.myRef.current.firstChild);
       this.chart = null;
     }
-    this.chart = createChart(this.myRef.current, this.state.selectedChartStyle);
+    this.chart = createChart(this.myRef.current, styleDefault);
 
     console.log(this.chart);
     this.refreshData();
@@ -45,14 +44,14 @@ export default class Chart extends React.Component {
   }
 
   switchStyle() {
-    // TODO change to apply options
-    console.log("switched style");
+    console.log("switching style");
     if (this.state.selectedChartStyleType === "default") {
-      this.setState({ selectedChartStyleType: "percent", selectedChartStyle: stylePercent });
-    } else {
-      this.setState({ selectedChartStyleType: "default", selectedChartStyle: styleDefault });
+      this.setState({ selectedChartStyleType: "percent"});
+			this.chart.applyOptions(stylePercent)
+    } else if (this.state.selectedChartStyleType === "percent"){
+			this.setState({ selectedChartStyleType: "default"});
+			this.chart.applyOptions(styleDefault)
     }
-    this.renderChart();
   }
 
   refreshDataAllData() {
@@ -84,7 +83,7 @@ export default class Chart extends React.Component {
 			const dataForSymbol = dataStore.dataForSymbolTicker(symbolSet.symbolTicker).data;
 			tempLineSeries = this.chart.addLineSeries();
 			tempLineSeries.setData(dataForSymbol);
-			
+
 			this.lineSeriesObj[symbolSet.symbolTicker] = tempLineSeries;
 		}
   }
@@ -95,7 +94,7 @@ export default class Chart extends React.Component {
         <ChartSwitchStyle
           refreshData={this.refreshData}
           switchStyle={this.switchStyle}
-          selectedChartStyleType={this.state.selectedChartStyleType === "default" ? "percent" : "default"}
+          selectedChartStyleType={this.state.selectedChartStyleType === "default" ? "default" : "percent"}
           refreshDataAllData={this.refreshDataAllData}
           createGraphForSelectedSymbols={this.createGraphForSelectedSymbols}
         />
@@ -105,7 +104,17 @@ export default class Chart extends React.Component {
   }
 }
 
-const styleDefault = { height: 300 };
+const styleDefault = {
+  height: 300,
+  rightPriceScale: {
+    scaleMargins: {
+      top: 0.1,
+      bottom: 0.1,
+    },
+    mode: PriceScaleMode.Normal,
+    borderColor: "rgba(197, 203, 206, 0.4)",
+  },
+};
 const stylePercent = {
   height: 300,
   rightPriceScale: {

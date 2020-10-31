@@ -168,11 +168,6 @@ function App() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <ChartingPage dataStore={dataStore}/>
-        <Typography>
-          Aint even this shit working
-          {JSON.stringify(dataStore.allData)}
-        </Typography>
-
       </main>
     </div>
   );

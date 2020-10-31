@@ -14,7 +14,6 @@ class DataStore {
       addSymbol: action,
       addSymbolDataToAllData: action,
       symbolsTickerAndDataFetchedOnlyValid: computed,
-			symbolsTickerAndDataFetchedOnlyValid: computed,
     });
 
     this.addSymbol({ symbolTicker: "All", isVisible: true, dataFetched: false });
