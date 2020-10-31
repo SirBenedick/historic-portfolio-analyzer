@@ -17,6 +17,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import HomeIcon from '@material-ui/icons/Home';
 
 // Content
 import Chart from "./components/Chart"
@@ -148,7 +150,7 @@ function App() {
         <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon>{index % 2 === 0 ? <HomeIcon /> : <DashboardIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
@@ -167,6 +169,10 @@ function App() {
         <div className={classes.toolbar} />
         <SelectedSymbolsBar dataStore={dataStore} />
         <Chart/>
+        <Typography>
+          Aint even this shit working
+          {JSON.stringify(dataStore.allData)}
+        </Typography>
 
       </main>
     </div>

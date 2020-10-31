@@ -22,8 +22,11 @@ const useStyles = makeStyles((theme) => ({
 const SelectedSymbolsBar = observer(({dataStore}) => {
   const classes = useStyles();
 
-  const toggleVisibility = (symbolToHide) => () => {
-    dataStore.toggleSymbol(symbolToHide)
+  const toggleVisibility = (symbolTickerToHide) => () => {
+    dataStore.toggleSymbolVisibility(symbolTickerToHide)
+    // Can be deleted in future
+    if(symbolTickerToHide != "All") console.log(JSON.stringify(dataStore.dataForSymbolTicker(symbolTickerToHide)))
+    if(symbolTickerToHide === "All") console.log(JSON.stringify(dataStore.tempAllComputedEvenWeight()))
   };
 
   return (
@@ -31,10 +34,10 @@ const SelectedSymbolsBar = observer(({dataStore}) => {
       {dataStore.symbols.map((symbol) => {
 
         return (
-          <li key={symbol.symbol}>
+          <li key={symbol.symbolTicker}>
             <Chip
-              label={symbol.symbol}
-              onClick={toggleVisibility(symbol.symbol)}
+              label={symbol.symbolTicker}
+              onClick={toggleVisibility(symbol.symbolTicker)}
               className={classes.chip}
               color={symbol.isVisible ? "primary" : "default"}
               clickable={true}

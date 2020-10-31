@@ -62,6 +62,10 @@ export default class Chart extends React.Component {
     this.renderChart();
   }
 
+  refreshDataAllData() {
+    fetchDataService.fetchDataForAllSymbols().then((res) => console.log(`Fetched: ${res}`));
+  }
+
   render() {
     return (
       <Paper style={{ padding: "10px", marginTop: "10px" }}>
@@ -69,6 +73,7 @@ export default class Chart extends React.Component {
           refreshData={this.refreshData}
           switchStyle={this.switchStyle}
           selectedChartStyleType={this.state.selectedChartStyleType === "default" ? "percent" : "default"}
+          refreshDataAllData={this.refreshDataAllData}
         />
         <div ref={this.myRef} id="here"></div>
       </Paper>
