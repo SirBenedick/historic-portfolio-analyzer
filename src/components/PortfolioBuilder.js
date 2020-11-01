@@ -1,31 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, FormControl, InputLabel, Input } from "@material-ui/core";
-import { observer } from "mobx-react"
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
+import { observer } from "mobx-react";
 
-import dataStore from "../stores/DataStore";
-import DatePicker from "./DatePicker";
-import PortfolioListValueField from "./PortfolioListValueField"
+import PortfolioListValueField from "./PortfolioListValueField";
 
-const useStyles = makeStyles({
-  table: {
-    // minWidth: 650,
-  },
-});
+const useStyles = makeStyles({});
 
 export default function PortfolioBuilder(props) {
   const classes = useStyles();
-
-  const [selectedDate, setSelectedDate] = React.useState(new Date("2014-08-18T21:11:54"));
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
-
-  const onCellChange = (symbolSet, value) => {
-    props.dataStore.setValueForSymbolTicker(symbolSet.symbolTicker, value)
-  };
 
   return (
     <TableContainer component={Paper}>
@@ -39,35 +23,28 @@ export default function PortfolioBuilder(props) {
         </TableHead>
         <TableBody>
           {props.dataStore.symbols.map((symbolSet) => {
-            if (symbolSet.name !== "All")
+            if (symbolSet.symbolTicker !== "All")
               return (
                 <TableRow key={symbolSet.symbolTicker}>
                   <TableCell component="th" scope="row">
-                    {symbolSet.name}
+                    {symbolSet.symbolTicker}
                   </TableCell>
                   {/* <TableCell align="right">
                     <DatePicker entryDate={symbolSet.entryDate}/>
                   </TableCell> */}
                   <TableCell align="right">
-                      <PortfolioListValueField dataStore={props.dataStore} />
-                    <TextField value={symbolSet.value} onChange={(event) => onCellChange(symbolSet, event.target.value)} />
-                    {/* <FormControl fullWidth className={classes.margin}>
-                      <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
-                      <Input
-                        id="standard-adornment-amount"
-                        value={"values.amount"}
-                        onChange={handleChange("amount")}
-                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                      />
-                    </FormControl> */}
+                    <PortfolioListValueField dataStore={props.dataStore} symbolSet={symbolSet} />
                   </TableCell>
                 </TableRow>
               );
           })}
         </TableBody>
       </Table>
-      {/* <p>{props.dataStore.symbols.reduce((pv, symbolSet) => pv + symbolSet.value, 0)}</p> */}
-      {/* <p>{props.dataStore.symbols}</p> */}
+      <SummaryOfPortfolio dataStore={props.dataStore} />
     </TableContainer>
   );
 }
+
+const SummaryOfPortfolio = observer(({ dataStore }) => {
+  return <div>Total: ${dataStore.totalValueOfSymbols}</div>;
+});

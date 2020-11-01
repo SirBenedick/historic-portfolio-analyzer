@@ -1,15 +1,24 @@
 import React from "react";
-import { observer } from "mobx-react-lite"
+import { FormControl, InputLabel, Input, InputAdornment } from "@material-ui/core";
+import { observer } from "mobx-react-lite";
 
-const PortfolioListValueField = observer(({dataStore}) => {
-
-
+const PortfolioListValueField = observer(({ dataStore, symbolSet }) => {
+  const onValueChange = (value) => {
+    dataStore.setValueForTicker(symbolSet.symbolTicker, value);
+  };
   return (
-    <div><p>Hey</p>
-        {/* {JSON.stringify(dataStore.dataForSymbolTicker("AAPL"))} */}
+    <div>
+      <FormControl fullWidth>
+        <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
+        <Input
+          id="standard-adornment-amount"
+          value={symbolSet.value}
+          onChange={(event) => onValueChange(event.target.value)}
+          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+        />
+      </FormControl>
     </div>
   );
-})
+});
 
-
-export default PortfolioListValueField
+export default PortfolioListValueField;
