@@ -95,13 +95,13 @@ export default class Chart extends React.Component {
       let tempLineSeries = this.chart.addLineSeries({
         color: seriesColor,
       });
-      if (dataForSymbol.length !== 0) tempLineSeries.setData(dataForSymbol);
+      if (dataForSymbol && dataForSymbol.length !== 0) tempLineSeries.setData(dataForSymbol);
 
       // Create new lineSeries Object
       this.lineSeriesObj[symbolSet.symbolTicker] = { series: tempLineSeries, color: seriesColor };
     } else {
       // If lineSeries exists then only update data, keep color
-      if (dataForSymbol.length !== 0) this.lineSeriesObj[symbolSet.symbolTicker]["series"].setData(dataForSymbol);
+      if (dataForSymbol && dataForSymbol.length !== 0) this.lineSeriesObj[symbolSet.symbolTicker]["series"].setData(dataForSymbol);
     }
     console.log(this.lineSeriesObj[symbolSet.symbolTicker]);
   }

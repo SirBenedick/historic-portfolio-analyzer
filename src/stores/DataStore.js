@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, computed } from "mobx";
+import { makeObservable, observable, action, computed, toJS } from "mobx";
 
 class DataStore {
   symbols = [];
@@ -85,7 +85,7 @@ class DataStore {
     });
     return tempResult.filter((symbolSet) => symbolSet);
   }
- 
+
   get totalValueOfSymbols() {
     return this.symbols.reduce((pv, symbolSet) => {
       if (symbolSet.symbolTicker !== "All") return +pv + +symbolSet.value;
@@ -93,14 +93,37 @@ class DataStore {
     }, 0);
   }
 
-  // Unclear if this has to be a computed
+  isDataFetchedForAllSymbols() {
+    console.log("isDataFetchedForAllSymbols")
+    let bool = true
+    this.symbols.forEach((symbolSet) => {
+      if (symbolSet.symbolTicker=== "All") return;
+      if (!symbolSet.dataFetched) bool = false;
+    });
+    return bool;
+  }
+
   dataForAllCalculated() {
-    // TODO fix calculation
-    // = [{ time: "2019-04-11", assets: { AAPL: { symbol: "AAPL", value: 80.21 }, "AMZN"... } }];
+    console.log("dataForAllCalculated");
+    //TODO Make sure its a trading day or identify next trading day
+    if (!this.isDataFetchedForAllSymbols()) return { symbol: "All", data: false };
+
+    const startDate = "2020-10-27";
+    const startingDayAssets = toJS(this.allData.find((entry) => entry.time === startDate));
+
+    const tickerValueMap = {};
+    this.symbols.forEach((symbolSet) => {
+      if (symbolSet.symbolTicker === "All") return;
+      const quantity = parseFloat(symbolSet.value) / parseFloat(startingDayAssets.assets[symbolSet.symbolTicker].value);
+      tickerValueMap[symbolSet.symbolTicker] = { startingValue: symbolSet.value, quantity: quantity };
+    });
+
     const temp = this.allData.map((entry) => {
       let tempValue = 0;
       Object.keys(entry.assets).forEach((key) => {
-        tempValue += (entry.assets[key].value * 1) / 3;
+        const price = entry.assets[key].value;
+        const quantity = tickerValueMap[key].quantity;
+        tempValue += +price * +quantity;
       });
       return { time: entry.time, value: tempValue };
     });
