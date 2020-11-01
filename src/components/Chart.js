@@ -78,8 +78,8 @@ export default class Chart extends React.Component {
         if (this.lineSeriesObj[symbolSet.symbolTicker] && this.lineSeriesObj[symbolSet.symbolTicker]["series"]) {
           let tempLineSeries = this.lineSeriesObj[symbolSet.symbolTicker]["series"];
           this.chart.removeSeries(tempLineSeries);
-					this.removeColorInUse(this.lineSeriesObj[symbolSet.symbolTicker]["color"])
-					this.lineSeriesObj[symbolSet.symbolTicker] = null;
+          this.removeColorInUse(this.lineSeriesObj[symbolSet.symbolTicker]["color"]);
+          this.lineSeriesObj[symbolSet.symbolTicker] = null;
         }
       }
     });
@@ -87,18 +87,23 @@ export default class Chart extends React.Component {
 
   addLineSeriesData(symbolSet) {
     console.log("addLineSeriesData");
-		// TODO: Update existing series
+    const dataForSymbol = dataStore.dataForSymbolTicker(symbolSet.symbolTicker).data;
+
     if (!this.lineSeriesObj[symbolSet.symbolTicker]) {
-			const dataForSymbol = dataStore.dataForSymbolTicker(symbolSet.symbolTicker).data;
-			const seriesColor = this.nextAvailableColorValue()
-			let tempLineSeries = this.chart.addLineSeries({
-				color: seriesColor,
-			});
-			tempLineSeries.setData(dataForSymbol);
-			
-			// Create new lineSeries Object
-			this.lineSeriesObj[symbolSet.symbolTicker] = { series: tempLineSeries, color: seriesColor}
+      // If lineSeriesObj for ticker does not exist then create new lineSeriesObj
+      const seriesColor = this.nextAvailableColorValue();
+      let tempLineSeries = this.chart.addLineSeries({
+        color: seriesColor,
+      });
+      if (dataForSymbol.length !== 0) tempLineSeries.setData(dataForSymbol);
+
+      // Create new lineSeries Object
+      this.lineSeriesObj[symbolSet.symbolTicker] = { series: tempLineSeries, color: seriesColor };
+    } else {
+      // If lineSeries exists then only update data, keep color
+      if (dataForSymbol.length !== 0) this.lineSeriesObj[symbolSet.symbolTicker]["series"].setData(dataForSymbol);
     }
+    console.log(this.lineSeriesObj[symbolSet.symbolTicker]);
   }
 
   nextAvailableColorValue() {
@@ -110,19 +115,19 @@ export default class Chart extends React.Component {
         element.isBegingUsed = true;
         break;
       }
-		}
+    }
     return availableColorValue;
-	}
-	
-	removeColorInUse(colorValue){
-		for (let index = 0; index < this.chartColorsForSeries.length; index++) {
-			const element = this.chartColorsForSeries[index];
+  }
+
+  removeColorInUse(colorValue) {
+    for (let index = 0; index < this.chartColorsForSeries.length; index++) {
+      const element = this.chartColorsForSeries[index];
       if (element.colorValue === colorValue) {
-				element.isBegingUsed = false;
+        element.isBegingUsed = false;
         break;
       }
-		}
-	}
+    }
+  }
 
   render() {
     return (
