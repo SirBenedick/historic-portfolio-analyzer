@@ -19,10 +19,34 @@ class DataStore {
       totalValueOfSymbols: computed,
     });
 
-    this.addSymbol({ symbolTicker: "All", isVisible: true, dataFetched: false, value: 0 });
-    this.addSymbol({ symbolTicker: "AAPL", isVisible: true, dataFetched: false, value: 100 });
-    this.addSymbol({ symbolTicker: "MSFT", isVisible: true, dataFetched: false, value: 100 });
-    this.addSymbol({ symbolTicker: "AMZN", isVisible: true, dataFetched: false, value: 100 });
+    this.addSymbol({
+      symbolTicker: "All",
+      isVisible: true,
+      dataFetched: false,
+      value: 0,
+      color: this.nextAvailableColorValue(),
+    });
+    this.addSymbol({
+      symbolTicker: "AAPL",
+      isVisible: true,
+      dataFetched: false,
+      value: 100,
+      color: this.nextAvailableColorValue(),
+    });
+    this.addSymbol({
+      symbolTicker: "MSFT",
+      isVisible: true,
+      dataFetched: false,
+      value: 100,
+      color: this.nextAvailableColorValue(),
+    });
+    this.addSymbol({
+      symbolTicker: "AMZN",
+      isVisible: true,
+      dataFetched: false,
+      value: 100,
+      color: this.nextAvailableColorValue(),
+    });
   }
 
   addSymbolDataToAllData(symbolTicker, data) {
@@ -94,10 +118,10 @@ class DataStore {
   }
 
   isDataFetchedForAllSymbols() {
-    console.log("isDataFetchedForAllSymbols")
-    let bool = true
+    console.log("isDataFetchedForAllSymbols");
+    let bool = true;
     this.symbols.forEach((symbolSet) => {
-      if (symbolSet.symbolTicker=== "All") return;
+      if (symbolSet.symbolTicker === "All") return;
       if (!symbolSet.dataFetched) bool = false;
     });
     return bool;
@@ -150,7 +174,41 @@ class DataStore {
     });
     return { symbol: symbolTicker, data: temp };
   }
+
+  nextAvailableColorValue() {
+    let availableColorValue = null;
+    for (let index = 0; index < chartColorsForSeries.length; index++) {
+      const element = chartColorsForSeries[index];
+      if (!element.isBegingUsed) {
+        availableColorValue = element.colorValue;
+        element.isBegingUsed = true;
+        break;
+      }
+    }
+    return availableColorValue;
+  }
+
+  removeColorInUse(colorValue) {
+    for (let index = 0; index < chartColorsForSeries.length; index++) {
+      const element = chartColorsForSeries[index];
+      if (element.colorValue === colorValue) {
+        element.isBegingUsed = false;
+        break;
+      }
+    }
+  }
 }
+
+const chartColorsForSeries = [
+  { colorValue: "#3f51b5", isBegingUsed: false },
+  { colorValue: "#2196f3", isBegingUsed: false },
+  { colorValue: "#03a9f4", isBegingUsed: false },
+  { colorValue: "#00bcd4", isBegingUsed: false },
+  { colorValue: "#009688", isBegingUsed: false },
+  { colorValue: "#4caf50", isBegingUsed: false },
+  { colorValue: "#8bc34a", isBegingUsed: false },
+  { colorValue: "#cddc39", isBegingUsed: false },
+];
 
 const dataStore = new DataStore();
 export default dataStore;

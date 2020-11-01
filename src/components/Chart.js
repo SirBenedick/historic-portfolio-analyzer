@@ -15,16 +15,6 @@ export default class Chart extends React.Component {
     this.myRef = React.createRef();
     this.chart = {};
     this.lineSeriesObj = {};
-    this.chartColorsForSeries = [
-      { colorValue: "#3f51b5", isBegingUsed: false },
-      { colorValue: "#2196f3", isBegingUsed: false },
-      { colorValue: "#03a9f4", isBegingUsed: false },
-      { colorValue: "#00bcd4", isBegingUsed: false },
-      { colorValue: "#009688", isBegingUsed: false },
-      { colorValue: "#4caf50", isBegingUsed: false },
-      { colorValue: "#8bc34a", isBegingUsed: false },
-      { colorValue: "#cddc39", isBegingUsed: false },
-    ];
 
     this.renderChart = this.renderChart.bind(this);
     this.refreshData = this.refreshData.bind(this);
@@ -78,7 +68,6 @@ export default class Chart extends React.Component {
         if (this.lineSeriesObj[symbolSet.symbolTicker] && this.lineSeriesObj[symbolSet.symbolTicker]["series"]) {
           let tempLineSeries = this.lineSeriesObj[symbolSet.symbolTicker]["series"];
           this.chart.removeSeries(tempLineSeries);
-          this.removeColorInUse(this.lineSeriesObj[symbolSet.symbolTicker]["color"]);
           this.lineSeriesObj[symbolSet.symbolTicker] = null;
         }
       }
@@ -91,42 +80,18 @@ export default class Chart extends React.Component {
 
     if (!this.lineSeriesObj[symbolSet.symbolTicker]) {
       // If lineSeriesObj for ticker does not exist then create new lineSeriesObj
-      const seriesColor = this.nextAvailableColorValue();
       let tempLineSeries = this.chart.addLineSeries({
-        color: seriesColor,
+        color: symbolSet.color,
       });
       if (dataForSymbol && dataForSymbol.length !== 0) tempLineSeries.setData(dataForSymbol);
 
       // Create new lineSeries Object
-      this.lineSeriesObj[symbolSet.symbolTicker] = { series: tempLineSeries, color: seriesColor };
+      this.lineSeriesObj[symbolSet.symbolTicker] = { series: tempLineSeries, color: symbolSet.color };
     } else {
       // If lineSeries exists then only update data, keep color
       if (dataForSymbol && dataForSymbol.length !== 0) this.lineSeriesObj[symbolSet.symbolTicker]["series"].setData(dataForSymbol);
     }
     console.log(this.lineSeriesObj[symbolSet.symbolTicker]);
-  }
-
-  nextAvailableColorValue() {
-    let availableColorValue = null;
-    for (let index = 0; index < this.chartColorsForSeries.length; index++) {
-      const element = this.chartColorsForSeries[index];
-      if (!element.isBegingUsed) {
-        availableColorValue = element.colorValue;
-        element.isBegingUsed = true;
-        break;
-      }
-    }
-    return availableColorValue;
-  }
-
-  removeColorInUse(colorValue) {
-    for (let index = 0; index < this.chartColorsForSeries.length; index++) {
-      const element = this.chartColorsForSeries[index];
-      if (element.colorValue === colorValue) {
-        element.isBegingUsed = false;
-        break;
-      }
-    }
   }
 
   render() {
