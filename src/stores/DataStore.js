@@ -13,6 +13,7 @@ class DataStore {
       toggleSymbolVisibility: action,
       addSymbol: action,
       setValueForTicker: action,
+      setSymbolsDataFetched: action,
       addSymbolDataToAllData: action,
       symbolsTickerAndDataFetchedOnlyValid: computed,
       totalValueOfSymbols: computed,
@@ -55,11 +56,6 @@ class DataStore {
     this.setSymbolsDataFetched(symbolTicker, true);
   }
 
-  setAppleData(data) {
-    this.appleData = data;
-    return true;
-  }
-
   addSymbol(newSymbol) {
     this.symbols.push(newSymbol);
   }
@@ -89,7 +85,15 @@ class DataStore {
     });
     return tempResult.filter((symbolSet) => symbolSet);
   }
+ 
+  get totalValueOfSymbols() {
+    return this.symbols.reduce((pv, symbolSet) => {
+      if (symbolSet.symbolTicker !== "All") return +pv + +symbolSet.value;
+      else return pv;
+    }, 0);
+  }
 
+  // Unclear if this has to be a computed
   dataForAllCalculated() {
     // TODO fix calculation
     // = [{ time: "2019-04-11", assets: { AAPL: { symbol: "AAPL", value: 80.21 }, "AMZN"... } }];
@@ -122,13 +126,6 @@ class DataStore {
       return { time: entry.time, value: entry.assets[symbolTicker].value };
     });
     return { symbol: symbolTicker, data: temp };
-  }
-
-  get totalValueOfSymbols() {
-    return this.symbols.reduce((pv, symbolSet) => {
-      if (symbolSet.symbolTicker !== "All") return +pv + +symbolSet.value;
-      else return pv;
-    }, 0);
   }
 }
 

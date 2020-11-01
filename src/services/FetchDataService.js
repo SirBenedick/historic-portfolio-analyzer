@@ -1,7 +1,6 @@
 import axios from "axios";
 import dataStore from "../stores/DataStore";
 const iex_url = "https://sandbox.iexapis.com/stable/";
-const symbol_appel = "AAPL";
 const time = "5d";
 const token = "-";
 
@@ -27,15 +26,6 @@ class FetchDataService {
       })
     );
     return fetchedSymbols;
-  }
-
-  async fetchApple() {
-    // let res = await axios.get(`${iex_url}stock/${symbol_appel}/chart/${time}?token=${token}`, { params: { chartCloseOnly: true } })
-    let res = { data: example_3month };
-
-    console.log("fetched service");
-    dataStore.setAppleData(this.convertIEXDataToChartFormat(res.data));
-    return true;
   }
 }
 
