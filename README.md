@@ -1,5 +1,6 @@
 ## To-Do:
-* Selected different % of portfolio for each symbol
+* Color of symbol saved in store, not chart 
+* * chips are shown in line color
 * Make Graph Data reactive
 * Refactor Chart Component
 * Search for symbols (maybe hardcode Ticker-Name-List)
@@ -9,7 +10,7 @@
 * Add card performance weighted compared to single asset and market
 * Add configuration page to enter API keys
 * Add different Backends to call stock data from different sources
-* Clean up README.md: Add UCs, szenarios, technoglogies...
+* Clean up README.md: Add UCs, scenarios, technoglogies...
 
 
 ### Known Bugs/Issues
