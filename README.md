@@ -1,5 +1,4 @@
 ## To-Do:
-* Pick starting time for all positions
 * Make Graph Data reactive
 * Refactor Chart Component
 * Search for symbols (maybe hardcode Ticker-Name-List)
@@ -11,6 +10,7 @@
 * Add different Backends to call stock data from different sources
 * Clean up README.md: Add UCs, scenarios, technoglogies...
 * Create store for snackbar messages
+* Refactor/Improve dataStore.dataForAllCalculated()
 
 
 ### Known Bugs/Issues

@@ -5,19 +5,25 @@ class DataStore {
   pendingRequests = 0;
   appleData = [];
   allData = [];
+  portfolioStartingDate = "";
 
   constructor() {
     makeObservable(this, {
       symbols: observable, // = { symbolTicker: "All", isVisible: true, dataFetched: false }
       allData: observable, // = [{ time: "2019-04-11", assets: { AAPL: { symbol: "AAPL", value: 80.21 }, "AMZN"... } }];
+      portfolioStartingDate: observable,
       toggleSymbolVisibility: action,
       addSymbol: action,
       setValueForTicker: action,
       setSymbolsDataFetched: action,
       addSymbolDataToAllData: action,
+      setPortfolioStartingDate: action,
       symbolsTickerAndDataFetchedOnlyValid: computed,
       totalValueOfSymbols: computed,
     });
+
+    const d = new Date();
+    this.portfolioStartingDate = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
 
     this.addSymbol({
       symbolTicker: "All",
@@ -101,6 +107,10 @@ class DataStore {
     });
   }
 
+  setPortfolioStartingDate(date) {
+    this.portfolioStartingDate = date;
+  }
+
   get symbolsTickerAndDataFetchedOnlyValid() {
     let tempResult = this.symbols.map((symbolSet) => {
       if (symbolSet.symbolTicker != "All") {
@@ -132,8 +142,7 @@ class DataStore {
     //TODO Make sure its a trading day or identify next trading day
     if (!this.isDataFetchedForAllSymbols()) return { symbol: "All", data: false };
 
-    const startDate = "2020-10-27";
-    const startingDayAssets = toJS(this.allData.find((entry) => entry.time === startDate));
+    const startingDayAssets = toJS(this.allData.find((entry) => entry.time === toJS(this.portfolioStartingDate)));
 
     const tickerValueMap = {};
     this.symbols.forEach((symbolSet) => {
@@ -143,6 +152,7 @@ class DataStore {
     });
 
     const temp = this.allData.map((entry) => {
+      if (entry.time < this.portfolioStartingDate) return null;
       let tempValue = 0;
       Object.keys(entry.assets).forEach((key) => {
         const price = entry.assets[key].value;
@@ -151,7 +161,13 @@ class DataStore {
       });
       return { time: entry.time, value: tempValue };
     });
-    return { symbol: "All", data: temp };
+    const temp2 = temp.filter((entry) => {
+      console.log(entry)
+      if (entry) return entry;
+    });
+
+
+    return { symbol: "All", data: temp2 };
   }
 
   getSymbolSetForTicker(symbolTicker) {

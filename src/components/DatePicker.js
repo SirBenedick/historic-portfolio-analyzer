@@ -1,20 +1,16 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-
+import { observer } from "mobx-react";
 import MomentUtils from '@date-io/moment';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-export default function DatePicker(props) {
-    console.log("Datepicker")
-    console.log(props.entryDate)
-  // The first commit of Material-UI 
-  const [selectedDate, setSelectedDate] = React.useState(props.entryDate ? new Date(props.entryDate): new Date(null));
+const DatePicker = observer(({dataStore})=>{
 
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    dataStore.setPortfolioStartingDate(date.format("YYYY-MM-DD"))
   };
 
   return (
@@ -23,11 +19,11 @@ export default function DatePicker(props) {
         <KeyboardDatePicker
           disableToolbar
           variant="inline"
-          format="yyyy/mm/DD"
+          format="yyyy-MM-DD"
           margin="normal"
-          id="date-picker-inline"
-          label="Date picker inline"
-          value={selectedDate}
+          id="date-picker-starting-datet"
+          label="Starting date"
+          value={dataStore.portfolioStartingDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{
             'aria-label': 'change date',
@@ -36,4 +32,6 @@ export default function DatePicker(props) {
       </Grid>
     </MuiPickersUtilsProvider>
   );
-}
+})
+
+export default DatePicker;

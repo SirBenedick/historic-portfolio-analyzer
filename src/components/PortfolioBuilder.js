@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import { observer } from "mobx-react";
 
 import PortfolioListValueField from "./PortfolioListValueField";
+import DatePicker from "./DatePicker";
 
 const useStyles = makeStyles({});
 
@@ -41,6 +42,7 @@ export default function PortfolioBuilder(props) {
         </TableBody>
       </Table>
       <SummaryOfPortfolio dataStore={props.dataStore} />
+      <DatePicker dataStore={props.dataStore}/>
     </TableContainer>
   );
 }
