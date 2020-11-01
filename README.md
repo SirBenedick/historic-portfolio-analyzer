@@ -1,6 +1,5 @@
 ## To-Do:
-* Color of symbol saved in store, not chart 
-* * chips are shown in line color
+* Pick starting time for all positions
 * Make Graph Data reactive
 * Refactor Chart Component
 * Search for symbols (maybe hardcode Ticker-Name-List)
@@ -11,6 +10,7 @@
 * Add configuration page to enter API keys
 * Add different Backends to call stock data from different sources
 * Clean up README.md: Add UCs, scenarios, technoglogies...
+* Create store for snackbar messages
 
 
 ### Known Bugs/Issues

@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
 import Paper from "@material-ui/core/Paper";
-import { observer } from "mobx-react-lite"
+import { observer } from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,31 +18,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-const SelectedSymbolsBar = observer(({dataStore}) => {
+const SelectedSymbolsBar = observer(({ dataStore }) => {
   const classes = useStyles();
 
   const toggleVisibility = (symbolTickerToHide) => () => {
-    dataStore.toggleSymbolVisibility(symbolTickerToHide)
+    dataStore.toggleSymbolVisibility(symbolTickerToHide);
+  };
+
+  const handleDelete = (symbolTickerToDelete) => {
+    console.log("Deleting symbol: " + symbolTickerToDelete);
   };
 
   return (
     <Paper component="ul" className={classes.root}>
-      {dataStore.symbols.map((symbol) => {
-
+      {dataStore.symbols.map((symbolSet) => {
         return (
-          <li key={symbol.symbolTicker}>
+          <li key={symbolSet.symbolTicker}>
             <Chip
-              label={symbol.symbolTicker}
-              onClick={toggleVisibility(symbol.symbolTicker)}
+              label={symbolSet.symbolTicker}
+              onClick={toggleVisibility(symbolSet.symbolTicker)}
+              onDelete={() => handleDelete(symbolSet.symbolTicker)}
               className={classes.chip}
-              color={symbol.isVisible ? "primary" : "default"}
+              color={symbolSet.isVisible ? "primary" : "default"}
               clickable={true}
+              style={{ backgroundColor: symbolSet.isVisible ? symbolSet.color : "#eeeeee" }}
             />
           </li>
         );
       })}
     </Paper>
   );
-})
-export default SelectedSymbolsBar
+});
+export default SelectedSymbolsBar;
