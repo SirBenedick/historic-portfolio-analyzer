@@ -1,9 +1,8 @@
 ## To-Do:
+* Selected different % of portfolio for each symbol
 * Make Graph Data reactive
-* Add diffrent color for each line
 * Refactor Chart Component
 * Search for symbols (maybe hardcode Ticker-Name-List)
-* Selected different % of porttfolio for each symbol
 * Choose time of entry for each position
 * Heatmap for daily/weekly/montly return
 * Add loading indicator (Backdrop)

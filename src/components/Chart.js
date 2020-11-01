@@ -15,6 +15,16 @@ export default class Chart extends React.Component {
     this.myRef = React.createRef();
     this.chart = {};
     this.lineSeriesObj = {};
+    this.chartColorsForSeries = [
+      { colorValue: "#3f51b5", isBegingUsed: false },
+      { colorValue: "#2196f3", isBegingUsed: false },
+      { colorValue: "#03a9f4", isBegingUsed: false },
+      { colorValue: "#00bcd4", isBegingUsed: false },
+      { colorValue: "#009688", isBegingUsed: false },
+      { colorValue: "#4caf50", isBegingUsed: false },
+      { colorValue: "#8bc34a", isBegingUsed: false },
+      { colorValue: "#cddc39", isBegingUsed: false },
+    ];
 
     this.renderChart = this.renderChart.bind(this);
     this.refreshData = this.refreshData.bind(this);
@@ -46,11 +56,11 @@ export default class Chart extends React.Component {
   switchStyle() {
     console.log("switching style");
     if (this.state.selectedChartStyleType === "default") {
-      this.setState({ selectedChartStyleType: "percent"});
-			this.chart.applyOptions(stylePercent)
-    } else if (this.state.selectedChartStyleType === "percent"){
-			this.setState({ selectedChartStyleType: "default"});
-			this.chart.applyOptions(styleDefault)
+      this.setState({ selectedChartStyleType: "percent" });
+      this.chart.applyOptions(stylePercent);
+    } else if (this.state.selectedChartStyleType === "percent") {
+      this.setState({ selectedChartStyleType: "default" });
+      this.chart.applyOptions(styleDefault);
     }
   }
 
@@ -65,28 +75,54 @@ export default class Chart extends React.Component {
       if (symbolSet.isVisible) {
         this.addLineSeriesData(symbolSet);
       } else {
-        if (this.lineSeriesObj[symbolSet.symbolTicker]) {
-          let tempLineSeries = this.lineSeriesObj[symbolSet.symbolTicker];
+        if (this.lineSeriesObj[symbolSet.symbolTicker] && this.lineSeriesObj[symbolSet.symbolTicker]["series"]) {
+          let tempLineSeries = this.lineSeriesObj[symbolSet.symbolTicker]["series"];
           this.chart.removeSeries(tempLineSeries);
-          this.lineSeriesObj[symbolSet.symbolTicker] = null;
+					this.removeColorInUse(this.lineSeriesObj[symbolSet.symbolTicker]["color"])
+					this.lineSeriesObj[symbolSet.symbolTicker] = null;
         }
       }
     });
   }
 
   addLineSeriesData(symbolSet) {
-		console.log("addLineSeriesData");
+    console.log("addLineSeriesData");
 		// TODO: Update existing series
-
-		let tempLineSeries = this.lineSeriesObj[symbolSet.symbolTicker];
-		if(!tempLineSeries){
+    if (!this.lineSeriesObj[symbolSet.symbolTicker]) {
 			const dataForSymbol = dataStore.dataForSymbolTicker(symbolSet.symbolTicker).data;
-			tempLineSeries = this.chart.addLineSeries();
+			const seriesColor = this.nextAvailableColorValue()
+			let tempLineSeries = this.chart.addLineSeries({
+				color: seriesColor,
+			});
 			tempLineSeries.setData(dataForSymbol);
-
-			this.lineSeriesObj[symbolSet.symbolTicker] = tempLineSeries;
-		}
+			
+			// Create new lineSeries Object
+			this.lineSeriesObj[symbolSet.symbolTicker] = { series: tempLineSeries, color: seriesColor}
+    }
   }
+
+  nextAvailableColorValue() {
+    let availableColorValue = null;
+    for (let index = 0; index < this.chartColorsForSeries.length; index++) {
+      const element = this.chartColorsForSeries[index];
+      if (!element.isBegingUsed) {
+        availableColorValue = element.colorValue;
+        element.isBegingUsed = true;
+        break;
+      }
+		}
+    return availableColorValue;
+	}
+	
+	removeColorInUse(colorValue){
+		for (let index = 0; index < this.chartColorsForSeries.length; index++) {
+			const element = this.chartColorsForSeries[index];
+      if (element.colorValue === colorValue) {
+				element.isBegingUsed = false;
+        break;
+      }
+		}
+	}
 
   render() {
     return (
