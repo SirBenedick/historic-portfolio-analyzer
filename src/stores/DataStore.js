@@ -8,8 +8,8 @@ class DataStore {
 
   constructor() {
     makeObservable(this, {
-      symbols: observable,
-      allData: observable,
+      symbols: observable, // = { symbolTicker: "All", isVisible: true, dataFetched: false }
+      allData: observable, // = [{ time: "2019-04-11", assets: { AAPL: { symbol: "AAPL", value: 80.21 }, "AMZN"... } }];
       toggleSymbolVisibility: action,
       addSymbol: action,
       addSymbolDataToAllData: action,
@@ -88,7 +88,8 @@ class DataStore {
     return tempResult.filter((symbolSet) => symbolSet);
 	}
 	
-	tempAllComputedEvenWeight(){
+	dataForAllCalculated(){
+    // TODO fix calculation
 		// = [{ time: "2019-04-11", assets: { AAPL: { symbol: "AAPL", value: 80.21 }, "AMZN"... } }];
 		const temp = this.allData.map(entry=>{
 			let tempValue = 0
@@ -102,6 +103,7 @@ class DataStore {
 	}
 
 	dataForSymbolTicker(symbolTicker){
+    if(symbolTicker === "All") return this.dataForAllCalculated()
 		const temp = this.allData.map(entry=>{
 			return {time: entry.time, value: entry.assets[symbolTicker].value}
 		})

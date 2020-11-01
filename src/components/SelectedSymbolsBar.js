@@ -24,9 +24,6 @@ const SelectedSymbolsBar = observer(({dataStore}) => {
 
   const toggleVisibility = (symbolTickerToHide) => () => {
     dataStore.toggleSymbolVisibility(symbolTickerToHide)
-    // Can be deleted in future
-    if(symbolTickerToHide != "All") console.log(JSON.stringify(dataStore.dataForSymbolTicker(symbolTickerToHide)))
-    if(symbolTickerToHide === "All") console.log(JSON.stringify(dataStore.tempAllComputedEvenWeight()))
   };
 
   return (

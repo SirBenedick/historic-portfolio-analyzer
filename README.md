@@ -1,5 +1,4 @@
 ## To-Do:
-* Calculate average growth ("All"-line)
 * Make Graph Data reactive
 * Add diffrent color for each line
 * Refactor Chart Component
