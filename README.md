@@ -1,5 +1,4 @@
 ## To-Do:
-* Save portfolio data, to perform further calculations
 * Make Graph Data reactive
 * Create store for snackbar messages
 * Search for symbols (maybe hardcode Ticker-Name-List)
