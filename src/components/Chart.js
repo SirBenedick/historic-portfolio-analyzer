@@ -19,6 +19,7 @@ export default class Chart extends React.Component {
 
     this.renderChart = this.renderChart.bind(this);
     this.switchStyle = this.switchStyle.bind(this);
+    this.refreshDataAllData = this.refreshDataAllData.bind(this);
     this.createGraphForSelectedSymbols = this.createGraphForSelectedSymbols.bind(this);
     this.addLineSeriesData = this.addLineSeriesData.bind(this);
   }
@@ -50,6 +51,7 @@ export default class Chart extends React.Component {
   async refreshDataAllData() {
     await fetchDataService.fetchDataForAllSymbolsAlphaVantage();
     if (dataStore.isDataFetchedForAllSymbols()) await idbSymbolDataStore.getDataChartFormatBySymbol("All");
+    await this.createGraphForSelectedSymbols()
   }
 
   async createGraphForSelectedSymbols() {
