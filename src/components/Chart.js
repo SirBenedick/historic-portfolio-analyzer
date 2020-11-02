@@ -1,6 +1,6 @@
 import React from "react";
 import { createChart, PriceScaleMode } from "lightweight-charts";
-import fetchDataService from "../services/FetchDataService";
+import FetchDataService from "../services/FetchDataService";
 import { Paper } from "@material-ui/core";
 import dataStore from "../stores/DataStore";
 import ChartSwitchStyle from "./ChartSwitchStyle";
@@ -55,7 +55,7 @@ export default class Chart extends React.Component {
   }
 
   async refreshDataAllData() {
-    await fetchDataService.fetchDataForAllSymbolsAlphaVantage();
+    await FetchDataService.fetchDataForAllSymbolsAlphaVantage();
     if (dataStore.isDataFetchedForAllSymbols()) await idbSymbolDataStore.getDataChartFormatBySymbol("All");
   }
 

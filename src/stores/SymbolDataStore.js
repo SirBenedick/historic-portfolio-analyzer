@@ -1,7 +1,7 @@
 import dbPromise from "./dbPromise";
 import dataStore from "./DataStore";
 import moment from "moment";
-import fetchDataService from "../services/FetchDataService";
+import FetchDataService from "../services/FetchDataService";
 import idbPortfolioStore from "./PortfolioStore";
 
 const idbSymbolDataStore = {
@@ -61,7 +61,7 @@ const formateDataToChartFormat = (symbolData) => {
 const calculateAndStoreHistoricPortfolioPerformance = async () => {
   console.log("calculateAndStoreHistoricPortfolioPerformance");
   if (!dataStore.isDataFetchedForAllSymbols()) {
-    await fetchDataService.fetchDataForAllSymbolsAlphaVantage();
+    await FetchDataService.fetchDataForAllSymbolsAlphaVantage();
   }
 
   //  Calculate the quanity of each asset at the starting day
