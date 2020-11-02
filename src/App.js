@@ -24,6 +24,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import dataStore from "./stores/DataStore";
 import ChartingPage from "./pages/ChartingPage";
 import TriggerRerenderVoid from "./components/TriggerRerenderVoid"
+import Notifier from "./components/Notifier"
 
 const drawerWidth = 240;
 
@@ -109,6 +110,7 @@ function App() {
 
   return (
     <div className={classes.root}>
+      <Notifier />
       <CssBaseline />
       <AppBar
         position="fixed"

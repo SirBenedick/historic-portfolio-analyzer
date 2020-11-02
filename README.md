@@ -13,6 +13,7 @@
 * Add different Backends to call stock data from different sources
 * Clean up README.md: Add UCs, scenarios, technoglogies...
 * Add timeframe for all data
+* Move dataIsFetched to SymbolDataStore
 
 ### Minor To-Dos:
 * Add tooltip to chart(?)

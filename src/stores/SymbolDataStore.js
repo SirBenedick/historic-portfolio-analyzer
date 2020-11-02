@@ -1,8 +1,9 @@
 import dbPromise from "./dbPromise";
 import dataStore from "./DataStore";
 import moment from "moment";
-import fetchDataService from "../services/FetchDataService";
+import FetchDataService from "../services/FetchDataService";
 import idbPortfolioStore from "./PortfolioStore";
+import notificationStore from "./NotificationStore";
 
 const idbSymbolDataStore = {
   async get(key) {
@@ -60,8 +61,15 @@ const formateDataToChartFormat = (symbolData) => {
 
 const calculateAndStoreHistoricPortfolioPerformance = async () => {
   console.log("calculateAndStoreHistoricPortfolioPerformance");
+  const key_snackbar_notification = notificationStore.enqueueSnackbar({
+    message: `Calculating Portfolio value`,
+    options: {
+      variant: "info",
+      persistent: true
+    },
+  });
   if (!dataStore.isDataFetchedForAllSymbols()) {
-    await fetchDataService.fetchDataForAllSymbolsAlphaVantage();
+    await FetchDataService.fetchDataForAllSymbolsAlphaVantage();
   }
 
   //  Calculate the quanity of each asset at the starting day
@@ -121,6 +129,7 @@ const calculateAndStoreHistoricPortfolioPerformance = async () => {
 
   await idbPortfolioStore.set("dataSeries", result);
   dataStore.setSymbolsDataFetched("All", true);
+  notificationStore.removeSnackbar(key_snackbar_notification)
   return result;
 };
 
