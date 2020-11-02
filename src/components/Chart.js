@@ -55,7 +55,8 @@ export default class Chart extends React.Component {
   }
 
   refreshDataAllData() {
-    fetchDataService.fetchDataForAllSymbols().then((res) => console.log(`Fetched: ${res}`));
+    fetchDataService
+      .fetchDataForAllSymbolsAlphaVantage()
   }
 
   async createGraphForSelectedSymbols() {
@@ -89,7 +90,8 @@ export default class Chart extends React.Component {
       this.lineSeriesObj[symbolSet.symbolTicker] = { series: tempLineSeries, color: symbolSet.color };
     } else {
       // If lineSeries exists then only update data, keep color
-      if (dataForSymbol && dataForSymbol.length !== 0) this.lineSeriesObj[symbolSet.symbolTicker]["series"].setData(dataForSymbol);
+      if (dataForSymbol && dataForSymbol.length !== 0)
+        this.lineSeriesObj[symbolSet.symbolTicker]["series"].setData(dataForSymbol);
     }
     console.log(this.lineSeriesObj[symbolSet.symbolTicker]);
   }
