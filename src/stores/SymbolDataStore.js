@@ -40,6 +40,10 @@ const idbSymbolDataStore = {
       return formateDataToChartForPortfolio();
     }
   },
+  async getTimeSeriesDailyByTicker(symbolTicker) {
+    const data = await this.get(symbolTicker);
+    return data["Time Series (Daily)"];
+  },
   async set(val) {
     return (await dbPromise).put("symbolDataStore", val);
   },
@@ -69,6 +73,7 @@ const formateDataToChartForPortfolio = async () => {
   }
 
   //  Calculate the quanity of each asset at the starting day
+  console.log("Portfolio - calculating quantity");
   let symbolQuantityMap = {};
   await Promise.all(
     dataStore.getSymbolsWithoutAll().map(async (symbolSet) => {
@@ -83,6 +88,7 @@ const formateDataToChartForPortfolio = async () => {
   );
 
   // Generate a list of all days between dataStore.portfolioStartingDate and today (including both days)
+  console.log("Portfolio - list of dates");
   let datesToCheck = [];
   let date = moment(dataStore.portfolioStartingDate);
   while (date.isBefore()) {
@@ -91,20 +97,26 @@ const formateDataToChartForPortfolio = async () => {
   }
 
   // Iterate through all days and calculate the total value
-  let result = [];
+  console.log("Portfolio - calculating for each day");
+  let tempSymbolDatasetMap = {};
   await Promise.all(
-    datesToCheck.map(async (date) => {
-      let tempSumForDate = 0;
-      await Promise.all(
-        dataStore.getSymbolsWithoutAll().map(async (symbolSet) => {
-          let tempValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(symbolSet.symbolTicker, date);
-          if (!tempValue) return;
-          tempSumForDate += tempValue * symbolQuantityMap[symbolSet.symbolTicker];
-        })
-      );
-      if (tempSumForDate) result.push({ time: date, value: tempSumForDate });
+    dataStore.getSymbolsWithoutAll().map(async (symbolSet) => {
+      let tempDataSet = await idbSymbolDataStore.getTimeSeriesDailyByTicker(symbolSet.symbolTicker);
+      tempSymbolDatasetMap[symbolSet.symbolTicker] = tempDataSet;
     })
   );
+
+  let result = [];
+  datesToCheck.forEach((date) => {
+    let tempSumForDate = 0;
+    for (const [symbolTicker, dataset] of Object.entries(tempSymbolDatasetMap)) {
+      if (!(date in dataset)) return;
+      let tempValue = dataset[date]["5. adjusted close"];
+      tempSumForDate += tempValue * symbolQuantityMap[symbolTicker];
+    }
+    if (tempSumForDate) result.push({ time: date, value: tempSumForDate });
+  });
+
   return result;
 };
 
