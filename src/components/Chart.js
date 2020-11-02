@@ -49,7 +49,7 @@ export default class Chart extends React.Component {
 
   async refreshDataAllData() {
     await fetchDataService.fetchDataForAllSymbolsAlphaVantage();
-    await idbSymbolDataStore.getDataChartFormatBySymbol("All");
+    if (dataStore.isDataFetchedForAllSymbols()) await idbSymbolDataStore.getDataChartFormatBySymbol("All");
   }
 
   async createGraphForSelectedSymbols() {

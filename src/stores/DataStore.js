@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, computed } from "mobx";
+import { makeObservable, observable, action, computed, toJS } from "mobx";
 
 class DataStore {
   symbols = [];
@@ -46,7 +46,21 @@ class DataStore {
       color: this.nextAvailableColorValue(),
     });
     this.addSymbol({
-      symbolTicker: "AMZN",
+      symbolTicker: "IBM",
+      isVisible: true,
+      dataFetched: false,
+      value: 100,
+      color: this.nextAvailableColorValue(),
+    });
+    this.addSymbol({
+      symbolTicker: "BA",
+      isVisible: true,
+      dataFetched: false,
+      value: 100,
+      color: this.nextAvailableColorValue(),
+    });
+    this.addSymbol({
+      symbolTicker: "DAI.DEX",
       isVisible: true,
       dataFetched: false,
       value: 100,
@@ -106,9 +120,12 @@ class DataStore {
   }
 
   getSymbolSetForTicker(symbolTicker) {
-    return this.symbols.find((symbolSet) => symbolSet.symbolTicker === symbolTicker);
+    return toJS(this.symbols.find((symbolSet) => symbolSet.symbolTicker === symbolTicker));
   }
-  
+
+  getSymbolsWithoutAll() {
+    return this.symbols.filter((symbolSet) => symbolSet.symbolTicker !== "All");
+  }
 
   setValueForTicker(changedSymbolByTicker, value) {
     console.log("Updating value: " + value);

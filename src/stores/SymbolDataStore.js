@@ -24,7 +24,7 @@ const idbSymbolDataStore = {
     return (await dbPromise).get("symbolDataStore", key);
   },
   async getAdjustedCloseByTickerAndDate(key, date) {
-    const data = await (await dbPromise).get("symbolDataStore", key);
+    const data = await this.get(key);
     if (data["Time Series (Daily)"][date]) return data["Time Series (Daily)"][date]["5. adjusted close"];
     else return false;
   },
@@ -64,21 +64,21 @@ const formateDataToChartFormat = (symbolData) => {
 
 const formateDataToChartForPortfolio = async () => {
   console.log("formateDataToChartForPortfolio");
-  if (!dataStore.isDataFetchedForAllSymbols()){
+  if (!dataStore.isDataFetchedForAllSymbols()) {
     await fetchDataService.fetchDataForAllSymbolsAlphaVantage();
   }
 
   //  Calculate the quanity of each asset at the starting day
   let symbolQuantityMap = {};
-  const allKeys = await idbSymbolDataStore.keys();
   await Promise.all(
-    allKeys.map(async (symbol) => {
+    dataStore.getSymbolsWithoutAll().map(async (symbolSet) => {
       const startingDatePriceValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(
-        symbol,
+        symbolSet.symbolTicker,
         dataStore.portfolioStartingDate
       );
-      const startingDatePortfolioValue = dataStore.getSymbolSetForTicker(symbol)["value"];
-      symbolQuantityMap[symbol] = parseFloat(startingDatePortfolioValue) / parseFloat(startingDatePriceValue);
+      const startingDatePortfolioValue = dataStore.getSymbolSetForTicker(symbolSet.symbolTicker)["value"];
+      symbolQuantityMap[symbolSet.symbolTicker] =
+        parseFloat(startingDatePortfolioValue) / parseFloat(startingDatePriceValue);
     })
   );
 
@@ -96,10 +96,10 @@ const formateDataToChartForPortfolio = async () => {
     datesToCheck.map(async (date) => {
       let tempSumForDate = 0;
       await Promise.all(
-        allKeys.map(async (symbol) => {
-          let tempValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(symbol, date);
+        dataStore.getSymbolsWithoutAll().map(async (symbolSet) => {
+          let tempValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(symbolSet.symbolTicker, date);
           if (!tempValue) return;
-          tempSumForDate += tempValue * symbolQuantityMap[symbol];
+          tempSumForDate += tempValue * symbolQuantityMap[symbolSet.symbolTicker];
         })
       );
       if (tempSumForDate) result.push({ time: date, value: tempSumForDate });
