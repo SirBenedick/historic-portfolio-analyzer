@@ -1,7 +1,9 @@
 ## To-Do:
 * Make Graph Data reactive
 * * Improve rerender - do not rerender every line on graph
-* Create store for snackbar messages
+* * Move dataIsFetched to SymbolDataStore/do not let  it load data that is downloaded
+* * Slow down TriggerRerenderVoid
+* * Handle error when loading for the first time
 * Search for symbols (maybe hardcode Ticker-Name-List)
 * Add configuration page to enter API keys and configure dataset
 * Setup github actions/pages
@@ -13,7 +15,6 @@
 * Add different Backends to call stock data from different sources
 * Clean up README.md: Add UCs, scenarios, technoglogies...
 * Add timeframe for all data
-* Move dataIsFetched to SymbolDataStore
 
 ### Minor To-Dos:
 * Add tooltip to chart(?)
