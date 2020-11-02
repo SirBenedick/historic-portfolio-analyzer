@@ -21,7 +21,6 @@ class FetchDataService {
                 apikey: alpha_vantage.api_token,
               },
             });
-            console.log(res)
             if("Note" in res.data){
               // TODO snackbar notification
               console.log("Failed to fetch for: "+ symbolSet.symbolTicker)
