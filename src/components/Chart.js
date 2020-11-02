@@ -4,6 +4,7 @@ import fetchDataService from "../services/FetchDataService";
 import { Paper } from "@material-ui/core";
 import dataStore from "../stores/DataStore";
 import ChartSwitchStyle from "./ChartSwitchStyle";
+import idbSymbolDataStore from "../stores/SymbolDataStore";
 
 export default class Chart extends React.Component {
   constructor(props) {
@@ -17,7 +18,6 @@ export default class Chart extends React.Component {
     this.lineSeriesObj = {};
 
     this.renderChart = this.renderChart.bind(this);
-    this.refreshData = this.refreshData.bind(this);
     this.switchStyle = this.switchStyle.bind(this);
     this.createGraphForSelectedSymbols = this.createGraphForSelectedSymbols.bind(this);
     this.addLineSeriesData = this.addLineSeriesData.bind(this);
@@ -34,13 +34,6 @@ export default class Chart extends React.Component {
       this.chart = null;
     }
     this.chart = createChart(this.myRef.current, styleDefault);
-
-    console.log(this.chart);
-    this.refreshData();
-  }
-
-  refreshData() {
-    console.log("Does nothing");
   }
 
   switchStyle() {
@@ -54,8 +47,9 @@ export default class Chart extends React.Component {
     }
   }
 
-  refreshDataAllData() {
-    fetchDataService.fetchDataForAllSymbols().then((res) => console.log(`Fetched: ${res}`));
+  async refreshDataAllData() {
+    await fetchDataService.fetchDataForAllSymbolsAlphaVantage();
+    await idbSymbolDataStore.getDataChartFormatBySymbol("All");
   }
 
   async createGraphForSelectedSymbols() {
@@ -74,24 +68,27 @@ export default class Chart extends React.Component {
     });
   }
 
-  addLineSeriesData(symbolSet) {
-    console.log("addLineSeriesData");
-    const dataForSymbol = dataStore.dataForSymbolTicker(symbolSet.symbolTicker).data;
+  async addLineSeriesData(symbolSet) {
+    console.log("addLineSeriesData: " + symbolSet.symbolTicker);
+
+    // TODO If data not availible then fetch data
+    const dataForSymbol = await idbSymbolDataStore.getDataChartFormatBySymbol(symbolSet.symbolTicker);
 
     if (!this.lineSeriesObj[symbolSet.symbolTicker]) {
       // If lineSeriesObj for ticker does not exist then create new lineSeriesObj
       let tempLineSeries = this.chart.addLineSeries({
         color: symbolSet.color,
       });
-      if (dataForSymbol && dataForSymbol.length !== 0) tempLineSeries.setData(dataForSymbol);
-
+      if (dataForSymbol && dataForSymbol.length !== 0) {
+        tempLineSeries.setData(dataForSymbol);
+      }
       // Create new lineSeries Object
       this.lineSeriesObj[symbolSet.symbolTicker] = { series: tempLineSeries, color: symbolSet.color };
     } else {
       // If lineSeries exists then only update data, keep color
-      if (dataForSymbol && dataForSymbol.length !== 0) this.lineSeriesObj[symbolSet.symbolTicker]["series"].setData(dataForSymbol);
+      if (dataForSymbol && dataForSymbol.length !== 0)
+        this.lineSeriesObj[symbolSet.symbolTicker]["series"].setData(dataForSymbol);
     }
-    console.log(this.lineSeriesObj[symbolSet.symbolTicker]);
   }
 
   render() {

@@ -16,7 +16,6 @@ class DataStore {
       addSymbol: action,
       setValueForTicker: action,
       setSymbolsDataFetched: action,
-      addSymbolDataToAllData: action,
       setPortfolioStartingDate: action,
       symbolsTickerAndDataFetchedOnlyValid: computed,
       totalValueOfSymbols: computed,
@@ -53,37 +52,6 @@ class DataStore {
       value: 100,
       color: this.nextAvailableColorValue(),
     });
-  }
-
-  addSymbolDataToAllData(symbolTicker, data) {
-    // data = [{ time: "2019-04-11", value: 80.01 }]
-    // result = [{ time: "2019-04-11", assets: { AAPL: { symbolTicker: "AAPL", value: 80.21 } } }];
-    if (this.allData.length === 0) {
-      data.forEach((entry) => {
-        const assetTemp = {};
-        assetTemp[symbolTicker] = { symbolTicker: symbolTicker, value: entry.value };
-
-        this.allData.push({
-          time: entry.time,
-          assets: assetTemp,
-        });
-      });
-    }
-    data.forEach((entry) => {
-      let timestampEntryIndex = this.allData.findIndex((entryAllData) => entry.time === entryAllData.time);
-      if (timestampEntryIndex >= 0) {
-        this.allData[timestampEntryIndex]["assets"][symbolTicker] = { symbolTicker: symbolTicker, value: entry.value };
-      } else {
-        const assetTemp = {};
-        assetTemp[symbolTicker] = { symbolTicker: symbolTicker, value: entry.value };
-
-        this.allData.push({
-          time: entry.time,
-          assets: assetTemp,
-        });
-      }
-    });
-    this.setSymbolsDataFetched(symbolTicker, true);
   }
 
   addSymbol(newSymbol) {
@@ -137,42 +105,10 @@ class DataStore {
     return bool;
   }
 
-  dataForAllCalculated() {
-    console.log("dataForAllCalculated");
-    //TODO Make sure its a trading day or identify next trading day
-    if (!this.isDataFetchedForAllSymbols()) return { symbol: "All", data: false };
-
-    const startingDayAssets = toJS(this.allData.find((entry) => entry.time === toJS(this.portfolioStartingDate)));
-
-    const tickerValueMap = {};
-    this.symbols.forEach((symbolSet) => {
-      if (symbolSet.symbolTicker === "All") return;
-      const quantity = parseFloat(symbolSet.value) / parseFloat(startingDayAssets.assets[symbolSet.symbolTicker].value);
-      tickerValueMap[symbolSet.symbolTicker] = { startingValue: symbolSet.value, quantity: quantity };
-    });
-
-    const temp = this.allData.map((entry) => {
-      if (entry.time < this.portfolioStartingDate) return null;
-      let tempValue = 0;
-      Object.keys(entry.assets).forEach((key) => {
-        const price = entry.assets[key].value;
-        const quantity = tickerValueMap[key].quantity;
-        tempValue += +price * +quantity;
-      });
-      return { time: entry.time, value: tempValue };
-    });
-    const temp2 = temp.filter((entry) => {
-      console.log(entry)
-      if (entry) return entry;
-    });
-
-
-    return { symbol: "All", data: temp2 };
-  }
-
   getSymbolSetForTicker(symbolTicker) {
     return this.symbols.find((symbolSet) => symbolSet.symbolTicker === symbolTicker);
   }
+  
 
   setValueForTicker(changedSymbolByTicker, value) {
     console.log("Updating value: " + value);
@@ -181,14 +117,6 @@ class DataStore {
         symbol.value = value;
       }
     });
-  }
-
-  dataForSymbolTicker(symbolTicker) {
-    if (symbolTicker === "All") return this.dataForAllCalculated();
-    const temp = this.allData.map((entry) => {
-      return { time: entry.time, value: entry.assets[symbolTicker].value };
-    });
-    return { symbol: symbolTicker, data: temp };
   }
 
   nextAvailableColorValue() {
