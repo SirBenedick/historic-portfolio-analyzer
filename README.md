@@ -1,5 +1,6 @@
 ## To-Do:
 * Make Graph Data reactive
+* * Improve rerender - do not rerender every line on graph
 * Create store for snackbar messages
 * Search for symbols (maybe hardcode Ticker-Name-List)
 * Add configuration page to enter API keys and configure dataset

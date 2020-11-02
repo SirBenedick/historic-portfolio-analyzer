@@ -23,6 +23,7 @@ import HomeIcon from "@material-ui/icons/Home";
 // Content
 import dataStore from "./stores/DataStore";
 import ChartingPage from "./pages/ChartingPage";
+import TriggerRerenderVoid from "./components/TriggerRerenderVoid"
 
 const drawerWidth = 240;
 
@@ -172,6 +173,7 @@ function App() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <ChartingPage dataStore={dataStore} ref={chartPageRef} />
+        <TriggerRerenderVoid dataStore={dataStore} rerenderChartRef={rerenderChartRef}/>
       </main>
     </div>
   );
