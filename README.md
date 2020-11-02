@@ -1,3 +1,27 @@
+## To-Do:
+* Make Graph Data reactive
+* Create store for snackbar messages
+* Search for symbols (maybe hardcode Ticker-Name-List)
+* Add configuration page to enter API keys and configure dataset
+* Setup github actions/pages
+* Refactor Chart Component
+* Choose time of entry for each position
+* Heatmap for daily/weekly/montly return
+* Add loading indicator (Backdrop)
+* Add card performance weighted compared to single asset and market
+* Add different Backends to call stock data from different sources
+* Clean up README.md: Add UCs, scenarios, technoglogies...
+* Add timeframe for all data
+
+### Minor To-Dos:
+* Add tooltip to chart(?)
+* Rename/Refactor "All" to Portfolio
+
+### Known Bugs/Issues
+
+* Some times the Portfolio calculation drops to 0
+* Switch for default/percent graph style is bugged
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
