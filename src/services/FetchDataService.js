@@ -21,7 +21,6 @@ class FetchDataService {
             },
           });
           res.data["symbol"] = symbolSet.symbolTicker;
-          console.log(res.data);
           await idbSymbolDataStore.set(res.data);
           // TODO check if received data was valid
           dataStore.setSymbolsDataFetched(symbolSet.symbolTicker, true);
