@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, computed, toJS } from "mobx";
+import { makeObservable, observable, action, computed, toJS, autorun } from "mobx";
 import moment from "moment";
 
 class DataStore {
@@ -22,7 +22,7 @@ class DataStore {
       totalValueOfSymbols: computed,
     });
 
-    this.portfolioStartingDate= moment().subtract(1, "weeks").format("YYYY-MM-DD")
+    this.portfolioStartingDate = moment().subtract(1, "weeks").format("YYYY-MM-DD");
 
     this.addSymbol({
       symbolTicker: "All",
@@ -65,6 +65,13 @@ class DataStore {
       dataFetched: false,
       value: 100,
       color: this.nextAvailableColorValue(),
+    });
+
+    autorun(() => {
+      const trigger = this.portfolioStartingDate;
+      const trigger2 = this.totalValueOfSymbols;
+      this.setSymbolsDataFetched("All", false);
+      console.log("Autorun");
     });
   }
 
