@@ -38,11 +38,12 @@ export default function PortfolioBuilder(props) {
                   </TableCell>
                 </TableRow>
               );
+            else return null;
           })}
         </TableBody>
       </Table>
       <SummaryOfPortfolio dataStore={props.dataStore} />
-      <DatePicker dataStore={props.dataStore}/>
+      <DatePicker dataStore={props.dataStore} />
     </TableContainer>
   );
 }
