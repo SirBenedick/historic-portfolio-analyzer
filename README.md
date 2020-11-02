@@ -4,6 +4,7 @@
 * Create store for snackbar messages
 * Search for symbols (maybe hardcode Ticker-Name-List)
 * Add configuration page to enter API keys and configure dataset
+* Setup github actions/pages
 * Refactor Chart Component
 * Choose time of entry for each position
 * Heatmap for daily/weekly/montly return
