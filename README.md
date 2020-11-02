@@ -1,17 +1,15 @@
 ## To-Do:
-* Connect to Alphavatage API
-* Create store for snackbar messages
 * Make Graph Data reactive
-* Refactor Chart Component
+* Create store for snackbar messages
 * Search for symbols (maybe hardcode Ticker-Name-List)
+* Refactor Chart Component
 * Choose time of entry for each position
 * Heatmap for daily/weekly/montly return
 * Add loading indicator (Backdrop)
 * Add card performance weighted compared to single asset and market
-* Add configuration page to enter API keys
+* Add configuration page to enter API keys and configure dataset
 * Add different Backends to call stock data from different sources
 * Clean up README.md: Add UCs, scenarios, technoglogies...
-* Refactor/Improve dataStore.dataForAllCalculated()
 
 
 ### Known Bugs/Issues
