@@ -1,4 +1,5 @@
 import { makeObservable, observable, action, computed, toJS } from "mobx";
+import moment from "moment";
 
 class DataStore {
   symbols = [];
@@ -21,8 +22,7 @@ class DataStore {
       totalValueOfSymbols: computed,
     });
 
-    const d = new Date();
-    this.portfolioStartingDate = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+    this.portfolioStartingDate= moment().subtract(1, "weeks").format("YYYY-MM-DD")
 
     this.addSymbol({
       symbolTicker: "All",

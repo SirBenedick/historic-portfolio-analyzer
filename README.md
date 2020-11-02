@@ -20,7 +20,6 @@
 
 * Some times the Portfolio calculation drops to 0
 * Switch for default/percent graph style is bugged
-* Catch a "non-trading-day" input for portfolio start
 
 # Getting Started with Create React App
 

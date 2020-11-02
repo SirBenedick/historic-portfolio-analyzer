@@ -75,12 +75,22 @@ const formateDataToChartForPortfolio = async () => {
   //  Calculate the quanity of each asset at the starting day
   console.log("Portfolio - calculating quantity");
   let symbolQuantityMap = {};
+  let startingDate = moment(dataStore.portfolioStartingDate);
   await Promise.all(
     dataStore.getSymbolsWithoutAll().map(async (symbolSet) => {
-      const startingDatePriceValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(
+      let startingDatePriceValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(
         symbolSet.symbolTicker,
-        dataStore.portfolioStartingDate
+        startingDate.format("YYYY-MM-DD")
       );
+
+      while (!startingDatePriceValue) {
+        startingDate.add(1, "days");
+        startingDatePriceValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(
+          symbolSet.symbolTicker,
+          startingDate.format("YYYY-MM-DD")
+        );
+      }
+
       const startingDatePortfolioValue = dataStore.getSymbolSetForTicker(symbolSet.symbolTicker)["value"];
       symbolQuantityMap[symbolSet.symbolTicker] =
         parseFloat(startingDatePortfolioValue) / parseFloat(startingDatePriceValue);
