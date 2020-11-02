@@ -24,12 +24,18 @@ export default class Chart extends React.Component {
     this.addLineSeriesData = this.addLineSeriesData.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.renderChart();
+
+    if (!dataStore.isDataFetchedForAllSymbols()) await this.refreshDataAllData();
+    this.createGraphForSelectedSymbols();
+  }
+
+  rerenderChartRef() {
+    this.createGraphForSelectedSymbols();
   }
 
   renderChart() {
-    console.log("renderChart");
     if (this.myRef.current.firstChild) {
       this.myRef.current.removeChild(this.myRef.current.firstChild);
       this.chart = null;
@@ -51,7 +57,6 @@ export default class Chart extends React.Component {
   async refreshDataAllData() {
     await fetchDataService.fetchDataForAllSymbolsAlphaVantage();
     if (dataStore.isDataFetchedForAllSymbols()) await idbSymbolDataStore.getDataChartFormatBySymbol("All");
-    await this.createGraphForSelectedSymbols()
   }
 
   async createGraphForSelectedSymbols() {
