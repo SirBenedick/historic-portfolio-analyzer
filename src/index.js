@@ -10,7 +10,7 @@ import notificationStore from "./stores/NotificationStore"
 ReactDOM.render(
   <React.StrictMode>
     <Provider notificationStore={notificationStore}>
-    <SnackbarProvider maxSnack={3}>
+    <SnackbarProvider maxSnack={10}>
       <App />
     </SnackbarProvider>
     </Provider>
