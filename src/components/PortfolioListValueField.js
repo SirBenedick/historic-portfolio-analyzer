@@ -11,7 +11,7 @@ const PortfolioListValueField = observer(({ dataStore, symbolSet }) => {
       <FormControl fullWidth>
         <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
         <Input
-          id="standard-adornment-amount"
+          id={`standard-adornment-amount-${symbolSet.symbolTicker}`}
           value={symbolSet.value}
           onChange={(event) => onValueChange(event.target.value)}
           startAdornment={<InputAdornment position="start">$</InputAdornment>}

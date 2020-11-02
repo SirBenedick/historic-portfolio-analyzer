@@ -1,4 +1,3 @@
-import { RestaurantMenu } from "@material-ui/icons";
 import { openDB } from "idb";
 import dataStore from "./DataStore";
 import moment from "moment";

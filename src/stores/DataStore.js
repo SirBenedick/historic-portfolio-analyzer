@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, computed, toJS } from "mobx";
+import { makeObservable, observable, action, computed } from "mobx";
 
 class DataStore {
   symbols = [];
@@ -81,7 +81,7 @@ class DataStore {
 
   get symbolsTickerAndDataFetchedOnlyValid() {
     let tempResult = this.symbols.map((symbolSet) => {
-      if (symbolSet.symbolTicker != "All") {
+      if (symbolSet.symbolTicker !== "All") {
         return { symbolTicker: symbolSet.symbolTicker, dataFetched: symbolSet.dataFetched };
       } else return false;
     });
