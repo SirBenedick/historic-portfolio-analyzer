@@ -16,9 +16,6 @@ export default function ChartSwitchStyle(props) {
 
   return (
     <FormGroup row>
-      <Button variant="contained" onClick={props.refreshDataAllData}>
-        Fetch all data
-      </Button>
       <Button variant="contained" onClick={props.createGraphForSelectedSymbols}>
         Display selected
       </Button>

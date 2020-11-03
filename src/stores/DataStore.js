@@ -1,68 +1,63 @@
 import { makeObservable, observable, action, computed, toJS, autorun } from "mobx";
 import moment from "moment";
-
+import FetchDataService from "../services/FetchDataService";
+import idbSymbolDataStore from "./SymbolDataStore";
 class DataStore {
-  symbols = [];
+  symbols = [
+    {
+      symbolTicker: "All",
+      isVisible: true,
+      value: 0,
+      color: this.nextAvailableColorValue(),
+    },
+  ];
   pendingRequests = 0;
   appleData = [];
-  allData = [];
   portfolioStartingDate = "";
+  triggerRerenderOfPortfolio = false;
 
   constructor() {
     makeObservable(this, {
-      symbols: observable, // = { symbolTicker: "All", isVisible: true, dataFetched: false }
-      allData: observable, // = [{ time: "2019-04-11", assets: { AAPL: { symbol: "AAPL", value: 80.21 }, "AMZN"... } }];
+      symbols: observable,
+      triggerRerenderOfPortfolio: observable,
       portfolioStartingDate: observable,
       toggleSymbolVisibility: action,
       addSymbol: action,
       setValueForTicker: action,
-      setSymbolsDataFetched: action,
+      setTriggerRerenderOfPortfolio: action,
       setPortfolioStartingDate: action,
-      symbolsTickerAndDataFetchedOnlyValid: computed,
       totalValueOfSymbols: computed,
     });
 
     this.portfolioStartingDate = moment().subtract(1, "weeks").format("YYYY-MM-DD");
 
     this.addSymbol({
-      symbolTicker: "All",
-      isVisible: true,
-      dataFetched: false,
-      value: 0,
-      color: this.nextAvailableColorValue(),
-    });
-    this.addSymbol({
       symbolTicker: "AAPL",
       isVisible: true,
-      dataFetched: false,
       value: 100,
       color: this.nextAvailableColorValue(),
     });
     this.addSymbol({
       symbolTicker: "MSFT",
       isVisible: true,
-      dataFetched: false,
       value: 100,
       color: this.nextAvailableColorValue(),
     });
     this.addSymbol({
       symbolTicker: "IBM",
       isVisible: true,
-      dataFetched: false,
       value: 100,
       color: this.nextAvailableColorValue(),
     });
     this.addSymbol({
       symbolTicker: "BA",
       isVisible: true,
-      dataFetched: false,
       value: 100,
       color: this.nextAvailableColorValue(),
     });
     this.addSymbol({
       symbolTicker: "DAI.DEX",
       isVisible: true,
-      dataFetched: false,
       value: 100,
       color: this.nextAvailableColorValue(),
     });
@@ -70,13 +65,21 @@ class DataStore {
     autorun(() => {
       const trigger = this.portfolioStartingDate;
       const trigger2 = this.totalValueOfSymbols;
-      this.setSymbolsDataFetched("All", false);
+      this.setTriggerRerenderOfPortfolio(true);
       console.log("Autorun");
     });
   }
 
-  addSymbol(newSymbol) {
+  setTriggerRerenderOfPortfolio(bool) {
+    this.triggerRerenderOfPortfolio = bool;
+  }
+
+  async addSymbol(newSymbol) {
     this.symbols.push(newSymbol);
+    const doesDataAlreadyExists = await idbSymbolDataStore.doesTimesSeriesDailyAdjustedExistForSymbol(
+      newSymbol.symbolTicker
+    );
+    if (!doesDataAlreadyExists) FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(newSymbol.symbolTicker);
   }
 
   toggleSymbolVisibility(changedSymbolbyTicker) {
@@ -88,25 +91,8 @@ class DataStore {
     });
   }
 
-  setSymbolsDataFetched(changedSymbolbyTicker, dataFetched) {
-    this.symbols.forEach((symbol) => {
-      if (symbol.symbolTicker === changedSymbolbyTicker) {
-        symbol.dataFetched = dataFetched;
-      }
-    });
-  }
-
   setPortfolioStartingDate(date) {
     this.portfolioStartingDate = date;
-  }
-
-  get symbolsTickerAndDataFetchedOnlyValid() {
-    let tempResult = this.symbols.map((symbolSet) => {
-      if (symbolSet.symbolTicker !== "All") {
-        return { symbolTicker: symbolSet.symbolTicker, dataFetched: symbolSet.dataFetched };
-      } else return false;
-    });
-    return tempResult.filter((symbolSet) => symbolSet);
   }
 
   get totalValueOfSymbols() {
@@ -114,16 +100,6 @@ class DataStore {
       if (symbolSet.symbolTicker !== "All") return +pv + +symbolSet.value;
       else return pv;
     }, 0);
-  }
-
-  isDataFetchedForAllSymbols() {
-    console.log("isDataFetchedForAllSymbols");
-    let bool = true;
-    this.symbols.forEach((symbolSet) => {
-      if (symbolSet.symbolTicker === "All") return;
-      if (!symbolSet.dataFetched) bool = false;
-    });
-    return bool;
   }
 
   getSymbolSetForTicker(symbolTicker) {

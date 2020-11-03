@@ -1,6 +1,5 @@
 import React from "react";
 import { createChart, PriceScaleMode } from "lightweight-charts";
-import FetchDataService from "../services/FetchDataService";
 import { Paper } from "@material-ui/core";
 import dataStore from "../stores/DataStore";
 import ChartSwitchStyle from "./ChartSwitchStyle";
@@ -19,19 +18,17 @@ export default class Chart extends React.Component {
 
     this.renderChart = this.renderChart.bind(this);
     this.switchStyle = this.switchStyle.bind(this);
-    this.refreshDataAllData = this.refreshDataAllData.bind(this);
     this.createGraphForSelectedSymbols = this.createGraphForSelectedSymbols.bind(this);
     this.addLineSeriesData = this.addLineSeriesData.bind(this);
   }
 
   async componentDidMount() {
     this.renderChart();
-
-    if (!dataStore.isDataFetchedForAllSymbols()) await this.refreshDataAllData();
     this.createGraphForSelectedSymbols();
   }
 
-  rerenderChartRef() {
+  async rerenderChartRef() {
+    await idbSymbolDataStore.calculateAndStoreHistoricPortfolioPerformance();
     this.createGraphForSelectedSymbols();
   }
 
@@ -52,11 +49,6 @@ export default class Chart extends React.Component {
       this.setState({ selectedChartStyleType: "default" });
       this.chart.applyOptions(styleDefault);
     }
-  }
-
-  async refreshDataAllData() {
-    await FetchDataService.fetchDataForAllSymbolsAlphaVantage();
-    if (dataStore.isDataFetchedForAllSymbols()) await idbSymbolDataStore.getDataChartFormatBySymbol("All");
   }
 
   async createGraphForSelectedSymbols() {
@@ -105,7 +97,6 @@ export default class Chart extends React.Component {
           refreshData={this.refreshData}
           switchStyle={this.switchStyle}
           selectedChartStyleType={this.state.selectedChartStyleType === "default" ? "default" : "percent"}
-          refreshDataAllData={this.refreshDataAllData}
           createGraphForSelectedSymbols={this.createGraphForSelectedSymbols}
         />
         <div ref={this.myRef} id="here"></div>

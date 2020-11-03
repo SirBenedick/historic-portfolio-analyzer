@@ -16,6 +16,11 @@ const idbPortfolioStore = {
   async keys() {
     return (await dbPromise).getAllKeys("portfolioStore");
   },
+  async doesDataSeriesExist() {
+    const data = await this.get("dataSeries");
+    if (data) return true;
+    else return false;
+  },
 };
 
 export default idbPortfolioStore;
