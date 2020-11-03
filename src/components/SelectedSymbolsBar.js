@@ -37,7 +37,7 @@ const SelectedSymbolsBar = observer(({ dataStore }) => {
             <Chip
               label={symbolSet.symbolTicker}
               onClick={toggleVisibility(symbolSet.symbolTicker)}
-              onDelete={() => handleDelete(symbolSet.symbolTicker)}
+              onDelete={symbolSet.symbolTicker !== "Portfolio" ? () => handleDelete(symbolSet.symbolTicker) : false}
               className={classes.chip}
               color={symbolSet.isVisible ? "primary" : "default"}
               clickable={true}
