@@ -15,7 +15,6 @@
 
 ### Minor To-Dos:
 - Add tooltip to chart(?)
-- Rename/Refactor "All" to Portfolio
 
 # Portfolio Analyzer / STONKs / Financial-Charting-Tool
 ## Roadmap

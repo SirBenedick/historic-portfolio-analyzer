@@ -31,7 +31,7 @@ const idbSymbolDataStore = {
   async getDataChartFormatBySymbol(key) {
     console.log("getDataChartFormatBySymbol: " + key);
     // TODO ensure consistent order old -> new
-    if (key === "All") {
+    if (key === "Portfolio") {
       const doesPortfolioDataExist = await idbPortfolioStore.doesDataSeriesExist();
       if (doesPortfolioDataExist) {
         return idbPortfolioStore.get("dataSeries");

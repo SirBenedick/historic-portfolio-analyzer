@@ -5,7 +5,7 @@ import idbSymbolDataStore from "./SymbolDataStore";
 class DataStore {
   symbols = [
     {
-      symbolTicker: "All",
+      symbolTicker: "Portfolio",
       isVisible: true,
       value: 0,
       color: this.nextAvailableColorValue(),
@@ -106,7 +106,7 @@ class DataStore {
 
   get totalValueOfSymbols() {
     return this.symbols.reduce((pv, symbolSet) => {
-      if (symbolSet.symbolTicker !== "All") return +pv + +symbolSet.value;
+      if (symbolSet.symbolTicker !== "Portfolio") return +pv + +symbolSet.value;
       else return pv;
     }, 0);
   }
@@ -116,7 +116,7 @@ class DataStore {
   }
 
   getSymbolsWithoutAll() {
-    return this.symbols.filter((symbolSet) => symbolSet.symbolTicker !== "All");
+    return this.symbols.filter((symbolSet) => symbolSet.symbolTicker !== "Portfolio");
   }
 
   setValueForTicker(changedSymbolByTicker, value) {

@@ -24,7 +24,7 @@ export default function PortfolioBuilder(props) {
         </TableHead>
         <TableBody>
           {props.dataStore.symbols.map((symbolSet) => {
-            if (symbolSet.symbolTicker !== "All")
+            if (symbolSet.symbolTicker !== "Portfolio")
               return (
                 <TableRow key={symbolSet.symbolTicker}>
                   <TableCell component="th" scope="row">

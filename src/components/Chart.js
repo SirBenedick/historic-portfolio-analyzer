@@ -39,7 +39,7 @@ export default class Chart extends React.Component {
 
   async recalculateAndRenderPortfolio() {
     await idbSymbolDataStore.calculateAndStoreHistoricPortfolioPerformance();
-    this.addLineSeriesData(this.props.dataStore.getSymbolSetForTicker("All"));
+    this.addLineSeriesData(this.props.dataStore.getSymbolSetForTicker("Portfolio"));
   }
 
   rerenderVisibleLines() {
