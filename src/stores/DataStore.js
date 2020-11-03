@@ -68,8 +68,9 @@ class DataStore {
     autorun(() => {
       const trigger = this.portfolioStartingDate;
       const trigger2 = this.totalValueOfSymbols;
+
       this.setTriggerRecalculatePortfolio(true);
-      console.log("Autorun");
+      console.log("Autorun " + JSON.stringify(trigger) + JSON.stringify(trigger2));
     });
   }
 

@@ -61,11 +61,10 @@ const idbSymbolDataStore = {
   },
   async calculateAndStoreHistoricPortfolioPerformance() {
     console.log("calculateAndStoreHistoricPortfolioPerformance");
-    const key_snackbar_notification = notificationStore.enqueueSnackbar({
+    notificationStore.enqueueSnackbar({
       message: `Calculating Portfolio value`,
       options: {
         variant: "info",
-        persistent: true,
       },
     });
 
@@ -125,7 +124,6 @@ const idbSymbolDataStore = {
     });
 
     await idbPortfolioStore.set("dataSeries", result);
-    notificationStore.removeSnackbar(key_snackbar_notification);
     return result;
   },
 };

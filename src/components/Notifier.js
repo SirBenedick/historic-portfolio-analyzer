@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { withSnackbar } from "notistack";
 import { inject, observer } from "mobx-react";
 import { autorun } from "mobx";
