@@ -1,5 +1,5 @@
 ## To-Do:
-U- Make Graph Data reactive
+- Make Graph Data reactive
     - TriggerRerenderVoid  gets triggered twice, select symbols not refreshing chart 
     - Slow down TriggerRerenderVoid
 - Handle error when loading for the first time
