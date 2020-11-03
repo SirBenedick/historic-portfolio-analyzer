@@ -16,6 +16,9 @@
 ### Minor To-Dos:
 - Add tooltip to chart(?)
 
+### Bugs
+- On init load data is being fetched twice
+
 # Portfolio Analyzer / STONKs / Financial-Charting-Tool
 ## Roadmap
 1. Create a plattform to analyze historic portfolio performance
