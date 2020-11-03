@@ -23,8 +23,8 @@ import HomeIcon from "@material-ui/icons/Home";
 // Content
 import dataStore from "./stores/DataStore";
 import ChartingPage from "./pages/ChartingPage";
-import TriggerRerenderVoid from "./components/TriggerRerenderVoid"
-import Notifier from "./components/Notifier"
+
+import Notifier from "./components/Notifier";
 
 const drawerWidth = 240;
 
@@ -94,7 +94,6 @@ function App() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const chartPageRef = React.useRef();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -102,10 +101,6 @@ function App() {
 
   const handleDrawerClose = () => {
     setOpen(false);
-  };
-
-  const rerenderChartRef = () => {
-    chartPageRef.current.rerenderChartRef();
   };
 
   return (
@@ -174,8 +169,7 @@ function App() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <ChartingPage dataStore={dataStore} ref={chartPageRef} />
-        <TriggerRerenderVoid dataStore={dataStore} rerenderChartRef={rerenderChartRef}/>
+        <ChartingPage dataStore={dataStore} />
       </main>
     </div>
   );

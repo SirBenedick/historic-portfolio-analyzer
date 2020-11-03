@@ -4,6 +4,7 @@ import { Paper } from "@material-ui/core";
 import dataStore from "../stores/DataStore";
 import ChartSwitchStyle from "./ChartSwitchStyle";
 import idbSymbolDataStore from "../stores/SymbolDataStore";
+import TriggerRerenderVoid from "./TriggerRerenderVoid"
 
 export default class Chart extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export default class Chart extends React.Component {
     this.chart = {};
     this.lineSeriesObj = {};
 
-    this.renderChart = this.renderChart.bind(this);
+    this.rerenderChartTrigger = this.rerenderChartTrigger.bind(this);
     this.switchStyle = this.switchStyle.bind(this);
     this.createGraphForSelectedSymbols = this.createGraphForSelectedSymbols.bind(this);
     this.addLineSeriesData = this.addLineSeriesData.bind(this);
@@ -27,7 +28,7 @@ export default class Chart extends React.Component {
     this.createGraphForSelectedSymbols();
   }
 
-  async rerenderChartRef() {
+  async rerenderChartTrigger() {
     await idbSymbolDataStore.calculateAndStoreHistoricPortfolioPerformance();
     this.createGraphForSelectedSymbols();
   }
@@ -99,7 +100,8 @@ export default class Chart extends React.Component {
           selectedChartStyleType={this.state.selectedChartStyleType === "default" ? "default" : "percent"}
           createGraphForSelectedSymbols={this.createGraphForSelectedSymbols}
         />
-        <div ref={this.myRef} id="here"></div>
+         <div ref={this.myRef} id="chart-ref"></div>
+        <TriggerRerenderVoid dataStore={dataStore} rerenderChartTrigger={this.rerenderChartTrigger}/>
       </Paper>
     );
   }

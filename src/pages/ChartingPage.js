@@ -1,19 +1,11 @@
-import React, { forwardRef, useImperativeHandle, useRef } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 
 import SelectedSymbolsBar from "../components/SelectedSymbolsBar";
 import Chart from "../components/Chart";
 import PortfolioBuilder from "../components/PortfolioBuilder";
 
-const ChartingPage = forwardRef((props, ref) => {
-  const chartRef = useRef();
-
-  useImperativeHandle(ref, () => ({
-    rerenderChartRef() {
-      chartRef.current.rerenderChartRef();
-    },
-  }));
-
+const ChartingPage = (props) => {
   return (
     <div>
       <Grid container spacing={3}>
@@ -21,7 +13,7 @@ const ChartingPage = forwardRef((props, ref) => {
           <SelectedSymbolsBar dataStore={props.dataStore} />
         </Grid>
         <Grid item xs={12}>
-          <Chart ref={chartRef} />
+          <Chart dataStore={props.dataStore}/>
         </Grid>
         <Grid item xs={6}>
           <PortfolioBuilder dataStore={props.dataStore} />
@@ -29,6 +21,6 @@ const ChartingPage = forwardRef((props, ref) => {
       </Grid>
     </div>
   );
-});
+};
 
 export default ChartingPage;

@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { autorun } from "mobx";
 
-const TriggerRerenderVoid = observer(({ dataStore, rerenderChartRef }) => {
+const TriggerRerenderVoid = observer(({ dataStore, rerenderChartTrigger }) => {
   // TODO improve the trigger
   useEffect(() =>
     autorun(() => {
       console.log("Void trigger executed, chart will rerender");
-      rerenderChartRef();
+      rerenderChartTrigger();
       dataStore.setTriggerRerenderOfPortfolio(false);
     })
   );
