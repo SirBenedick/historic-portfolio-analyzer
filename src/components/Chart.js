@@ -103,7 +103,6 @@ export default class Chart extends React.Component {
           refreshData={this.refreshData}
           switchStyle={this.switchStyle}
           selectedChartStyleType={this.state.selectedChartStyleType === "default" ? "default" : "percent"}
-          createGraphForSelectedSymbols={this.createGraphForSelectedSymbols}
         />
         <div ref={this.myRef} id="chart-ref"></div>
         <TriggerRecalculatePortfolio
