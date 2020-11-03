@@ -1,23 +1,38 @@
 ## To-Do:
-* Make Graph Data reactive
-* * TriggerRerenderVoid  gets triggered twice, select symbols not refreshing chart 
-* * Slow down TriggerRerenderVoid
-* * Handle error when loading for the first time
-* Search for symbols (maybe hardcode Ticker-Name-List)
-* Add configuration page to enter API keys and configure dataset
-* Setup github actions/pages
-* Refactor Chart Component
-* Choose time of entry for each position
-* Heatmap for daily/weekly/montly return
-* Add loading indicator (Backdrop)
-* Add card performance weighted compared to single asset and market
-* Add different Backends to call stock data from different sources
-* Clean up README.md: Add UCs, scenarios, technoglogies...
-* Add timeframe for all data
+U- Make Graph Data reactive
+    - TriggerRerenderVoid  gets triggered twice, select symbols not refreshing chart 
+    - Slow down TriggerRerenderVoid
+- Handle error when loading for the first time
+- Search for symbols (maybe hardcode Ticker-Name-List)
+- Add configuration page to enter API keys and configure dataset
+- Setup github actions/pages
+- Add license
+- Refactor Chart Component
+- Choose time of entry for each position
+- Heatmap for daily/weekly/montly return
+- Add loading indicator (Backdrop)
+- Add card performance weighted compared to single asset and market
+- Add different Backends to call stock data from different sources
+- Clean up README.md: Add UCs, scenarios, technoglogies...
+- Add timeframe for all data
 
 ### Minor To-Dos:
-* Add tooltip to chart(?)
-* Rename/Refactor "All" to Portfolio
+- Add tooltip to chart(?)
+- Rename/Refactor "All" to Portfolio
+
+# Portfolio Analyzer / STONKs / Financial-Charting-Tool
+## Roadmap
+1. Create a plattform to analyze historic portfolio performance
+2. Add metrics to quantify portfolio performance based on research
+3. Automate portfolio optimization
+
+## Technologies
+- [react](https://reactjs.org)
+- [mobx](https://mobx.js.org/README.html)
+- [material-ui](https://material-ui.com)
+- [lightweight-charts](https://github.com/tradingview/lightweight-charts) by [tradingview](https://www.tradingview.com/lightweight-charts/)
+- [IndexDB](https://developer.mozilla.org/de/docs/Web/API/IndexedDB_API)
+- Stock data API: [Alpha Vantage](https://www.alphavantage.co)
 
 # Getting Started with Create React App
 
