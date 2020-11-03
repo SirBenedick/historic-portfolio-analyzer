@@ -1,10 +1,10 @@
 import React from "react";
 import { createChart, PriceScaleMode } from "lightweight-charts";
 import { Paper } from "@material-ui/core";
-import dataStore from "../stores/DataStore";
 import ChartSwitchStyle from "./ChartSwitchStyle";
 import idbSymbolDataStore from "../stores/SymbolDataStore";
-import TriggerRerenderVoid from "./TriggerRerenderVoid"
+import TriggerRecalculatePortfolio from "./TriggerRecalculatePortfolio";
+import TriggerShowVisibleLines from "./TriggerShowVisibleLines";
 
 export default class Chart extends React.Component {
   constructor(props) {
@@ -17,7 +17,8 @@ export default class Chart extends React.Component {
     this.chart = {};
     this.lineSeriesObj = {};
 
-    this.rerenderChartTrigger = this.rerenderChartTrigger.bind(this);
+    this.recalculateAndRenderPortfolio = this.recalculateAndRenderPortfolio.bind(this);
+    this.rerenderVisibleLines = this.rerenderVisibleLines.bind(this);
     this.switchStyle = this.switchStyle.bind(this);
     this.createGraphForSelectedSymbols = this.createGraphForSelectedSymbols.bind(this);
     this.addLineSeriesData = this.addLineSeriesData.bind(this);
@@ -28,17 +29,21 @@ export default class Chart extends React.Component {
     this.createGraphForSelectedSymbols();
   }
 
-  async rerenderChartTrigger() {
-    await idbSymbolDataStore.calculateAndStoreHistoricPortfolioPerformance();
-    this.createGraphForSelectedSymbols();
-  }
-
   renderChart() {
     if (this.myRef.current.firstChild) {
       this.myRef.current.removeChild(this.myRef.current.firstChild);
       this.chart = null;
     }
     this.chart = createChart(this.myRef.current, styleDefault);
+  }
+
+  async recalculateAndRenderPortfolio() {
+    await idbSymbolDataStore.calculateAndStoreHistoricPortfolioPerformance();
+    this.addLineSeriesData(this.props.dataStore.getSymbolSetForTicker("All"));
+  }
+
+  rerenderVisibleLines() {
+    this.createGraphForSelectedSymbols();
   }
 
   switchStyle() {
@@ -55,7 +60,7 @@ export default class Chart extends React.Component {
   async createGraphForSelectedSymbols() {
     console.log("createGraphForSelectedSymbols");
 
-    dataStore.symbols.forEach((symbolSet) => {
+    this.props.dataStore.symbols.forEach((symbolSet) => {
       if (symbolSet.isVisible) {
         this.addLineSeriesData(symbolSet);
       } else {
@@ -100,8 +105,12 @@ export default class Chart extends React.Component {
           selectedChartStyleType={this.state.selectedChartStyleType === "default" ? "default" : "percent"}
           createGraphForSelectedSymbols={this.createGraphForSelectedSymbols}
         />
-         <div ref={this.myRef} id="chart-ref"></div>
-        <TriggerRerenderVoid dataStore={dataStore} rerenderChartTrigger={this.rerenderChartTrigger}/>
+        <div ref={this.myRef} id="chart-ref"></div>
+        <TriggerRecalculatePortfolio
+          dataStore={this.props.dataStore}
+          recalculateAndRenderPortfolio={this.recalculateAndRenderPortfolio}
+        />
+        <TriggerShowVisibleLines dataStore={this.props.dataStore} rerenderVisibleLines={this.rerenderVisibleLines} />
       </Paper>
     );
   }

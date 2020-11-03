@@ -14,17 +14,20 @@ class DataStore {
   pendingRequests = 0;
   appleData = [];
   portfolioStartingDate = "";
-  triggerRerenderOfPortfolio = false;
+  triggerRecalculatePortfolio = false;
+  triggerRerenderVisibleLines = false;
 
   constructor() {
     makeObservable(this, {
       symbols: observable,
-      triggerRerenderOfPortfolio: observable,
+      triggerRecalculatePortfolio: observable,
+      triggerRerenderVisibleLines: observable,
       portfolioStartingDate: observable,
       toggleSymbolVisibility: action,
       addSymbol: action,
       setValueForTicker: action,
-      setTriggerRerenderOfPortfolio: action,
+      setTriggerRecalculatePortfolio: action,
+      setTriggerRerenderVisibleLines: action,
       setPortfolioStartingDate: action,
       totalValueOfSymbols: computed,
     });
@@ -65,13 +68,17 @@ class DataStore {
     autorun(() => {
       const trigger = this.portfolioStartingDate;
       const trigger2 = this.totalValueOfSymbols;
-      this.setTriggerRerenderOfPortfolio(true);
+      this.setTriggerRecalculatePortfolio(true);
       console.log("Autorun");
     });
   }
 
-  setTriggerRerenderOfPortfolio(bool) {
-    this.triggerRerenderOfPortfolio = bool;
+  setTriggerRecalculatePortfolio(bool) {
+    this.triggerRecalculatePortfolio = bool;
+  }
+
+  setTriggerRerenderVisibleLines(bool) {
+    this.triggerRerenderVisibleLines = bool;
   }
 
   async addSymbol(newSymbol) {
@@ -89,6 +96,7 @@ class DataStore {
         symbol.isVisible = !symbol.isVisible;
       }
     });
+    this.setTriggerRerenderVisibleLines(true);
   }
 
   setPortfolioStartingDate(date) {

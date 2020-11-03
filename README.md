@@ -1,7 +1,4 @@
 ## To-Do:
-- Make Graph Data reactive
-    - TriggerRerenderVoid  gets triggered twice, select symbols not refreshing chart 
-    - Slow down TriggerRerenderVoid
 - Handle error when loading for the first time
 - Search for symbols (maybe hardcode Ticker-Name-List)
 - Add configuration page to enter API keys and configure dataset
