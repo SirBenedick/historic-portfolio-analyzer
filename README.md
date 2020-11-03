@@ -1,5 +1,4 @@
 ## To-Do:
-- Handle error when loading for the first time
 - Search for symbols (maybe hardcode Ticker-Name-List)
 - Add configuration page to enter API keys and configure dataset
 - Setup github actions/pages
