@@ -1,5 +1,6 @@
 ## To-Do:
 * Make Graph Data reactive
+* * TriggerRerenderVoid  gets triggered twice, select symbols not refreshing chart 
 * * Slow down TriggerRerenderVoid
 * * Handle error when loading for the first time
 * Search for symbols (maybe hardcode Ticker-Name-List)
@@ -17,11 +18,6 @@
 ### Minor To-Dos:
 * Add tooltip to chart(?)
 * Rename/Refactor "All" to Portfolio
-
-### Known Bugs/Issues
-
-* Some times the Portfolio calculation drops to 0
-* Switch for default/percent graph style is bugged
 
 # Getting Started with Create React App
 
