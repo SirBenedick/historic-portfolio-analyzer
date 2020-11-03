@@ -65,6 +65,7 @@ const idbSymbolDataStore = {
       message: `Calculating Portfolio value`,
       options: {
         variant: "info",
+        autoHideDuration: 2000
       },
     });
 
