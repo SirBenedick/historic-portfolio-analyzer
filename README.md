@@ -1,7 +1,5 @@
 ## To-Do:
 * Make Graph Data reactive
-* * Improve rerender - do not rerender every line on graph
-* * Move dataIsFetched to SymbolDataStore/do not let  it load data that is downloaded
 * * Slow down TriggerRerenderVoid
 * * Handle error when loading for the first time
 * Search for symbols (maybe hardcode Ticker-Name-List)
