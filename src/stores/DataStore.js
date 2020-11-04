@@ -33,7 +33,7 @@ class DataStore {
       totalValueOfSymbols: computed,
     });
 
-    this.portfolioStartingDate = moment().subtract(1, "weeks").format("YYYY-MM-DD");
+    this.portfolioStartingDate = moment().subtract(1, "years").format("YYYY-MM-DD");
 
     this.addSymbol("AAPL");
     this.addSymbol("MSFT");
