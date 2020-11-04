@@ -1,9 +1,8 @@
 ## To-Do:
 
-- Calculate Performance of each value
-- Store meta data for symbol in symbolstore (change data flow, (full name, currency, region))
 - Add configuration page to enter API keys and configure dataset
-- Perform a performance test
+- Perform a performance test and improve/optimize
+- Store meta data for symbol in symbolstore (change data flow, (full name, currency, region))
 - Setup github actions/pages
 - Add license
 - Create store for symbols to be fetched (in case API limit is reached)
