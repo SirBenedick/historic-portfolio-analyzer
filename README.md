@@ -1,20 +1,27 @@
 ## To-Do:
 
 - Add configuration page to enter API keys and configure dataset
-- Perform a performance test and improve/optimize
-- Store meta data for symbol in symbolstore (change data flow, (full name, currency, region))
+- Style: Find a place for DatePicker
+- Style: Switch default/percent
+- Optimize: Perform a performance test and improve/optimize
+- Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
+- Add: License (just in case, you never know...)
+- Version: bump to 0.2.0 (if all of the above are completed)
+- Refactor: Change repository name to... ?
 - Setup github actions/pages
-- Add license
-- Create store for symbols to be fetched (in case API limit is reached)
-- Store datet of fetched data, refresh if is too old
-- Refactor Chart Component
-- Choose time of entry for each position
-- Heatmap for daily/weekly/montly return
-- Add loading indicator (Backdrop)
-- Add card performance weighted compared to single asset and market
-- Add different Backends to call stock data from different sources
+- Add: Calculation of dividends to portfolio performance
+- Add: Store for symbols to be fetched (in case API limit is reached)
+- Add: Store datet of fetched data, refresh if is too old
+- Refactor: Chart Component
+- Add: Choose time of entry for each position
+- Add: Heatmap for daily/weekly/montly return
+- Add Loading indicator (Backdrop)
+- Add: Card performance weighted compared to single asset and market
+- Add: Different Backends to call stock data from different sources
 - Clean up README.md: Add UCs, scenarios, technoglogies...
 - Add timeframe for all data
+
+- Add/Style/Remove/Optimize/Refactor
 
 ### Minor To-Dos:
 
