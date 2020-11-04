@@ -1,8 +1,7 @@
 ## To-Do:
-- Search for symbols (maybe hardcode Ticker-Name-List)
+- Redesign "Portfolibuilder"
 - Make portfoliobuilder reactiv
 - Add configuration page to enter API keys and configure dataset
-- Redesign "Portfolibuilder"
 - Perform a performance test
 - Setup github actions/pages
 - Add license
