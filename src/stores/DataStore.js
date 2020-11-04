@@ -56,6 +56,19 @@ class DataStore {
   }
 
   async addSymbol(symbolSetSearchResult) {
+    const compareSymbolSets = (a, b) => {
+      if (b.symbolTicker === "Portfolio") {
+        return 1;
+      }
+      if (a.symbolTicker < b.symbolTicker) {
+        return -1;
+      }
+      if (a.symbolTicker > b.symbolTicker) {
+        return 1;
+      }
+      return 0;
+    };
+
     if (this.getSymbolSetForTicker(symbolSetSearchResult)) {
       notificationStore.enqueueSnackbar({
         message: `Symbol: ${symbolSetSearchResult.symbolTicker} already part of portfolio`,
@@ -74,6 +87,7 @@ class DataStore {
       value: 100,
       color: this.nextAvailableColorValue(),
     });
+    this.symbols.sort(compareSymbolSets);
     const doesDataAlreadyExists = await idbSymbolDataStore.doesTimesSeriesDailyAdjustedExistForSymbol(
       symbolSetSearchResult.symbolTicker
     );
