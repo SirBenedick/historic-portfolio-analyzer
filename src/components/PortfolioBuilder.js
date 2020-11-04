@@ -21,7 +21,7 @@ const PortfolioBuilder = observer(({ dataStore }) => {
 
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
+      <Table className={classes.table} aria-label="simple table" size="small">
         <TableHead>
           <TableRow>
             <TableCell>Symbol</TableCell>
