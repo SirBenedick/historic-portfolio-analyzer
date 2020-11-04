@@ -2,7 +2,6 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 
 import SelectedSymbolsBar from "../components/SelectedSymbolsBar";
-import SearchForSymbolInput from "../components/SearchForSymbolInput";
 import Chart from "../components/Chart";
 import PortfolioBuilder from "../components/PortfolioBuilder";
 
@@ -12,10 +11,9 @@ const ChartingPage = (props) => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <SelectedSymbolsBar dataStore={props.dataStore} />
-          <SearchForSymbolInput dataStore={props.dataStore} />
         </Grid>
         <Grid item xs={12}>
-          <Chart dataStore={props.dataStore}/>
+          <Chart dataStore={props.dataStore} />
         </Grid>
         <Grid item xs={6}>
           <PortfolioBuilder dataStore={props.dataStore} />

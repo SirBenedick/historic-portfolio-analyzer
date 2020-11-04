@@ -1,8 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Chip from "@material-ui/core/Chip";
-import Paper from "@material-ui/core/Paper";
+import { Paper, Chip, Grid } from "@material-ui/core";
 import { observer } from "mobx-react-lite";
+import SearchForSymbolInput from "../components/SearchForSymbolInput";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,22 +30,32 @@ const SelectedSymbolsBar = observer(({ dataStore }) => {
   };
 
   return (
-    <Paper component="ul" className={classes.root}>
-      {dataStore.symbols.map((symbolSet) => {
-        return (
-          <li key={symbolSet.symbolTicker}>
-            <Chip
-              label={symbolSet.symbolTicker}
-              onClick={toggleVisibility(symbolSet.symbolTicker)}
-              onDelete={symbolSet.symbolTicker !== "Portfolio" ? () => handleDelete(symbolSet.symbolTicker) : false}
-              className={classes.chip}
-              color={symbolSet.isVisible ? "primary" : "default"}
-              clickable={true}
-              style={{ backgroundColor: symbolSet.isVisible ? symbolSet.color : "#eeeeee" }}
-            />
-          </li>
-        );
-      })}
+    <Paper className={classes.root}>
+      <Grid container spacing={1} alignItems="center">
+        <Grid item xs={8}>
+          <Grid container direction="row" justify="center" alignItems="center">
+            {dataStore.symbols.map((symbolSet) => {
+              return (
+                <Chip
+                  key={symbolSet.symbolTicker}
+                  label={symbolSet.symbolTicker}
+                  onClick={toggleVisibility(symbolSet.symbolTicker)}
+                  onDelete={symbolSet.symbolTicker !== "Portfolio" ? () => handleDelete(symbolSet.symbolTicker) : false}
+                  className={classes.chip}
+                  color={symbolSet.isVisible ? "primary" : "default"}
+                  clickable={true}
+                  style={{ backgroundColor: symbolSet.isVisible ? symbolSet.color : "#eeeeee" }}
+                />
+              );
+            })}
+          </Grid>
+        </Grid>
+        <Grid item xs={4}>
+          <Grid container direction="row" justify="center" alignItems="center">
+            <SearchForSymbolInput dataStore={dataStore} />
+          </Grid>
+        </Grid>
+      </Grid>
     </Paper>
   );
 });

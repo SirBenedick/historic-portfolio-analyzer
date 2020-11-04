@@ -34,11 +34,10 @@ class DataStore {
 
     this.portfolioStartingDate = moment().subtract(1, "weeks").format("YYYY-MM-DD");
 
-    // this.addSymbol("AAPL");
-    // this.addSymbol("MSFT");
-    // this.addSymbol("IBM");
-    // this.addSymbol("BA");
-    // this.addSymbol("DAI.DEX");
+    this.addSymbol("AAPL");
+    this.addSymbol("MSFT");
+    this.addSymbol("IBM");
+    this.addSymbol("BA");
 
     autorun(() => {
       const trigger = this.portfolioStartingDate;

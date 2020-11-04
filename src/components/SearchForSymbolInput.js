@@ -67,12 +67,12 @@ const SearchForSymbolInput = observer(({ dataStore }) => {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Combo box"
+          label="Add Asset"
           variant="outlined"
           onChange={(event) => handleValueChange(event.target.value)}
         />
       )}
-      style={{ width: 300 }}
+      style={{ minWidth: "250px" }}
     />
   );
 });
