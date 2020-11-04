@@ -56,7 +56,25 @@ const FetchDataService = {
         apikey: configStore.alphaVantage.apiToken,
       },
     });
-    return res.data["bestMatches"];
+    if ("Note" in res.data) {
+      console.log("Failed to search for:" + keywords);
+      notificationStore.enqueueSnackbar({
+        message: `Failed to search for: ${keywords}`,
+        options: {
+          variant: "warning",
+        },
+      });
+      return false;
+    } else {
+      const matches = res.data["bestMatches"];
+      const searchResultsFormated = matches.map((result) => ({
+        symbolTicker: result["1. symbol"],
+        name: result["2. name"],
+        region: result["4. region"],
+        currency: result["8. currency"],
+      }));
+      return searchResultsFormated;
+    }
   },
 };
 

@@ -7,17 +7,16 @@ const PortfolioListValueField = observer(({ dataStore, symbolSet }) => {
     dataStore.setValueForTicker(symbolSet.symbolTicker, value);
   };
   return (
-    <div>
-      <FormControl fullWidth>
-        <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
-        <Input
-          id={`standard-adornment-amount-${symbolSet.symbolTicker}`}
-          value={symbolSet.value}
-          onChange={(event) => onValueChange(event.target.value)}
-          startAdornment={<InputAdornment position="start">$</InputAdornment>}
-        />
-      </FormControl>
-    </div>
+    <FormControl style={{ maxWidth: "80px" }}>
+      <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
+      <Input
+        id={`standard-adornment-amount-${symbolSet.symbolTicker}`}
+        size="small"
+        value={symbolSet.value}
+        onChange={(event) => onValueChange(event.target.value)}
+        startAdornment={<InputAdornment position="start">$</InputAdornment>}
+      />
+    </FormControl>
   );
 });
 
