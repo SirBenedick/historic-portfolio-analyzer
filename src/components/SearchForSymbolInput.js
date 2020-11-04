@@ -1,16 +1,9 @@
-/* eslint-disable no-use-before-define */
 import React from "react";
 import { TextField, Typography } from "@material-ui/core";
 import Autocomplete, { createFilterOptions } from "@material-ui/lab/Autocomplete";
 import { observer } from "mobx-react-lite";
 import axios from "axios";
-const alpha_vantage = { url: "https://www.alphavantage.co/query", api_token: "-" };
-
-function sleep(delay = 0) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, delay);
-  });
-}
+import configStore from "../stores/ConfigStore";
 
 const filterOptions = createFilterOptions({
   matchFrom: "any",
@@ -26,14 +19,13 @@ const SearchForSymbolInput = observer(({ dataStore }) => {
   const searchAlphaVantageByKeywords = async (keywords) => {
     console.log("++++++searchAlphaVantageByKeywords: " + keywords);
     setIsLoadingSearch(true);
-    const res = await axios.get(alpha_vantage.url, {
+    const res = await axios.get(configStore.alphaVantage.url, {
       params: {
-        function: "SYMBOL_SEARCH",
+        function: configStore.alphaVantageConstants.SYMBOL_SEARCH,
         keywords: keywords,
-        apikey: alpha_vantage.api_token,
+        apikey: configStore.alphaVantage.apiToken,
       },
     });
-    await sleep(1e3);
     setIsLoadingSearch(false);
     return res.data["bestMatches"];
   };
@@ -59,7 +51,8 @@ const SearchForSymbolInput = observer(({ dataStore }) => {
       loading={isLoadingSearch}
       value={value}
       onChange={(event, symbolSet) => {
-        dataStore.addSymbol(symbolSet["1. symbol"]);
+        setValue("");
+        if (symbolSet["1. symbol"]) dataStore.addSymbol(symbolSet["1. symbol"]);
       }}
       options={searchOptions}
       filterOptions={filterOptions}
@@ -84,3 +77,74 @@ const SearchForSymbolInput = observer(({ dataStore }) => {
   );
 });
 export default SearchForSymbolInput;
+
+// const example_res = {
+//   bestMatches: [
+//     {
+//       "1. symbol": "BA",
+//       "2. name": "The Boeing Company",
+//       "3. type": "Equity",
+//       "4. region": "United States",
+//       "5. marketOpen": "09:30",
+//       "6. marketClose": "16:00",
+//       "7. timezone": "UTC-05",
+//       "8. currency": "USD",
+//       "9. matchScore": "0.7273",
+//     },
+//     {
+//       "1. symbol": "BCO.DEX",
+//       "2. name": "The Boeing Company",
+//       "3. type": "Equity",
+//       "4. region": "XETRA",
+//       "5. marketOpen": "08:00",
+//       "6. marketClose": "20:00",
+//       "7. timezone": "UTC+01",
+//       "8. currency": "EUR",
+//       "9. matchScore": "0.6667",
+//     },
+//     {
+//       "1. symbol": "BOE.LON",
+//       "2. name": "The Boeing Company",
+//       "3. type": "Equity",
+//       "4. region": "United Kingdom",
+//       "5. marketOpen": "08:00",
+//       "6. marketClose": "16:30",
+//       "7. timezone": "UTC+00",
+//       "8. currency": "GBP",
+//       "9. matchScore": "0.6154",
+//     },
+//     {
+//       "1. symbol": "BOEI34.SAO",
+//       "2. name": "The Boeing Company",
+//       "3. type": "Equity",
+//       "4. region": "Brazil/Sao Paolo",
+//       "5. marketOpen": "10:00",
+//       "6. marketClose": "17:30",
+//       "7. timezone": "UTC-03",
+//       "8. currency": "BRL",
+//       "9. matchScore": "0.6000",
+//     },
+//     {
+//       "1. symbol": "BCO.FRK",
+//       "2. name": "The Boeing Company",
+//       "3. type": "Equity",
+//       "4. region": "Frankfurt",
+//       "5. marketOpen": "08:00",
+//       "6. marketClose": "20:00",
+//       "7. timezone": "UTC+01",
+//       "8. currency": "EUR",
+//       "9. matchScore": "0.4444",
+//     },
+//     {
+//       "1. symbol": "BOEI.BRU",
+//       "2. name": "The Boeing Company",
+//       "3. type": "Equity",
+//       "4. region": "Brussels",
+//       "5. marketOpen": "09:00",
+//       "6. marketClose": "17:00",
+//       "7. timezone": "UTC+01",
+//       "8. currency": "EUR",
+//       "9. matchScore": "0.3636",
+//     },
+//   ],
+// };

@@ -1,9 +1,7 @@
 import axios from "axios";
-import dataStore from "../stores/DataStore";
 import idbSymbolDataStore from "../stores/SymbolDataStore";
 import notificationStore from "../stores/NotificationStore";
-
-const alpha_vantage = { url: "https://www.alphavantage.co/query", api_token: "-" };
+import configStore from "../stores/ConfigStore";
 
 const FetchDataService = {
   async fetchDataDailyAdjustedForSymbolAlphaVantage(symbolTicker) {
@@ -16,12 +14,12 @@ const FetchDataService = {
       },
     });
       try {
-        const res = await axios.get(alpha_vantage.url, {
+        const res = await axios.get(configStore.alphaVantage.url, {
           params: {
-            function: "TIME_SERIES_DAILY_ADJUSTED",
+            function: configStore.alphaVantageConstants.TIME_SERIES_DAILY_ADJUSTED,
             symbol: symbolTicker,
             outputsize: "full",
-            apikey: alpha_vantage.api_token,
+            apikey: configStore.alphaVantage.apiToken,
           },
         });
         if ("Note" in res.data) {
