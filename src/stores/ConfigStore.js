@@ -3,7 +3,7 @@ import { makeObservable, observable } from "mobx";
 class ConfigStore {
   alphaVantage = { url: "https://www.alphavantage.co/query", apiToken: "-" };
   alphaVantageConstants = { SYMBOL_SEARCH: "SYMBOL_SEARCH", TIME_SERIES_DAILY_ADJUSTED: "TIME_SERIES_DAILY_ADJUSTED" };
-  alphaVantageSearchExample = alphaVantageSearchExample;
+  alphaVantageSearchExample = alphaVantageSearchMockedData;
 
   constructor() {
     makeObservable(this, {
@@ -12,7 +12,7 @@ class ConfigStore {
   }
 }
 
-const alphaVantageSearchExample = {
+const alphaVantageSearchMockedData = {data:{
   bestMatches: [
     {
       "1. symbol": "BA",
@@ -81,7 +81,7 @@ const alphaVantageSearchExample = {
       "9. matchScore": "0.3636",
     },
   ],
-};
+}};
 
 const configStore = new ConfigStore();
 export default configStore;
