@@ -27,6 +27,7 @@ class DataStore {
       toggleSymbolVisibility: action,
       addSymbol: action,
       setValueForTicker: action,
+      setPerformanceSincePortfolioStartForTicker: action,
       setTriggerRecalculatePortfolio: action,
       setTriggerRerenderVisibleLines: action,
       setPortfolioStartingDate: action,
@@ -42,7 +43,7 @@ class DataStore {
       const trigger2 = this.totalValueOfSymbols;
 
       this.setTriggerRecalculatePortfolio(true);
-      console.log("Autorun " + JSON.stringify(trigger) + JSON.stringify(trigger2));
+      console.log("Autorun: triggering portfolio rercalculation" + JSON.stringify(trigger) + JSON.stringify(trigger2));
     });
   }
 
@@ -68,7 +69,7 @@ class DataStore {
       symbolTicker: symbolSetSearchResult.symbolTicker,
       name: symbolSetSearchResult.name,
       currency: symbolSetSearchResult.currency,
-      performanceSincePortfolioStart: 0,
+      performanceSincePortfolioStart: 1,
       isVisible: true,
       value: 100,
       color: this.nextAvailableColorValue(),
@@ -117,6 +118,15 @@ class DataStore {
     this.symbols.forEach((symbol) => {
       if (symbol.symbolTicker === changedSymbolByTicker) {
         symbol.value = value;
+      }
+    });
+  }
+
+  setPerformanceSincePortfolioStartForTicker(changedSymbolByTicker, value) {
+    console.log("Updating performanceSincePortfolioStart: " + value);
+    this.symbols.forEach((symbol) => {
+      if (symbol.symbolTicker === changedSymbolByTicker) {
+        symbol.performanceSincePortfolioStart = value;
       }
     });
   }

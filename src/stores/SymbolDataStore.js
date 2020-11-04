@@ -65,16 +65,18 @@ const idbSymbolDataStore = {
       message: `Calculating Portfolio value`,
       options: {
         variant: "info",
-        autoHideDuration: 2000
+        autoHideDuration: 2000,
       },
     });
 
-    //  Calculate the quanity of each asset at the starting day
+    //  Calculate for each asset the quantity at portfolio start and the performance since
     console.log("Portfolio - calculating quantity");
     let symbolQuantityMap = {};
     let startingDate = moment(dataStore.portfolioStartingDate);
+    let endDate = moment();
     await Promise.all(
       dataStore.getSymbolsWithoutAll().map(async (symbolSet) => {
+        // Get price of asset for the portfolio starting date
         let startingDatePriceValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(
           symbolSet.symbolTicker,
           startingDate.format("YYYY-MM-DD")
@@ -88,9 +90,29 @@ const idbSymbolDataStore = {
           );
         }
 
-        const startingDatePortfolioValue = dataStore.getSymbolSetForTicker(symbolSet.symbolTicker)["value"];
-        symbolQuantityMap[symbolSet.symbolTicker] =
-          parseFloat(startingDatePortfolioValue) / parseFloat(startingDatePriceValue);
+        // Get price of asset for the portfolio end date
+        let endDatePriceValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(
+          symbolSet.symbolTicker,
+          endDate.format("YYYY-MM-DD")
+        );
+
+        while (!endDatePriceValue) {
+          endDate.subtract(1, "days");
+          endDatePriceValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(
+            symbolSet.symbolTicker,
+            endDate.format("YYYY-MM-DD")
+          );
+        }
+
+        // Calculate performanceSinceStart for this symbol and store the value
+        const performanceSinceStart = parseFloat(endDatePriceValue) / parseFloat(startingDatePriceValue);
+        dataStore.setPerformanceSincePortfolioStartForTicker(symbolSet.symbolTicker, performanceSinceStart);
+
+        // Calculate quantity for this symbol
+        const startingDateValueOfThisSymbol = dataStore.getSymbolSetForTicker(symbolSet.symbolTicker)["value"];
+        const quantity = parseFloat(startingDateValueOfThisSymbol) / parseFloat(startingDatePriceValue);
+
+        symbolQuantityMap[symbolSet.symbolTicker] = quantity;
       })
     );
 
