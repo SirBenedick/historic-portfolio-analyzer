@@ -6,7 +6,7 @@ import FetchDataService from "../services/FetchDataService";
 
 const filterOptions = createFilterOptions({
   matchFrom: "any",
-  stringify: (option) => `${option["1. symbol"]}-${option["2. name"]}`,
+  stringify: (option) => `${option.symbolTicker}-${option.name}`,
 });
 
 const SearchForSymbolInput = observer(({ dataStore }) => {
@@ -36,17 +36,17 @@ const SearchForSymbolInput = observer(({ dataStore }) => {
       id="combo-box-demo"
       loading={isLoadingSearch}
       value={value}
-      onChange={(event, symbolSet) => {
+      onChange={(event, symbolSearchResult) => {
         setValue("");
-        if (symbolSet["1. symbol"]) dataStore.addSymbol(symbolSet["1. symbol"]);
+        if (symbolSearchResult && symbolSearchResult.symbolTicker) dataStore.addSymbol(symbolSearchResult);
       }}
       options={searchOptions}
       filterOptions={filterOptions}
       renderOption={(option) => (
         <div>
-          <Typography>{option["2. name"]}</Typography>
+          <Typography>{option.name}</Typography>
           <Typography variant="caption">
-            {option["1. symbol"]} - {option["4. region"]} - {option["8. currency"]}
+            {option.symbolTicker} - {option.region} - {option.currency}
           </Typography>
         </div>
       )}

@@ -35,10 +35,7 @@ class DataStore {
 
     this.portfolioStartingDate = moment().subtract(1, "years").format("YYYY-MM-DD");
 
-    this.addSymbol("AAPL");
-    this.addSymbol("MSFT");
-    this.addSymbol("IBM");
-    this.addSymbol("BA");
+    this.addSymbol({ symbolTicker: "AAPL", name: "Apple Inc.", region: "testRegion", currency: "USD" });
 
     autorun(() => {
       const trigger = this.portfolioStartingDate;
@@ -57,10 +54,10 @@ class DataStore {
     this.triggerRerenderVisibleLines = bool;
   }
 
-  async addSymbol(newSymbolTicker) {
-    if (this.getSymbolSetForTicker(newSymbolTicker)) {
+  async addSymbol(symbolSetSearchResult) {
+    if (this.getSymbolSetForTicker(symbolSetSearchResult)) {
       notificationStore.enqueueSnackbar({
-        message: `Symbol: ${newSymbolTicker} already part of portfolio`,
+        message: `Symbol: ${symbolSetSearchResult.symbolTicker} already part of portfolio`,
         options: {
           variant: "info",
         },
@@ -68,14 +65,20 @@ class DataStore {
       return false;
     }
     this.symbols.push({
-      symbolTicker: newSymbolTicker,
+      symbolTicker: symbolSetSearchResult.symbolTicker,
+      name: symbolSetSearchResult.name,
+      currency: symbolSetSearchResult.currency,
+      performanceSincePortfolioStart: 0,
       isVisible: true,
       value: 100,
       color: this.nextAvailableColorValue(),
     });
-    const doesDataAlreadyExists = await idbSymbolDataStore.doesTimesSeriesDailyAdjustedExistForSymbol(newSymbolTicker);
-    if (!doesDataAlreadyExists) await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(newSymbolTicker);
-    //  Correct this
+    const doesDataAlreadyExists = await idbSymbolDataStore.doesTimesSeriesDailyAdjustedExistForSymbol(
+      symbolSetSearchResult.symbolTicker
+    );
+    if (!doesDataAlreadyExists)
+      await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(symbolSetSearchResult.symbolTicker);
+    //  TODO check if this  could be optimized
     this.setTriggerRerenderVisibleLines(true);
     this.setTriggerRecalculatePortfolio(true);
   }

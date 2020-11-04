@@ -1,15 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@material-ui/core";
 import { observer } from "mobx-react";
-
-import PortfolioListValueField from "./PortfolioListValueField";
-import DatePicker from "./DatePicker";
 
 const useStyles = makeStyles({});
 
-export default function PortfolioBuilder(props) {
+const PortfolioBuilder = observer(({ dataStore }) => {
   const classes = useStyles();
 
   return (
@@ -17,37 +14,46 @@ export default function PortfolioBuilder(props) {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Asset</TableCell>
-            {/* <TableCell align="right">Entry Date</TableCell> */}
-            <TableCell align="right">Value</TableCell>
+            <TableCell>Symbol</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell align="right">Performance</TableCell>
+            <TableCell align="right" style={{ maxWidth: "80px" }}>
+              Value
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.dataStore.symbols.map((symbolSet) => {
+          {dataStore.symbols.map((symbolSet) => {
             if (symbolSet.symbolTicker !== "Portfolio")
               return (
                 <TableRow key={symbolSet.symbolTicker}>
                   <TableCell component="th" scope="row">
                     {symbolSet.symbolTicker}
                   </TableCell>
-                  {/* <TableCell align="right">
-                    <DatePicker entryDate={symbolSet.entryDate}/>
-                  </TableCell> */}
+                  <TableCell align="left">{symbolSet.name}</TableCell>
+                  <TableCell align="right">{symbolSet.performanceSincePortfolioStart}</TableCell>
                   <TableCell align="right">
-                    <PortfolioListValueField dataStore={props.dataStore} symbolSet={symbolSet} />
+                    <input
+                      type="text"
+                      value={symbolSet.value}
+                      onChange={(event) => dataStore.setValueForTicker(symbolSet.symbolTicker, event.target.value)}
+                      style={{ maxWidth: "60px" }}
+                    />
                   </TableCell>
                 </TableRow>
               );
             else return null;
           })}
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell align="right">
+            <Typography noWrap>Total: ${dataStore.totalValueOfSymbols}</Typography>
+          </TableCell>
         </TableBody>
       </Table>
-      <SummaryOfPortfolio dataStore={props.dataStore} />
-      <DatePicker dataStore={props.dataStore} />
     </TableContainer>
   );
-}
-
-const SummaryOfPortfolio = observer(({ dataStore }) => {
-  return <div>Total: ${dataStore.totalValueOfSymbols}</div>;
 });
+
+export default PortfolioBuilder;
