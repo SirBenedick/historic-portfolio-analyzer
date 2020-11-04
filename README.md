@@ -1,6 +1,6 @@
 ## To-Do:
-- Redesign "Portfolibuilder"
-- Make portfoliobuilder reactiv
+
+- Store meta data for symbol in symbolstore (change data flow, (full name, currency, region))
 - Add configuration page to enter API keys and configure dataset
 - Perform a performance test
 - Setup github actions/pages
@@ -17,18 +17,23 @@
 - Add timeframe for all data
 
 ### Minor To-Dos:
+
 - Add tooltip to chart(?)
 
 ### Bugs
+
 - On init load data is being fetched twice
 
 # Portfolio Analyzer / STONKs / Financial-Charting-Tool
+
 ## Roadmap
+
 1. Create a plattform to analyze historic portfolio performance
 2. Add metrics to quantify portfolio performance based on research
 3. Automate portfolio optimization
 
 ## Technologies
+
 - [react](https://reactjs.org)
 - [mobx](https://mobx.js.org/README.html)
 - [material-ui](https://material-ui.com)
