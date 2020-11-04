@@ -15,7 +15,7 @@ const ChartingPage = (props) => {
         <Grid item xs={12}>
           <Chart dataStore={props.dataStore} />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <PortfolioBuilder dataStore={props.dataStore} />
         </Grid>
       </Grid>
