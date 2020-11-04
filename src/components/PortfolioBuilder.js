@@ -31,7 +31,7 @@ const PortfolioBuilder = observer(({ dataStore }) => {
                     {symbolSet.symbolTicker}
                   </TableCell>
                   <TableCell align="left">{symbolSet.name}</TableCell>
-                  <TableCell align="right">{symbolSet.performanceSincePortfolioStart}</TableCell>
+                  <TableCell align="right">{performanceToPercent(symbolSet.performanceSincePortfolioStart)}</TableCell>
                   <TableCell align="right">
                     <input
                       type="text"
@@ -55,5 +55,9 @@ const PortfolioBuilder = observer(({ dataStore }) => {
     </TableContainer>
   );
 });
+
+function performanceToPercent(performance) {
+  return ((parseFloat(performance) - 1) * 100).toFixed(2) + "%";
+}
 
 export default PortfolioBuilder;
