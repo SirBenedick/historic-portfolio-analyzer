@@ -1,5 +1,6 @@
 ## To-Do:
 
+- Calculate Performance of each value
 - Store meta data for symbol in symbolstore (change data flow, (full name, currency, region))
 - Add configuration page to enter API keys and configure dataset
 - Perform a performance test
