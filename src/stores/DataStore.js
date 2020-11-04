@@ -2,6 +2,7 @@ import { makeObservable, observable, action, computed, toJS, autorun } from "mob
 import moment from "moment";
 import FetchDataService from "../services/FetchDataService";
 import idbSymbolDataStore from "./SymbolDataStore";
+import notificationStore from "./NotificationStore";
 class DataStore {
   symbols = [
     {
@@ -57,6 +58,15 @@ class DataStore {
   }
 
   async addSymbol(newSymbolTicker) {
+    if (this.getSymbolSetForTicker(newSymbolTicker)) {
+      notificationStore.enqueueSnackbar({
+        message: `Symbol: ${newSymbolTicker} already part of portfolio`,
+        options: {
+          variant: "info",
+        },
+      });
+      return false;
+    }
     this.symbols.push({
       symbolTicker: newSymbolTicker,
       isVisible: true,
@@ -66,8 +76,8 @@ class DataStore {
     const doesDataAlreadyExists = await idbSymbolDataStore.doesTimesSeriesDailyAdjustedExistForSymbol(newSymbolTicker);
     if (!doesDataAlreadyExists) await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(newSymbolTicker);
     //  Correct this
-    this.setTriggerRerenderVisibleLines(true)
-    this.setTriggerRecalculatePortfolio(true)
+    this.setTriggerRerenderVisibleLines(true);
+    this.setTriggerRecalculatePortfolio(true);
   }
 
   toggleSymbolVisibility(changedSymbolbyTicker) {
