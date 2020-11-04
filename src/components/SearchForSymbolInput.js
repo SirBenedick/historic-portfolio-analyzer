@@ -2,8 +2,7 @@ import React from "react";
 import { TextField, Typography } from "@material-ui/core";
 import Autocomplete, { createFilterOptions } from "@material-ui/lab/Autocomplete";
 import { observer } from "mobx-react-lite";
-import axios from "axios";
-import configStore from "../stores/ConfigStore";
+import FetchDataService from "../services/FetchDataService";
 
 const filterOptions = createFilterOptions({
   matchFrom: "any",
@@ -16,24 +15,11 @@ const SearchForSymbolInput = observer(({ dataStore }) => {
   const [searchTimeout, setSearchTimeout] = React.useState(null);
   const [value, setValue] = React.useState(searchOptions[0]);
 
-  const searchAlphaVantageByKeywords = async (keywords) => {
-    console.log("++++++searchAlphaVantageByKeywords: " + keywords);
-    setIsLoadingSearch(true);
-    const res = await axios.get(configStore.alphaVantage.url, {
-      params: {
-        function: configStore.alphaVantageConstants.SYMBOL_SEARCH,
-        keywords: keywords,
-        apikey: configStore.alphaVantage.apiToken,
-      },
-    });
-    setIsLoadingSearch(false);
-    return res.data["bestMatches"];
-  };
-
   const handleValueChange = async (keywords) => {
-    console.log("--------Input changed");
     const handleSearch = async (keywords) => {
-      const res = await searchAlphaVantageByKeywords(keywords);
+      setIsLoadingSearch(true);
+      const res = await FetchDataService.searchAlphaVantageByKeywords(keywords);
+      setIsLoadingSearch(false);
       setSearchOptions(res);
     };
 
