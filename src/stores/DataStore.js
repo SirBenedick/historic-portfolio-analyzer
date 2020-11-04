@@ -34,36 +34,11 @@ class DataStore {
 
     this.portfolioStartingDate = moment().subtract(1, "weeks").format("YYYY-MM-DD");
 
-    this.addSymbol({
-      symbolTicker: "AAPL",
-      isVisible: true,
-      value: 100,
-      color: this.nextAvailableColorValue(),
-    });
-    this.addSymbol({
-      symbolTicker: "MSFT",
-      isVisible: true,
-      value: 100,
-      color: this.nextAvailableColorValue(),
-    });
-    this.addSymbol({
-      symbolTicker: "IBM",
-      isVisible: true,
-      value: 100,
-      color: this.nextAvailableColorValue(),
-    });
-    this.addSymbol({
-      symbolTicker: "BA",
-      isVisible: true,
-      value: 100,
-      color: this.nextAvailableColorValue(),
-    });
-    this.addSymbol({
-      symbolTicker: "DAI.DEX",
-      isVisible: true,
-      value: 100,
-      color: this.nextAvailableColorValue(),
-    });
+    // this.addSymbol("AAPL");
+    // this.addSymbol("MSFT");
+    // this.addSymbol("IBM");
+    // this.addSymbol("BA");
+    // this.addSymbol("DAI.DEX");
 
     autorun(() => {
       const trigger = this.portfolioStartingDate;
@@ -82,12 +57,18 @@ class DataStore {
     this.triggerRerenderVisibleLines = bool;
   }
 
-  async addSymbol(newSymbol) {
-    this.symbols.push(newSymbol);
-    const doesDataAlreadyExists = await idbSymbolDataStore.doesTimesSeriesDailyAdjustedExistForSymbol(
-      newSymbol.symbolTicker
-    );
-    if (!doesDataAlreadyExists) FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(newSymbol.symbolTicker);
+  async addSymbol(newSymbolTicker) {
+    this.symbols.push({
+      symbolTicker: newSymbolTicker,
+      isVisible: true,
+      value: 100,
+      color: this.nextAvailableColorValue(),
+    });
+    const doesDataAlreadyExists = await idbSymbolDataStore.doesTimesSeriesDailyAdjustedExistForSymbol(newSymbolTicker);
+    if (!doesDataAlreadyExists) await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(newSymbolTicker);
+    //  Correct this
+    this.setTriggerRerenderVisibleLines(true)
+    this.setTriggerRecalculatePortfolio(true)
   }
 
   toggleSymbolVisibility(changedSymbolbyTicker) {
