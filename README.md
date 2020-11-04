@@ -1,8 +1,13 @@
 ## To-Do:
 - Search for symbols (maybe hardcode Ticker-Name-List)
+- Make portfoliobuilder reactiv
 - Add configuration page to enter API keys and configure dataset
+- Redesign "Portfolibuilder"
+- Perform a performance test
 - Setup github actions/pages
 - Add license
+- Create store for symbols to be fetched (in case API limit is reached)
+- Store datet of fetched data, refresh if is too old
 - Refactor Chart Component
 - Choose time of entry for each position
 - Heatmap for daily/weekly/montly return

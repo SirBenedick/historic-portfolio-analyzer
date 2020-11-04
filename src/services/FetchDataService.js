@@ -1,9 +1,7 @@
 import axios from "axios";
-import dataStore from "../stores/DataStore";
 import idbSymbolDataStore from "../stores/SymbolDataStore";
 import notificationStore from "../stores/NotificationStore";
-
-const alpha_vantage = { url: "https://www.alphavantage.co/query", api_token: "-" };
+import configStore from "../stores/ConfigStore";
 
 const FetchDataService = {
   async fetchDataDailyAdjustedForSymbolAlphaVantage(symbolTicker) {
@@ -15,40 +13,50 @@ const FetchDataService = {
         variant: "info",
       },
     });
-      try {
-        const res = await axios.get(alpha_vantage.url, {
-          params: {
-            function: "TIME_SERIES_DAILY_ADJUSTED",
-            symbol: symbolTicker,
-            outputsize: "full",
-            apikey: alpha_vantage.api_token,
+    try {
+      const res = await axios.get(configStore.alphaVantage.url, {
+        params: {
+          function: configStore.alphaVantageConstants.TIME_SERIES_DAILY_ADJUSTED,
+          symbol: symbolTicker,
+          outputsize: "full",
+          apikey: configStore.alphaVantage.apiToken,
+        },
+      });
+      if ("Note" in res.data) {
+        console.log("Failed to fetch for: " + symbolTicker);
+        notificationStore.enqueueSnackbar({
+          message: `Failed to fetch data for: ${symbolTicker}`,
+          options: {
+            variant: "warning",
           },
         });
-        if ("Note" in res.data) {
-          console.log("Failed to fetch for: " + symbolTicker);
-          notificationStore.enqueueSnackbar({
-            message: `Failed to fetch data for: ${symbolTicker}`,
-            options: {
-              variant: "warning",
-            },
-          });
-          return false
-        } else {
-          res.data["symbol"] = symbolTicker;
-          await idbSymbolDataStore.set(res.data);
-          // TODO check if received data was valid
-          notificationStore.enqueueSnackbar({
-            message: `Successfully fetched data for: ${symbolTicker}`,
-            options: {
-              variant: "success",
-            },
-          });
-          return symbolTicker;
-        }
-      } catch (error) {
-        console.log(Object.keys(error), error.message);
+        return false;
+      } else {
+        res.data["symbol"] = symbolTicker;
+        await idbSymbolDataStore.set(res.data);
+        // TODO check if received data was valid
+        notificationStore.enqueueSnackbar({
+          message: `Successfully fetched data for: ${symbolTicker}`,
+          options: {
+            variant: "success",
+          },
+        });
+        return symbolTicker;
       }
-    
+    } catch (error) {
+      console.log(Object.keys(error), error.message);
+    }
+  },
+  async searchAlphaVantageByKeywords(keywords) {
+    console.log("searchAlphaVantageByKeywords: " + keywords);
+    const res = await axios.get(configStore.alphaVantage.url, {
+      params: {
+        function: configStore.alphaVantageConstants.SYMBOL_SEARCH,
+        keywords: keywords,
+        apikey: configStore.alphaVantage.apiToken,
+      },
+    });
+    return res.data["bestMatches"];
   },
 };
 
