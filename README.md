@@ -39,7 +39,15 @@
 2. Add metrics to quantify portfolio performance based on research
 3. Automate portfolio optimization
 
-## Technologies
+## Development
+
+### Feature focused annoyance driven development
+
+Only features that result in a direct increase in performance or usability will be implemented.
+There is no benefit in changing the application to suit features that might be implemented.
+Being annoyed by the current application architecture is the key indicator for needed changes. If it "does not feel right" change it.
+
+### Technologies
 
 - [react](https://reactjs.org)
 - [mobx](https://mobx.js.org/README.html)
