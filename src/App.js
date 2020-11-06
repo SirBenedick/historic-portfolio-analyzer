@@ -180,7 +180,9 @@ function App() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {pages.chartingPage.showPage ? <ChartingPage dataStore={dataStore} /> : null}
+        {pages.chartingPage.showPage ? (
+          <ChartingPage dataStore={dataStore} notificationStore={notificationStore} />
+        ) : null}
         {pages.settingsPage.showPage ? <SettingsPage configStore={configStore} /> : null}
       </main>
     </div>

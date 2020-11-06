@@ -72,15 +72,6 @@ class DataStore {
       return 0;
     };
 
-    if (this.getSymbolSetForTicker(symbolSetSearchResult)) {
-      notificationStore.enqueueSnackbar({
-        message: `Symbol: ${symbolSetSearchResult.symbolTicker} already part of portfolio`,
-        options: {
-          variant: "info",
-        },
-      });
-      return false;
-    }
     if (!symbolSetSearchResult) return false;
     this.symbols.push({
       symbolTicker: symbolSetSearchResult.symbolTicker,
@@ -141,6 +132,16 @@ class DataStore {
       if (symbolSet.symbolTicker !== "Portfolio") return +pv + +symbolSet.value;
       else return pv;
     }, 0);
+  }
+
+  async doesSymbolExist(symbolTicker) {
+    let doesExist = false;
+    this.symbols.forEach((symbolSet) => {
+      if (symbolSet.symbolTicker === symbolTicker) {
+        doesExist = true;
+      }
+    });
+    return doesExist;
   }
 
   getSymbolSetForTicker(symbolTicker) {

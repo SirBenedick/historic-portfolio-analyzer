@@ -9,7 +9,7 @@ const filterOptions = createFilterOptions({
   stringify: (option) => `${option.symbolTicker}-${option.name}`,
 });
 
-const SearchForSymbolInput = observer(({ dataStore }) => {
+const SearchForSymbolInput = observer(({ dataStore, notificationStore }) => {
   const [searchOptions, setSearchOptions] = React.useState([]);
   const [isLoadingSearch, setIsLoadingSearch] = React.useState(false);
   const [searchTimeout, setSearchTimeout] = React.useState(null);
@@ -31,6 +31,23 @@ const SearchForSymbolInput = observer(({ dataStore }) => {
     setSearchTimeout(timeout);
   };
 
+  const handleSearchSelect = async (symbolSearchResult) => {
+    const doesExist = await dataStore.doesSymbolExist(symbolSearchResult.symbolTicker);
+
+    if (doesExist) {
+      notificationStore.enqueueSnackbar({
+        message: `Symbol: ${symbolSearchResult.symbolTicker} already part of portfolio`,
+        options: {
+          variant: "warning",
+          autoHideDuration: 2000,
+        },
+        key: `SYMBOL-DUPLICATE-${symbolSearchResult.symbolTicker}`,
+      });
+    } else {
+      dataStore.addSymbol(symbolSearchResult);
+    }
+  };
+
   return (
     <Autocomplete
       id="combo-box-demo"
@@ -38,7 +55,7 @@ const SearchForSymbolInput = observer(({ dataStore }) => {
       value={value}
       onChange={(event, symbolSearchResult) => {
         setValue("");
-        if (symbolSearchResult && symbolSearchResult.symbolTicker) dataStore.addSymbol(symbolSearchResult);
+        if (symbolSearchResult && symbolSearchResult.symbolTicker) handleSearchSelect(symbolSearchResult);
       }}
       options={searchOptions}
       filterOptions={filterOptions}
