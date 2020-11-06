@@ -4,7 +4,7 @@ if (!("indexedDB" in window)) {
   console.log("This browser doesn't support IndexedDB");
 }
 
-const dbPromise = openDB("historic-portfolio-anazyler", 1, {
+const dbPromise = openDB("historic-portfolio-analyzer", 1, {
   upgrade(db) {
     if (!db.objectStoreNames.contains("symbolDataStore")) {
       console.log("Creating new symbolDataStore");
