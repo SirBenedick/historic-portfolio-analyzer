@@ -27,6 +27,7 @@ class ConfigStore {
       message: "Stored new API-Token",
       options: {
         variant: "success",
+        autoHideDuration: 1000,
       },
       key: notificationStore.keys.API_TOKEN_STORED,
     });

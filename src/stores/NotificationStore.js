@@ -11,7 +11,7 @@ const NotificationStore = function () {
 
     enqueueSnackbar: action((note) => {
       this.notifications.push({
-        key: new Date().getTime() + Math.random(),
+        key: note.key ? note.key : new Date().getTime() + Math.random(),
         ...note,
       });
     }),

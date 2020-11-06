@@ -11,7 +11,9 @@ const FetchDataService = {
       message: `Fetching data for: ${symbolTicker}`,
       options: {
         variant: "info",
+        autoHideDuration: 1500,
       },
+      key: `FETCHING-${symbolTicker}`,
     });
     try {
       const res = await axios.get(configStore.alphaVantage.url, {
@@ -28,7 +30,9 @@ const FetchDataService = {
           message: `Failed to fetch data for: ${symbolTicker}`,
           options: {
             variant: "warning",
+            autoHideDuration: 1500,
           },
+          key: `FETCHING-FAILED-${symbolTicker}`,
         });
         return false;
       } else {
@@ -39,7 +43,9 @@ const FetchDataService = {
           message: `Successfully fetched data for: ${symbolTicker}`,
           options: {
             variant: "success",
+            autoHideDuration: 1500,
           },
+          key: `FETCHING-SUCCESS-${symbolTicker}`,
         });
         return symbolTicker;
       }
