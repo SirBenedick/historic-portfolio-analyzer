@@ -22,22 +22,32 @@ Being annoyed by the current application architecture is the key indicator for n
 - [lightweight-charts](https://github.com/tradingview/lightweight-charts) by [tradingview](https://www.tradingview.com/lightweight-charts/)
 - [IndexDB](https://developer.mozilla.org/de/docs/Web/API/IndexedDB_API)
 - Stock data API: [Alpha Vantage](https://www.alphavantage.co)
-- [Semantic Versioning](https://semver.org) as a rule of thumb (MAJOR will refelct the roadmap progress)
 
-### To-Dos:
+### Versioning (MAJOR.MINOR.X)
 
-- Add: random API-Token generator
+- MAJOR: Reflectes the progress within the roadmap
+- MINOR: Bumps on the next completed feature set
+- X: Increase towards the next feature set (Is going to be forgotten often)
+
+### To-Dos (Add/Style/Remove/Optimize/Refactor/Fix):
+
+#### 0.2.0
+
 - Style: Find a place for DatePicker
 - Style: Switch default/percent
-- Style: Searchbar bigger
+- Style: Increase searchbar width
 - Add: Calculation of yearly portfolio performance
 - Add: Calculation of average year asset performance
-- Version: bump to 0.2.0 (if all of the above are completed)
+
+#### 0.3.0
+
 - Add Loading indicator while Portfolio is calculating (Backdrop)
 - Add: Calculation of dividends to portfolio performance
 - Add: Calculation of sharp ratio
 - Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
-- Version: bump to 0.3.0 (if all of the above are completed)
+
+#### Idea dump
+
 - Add: Store for symbols to be fetched (in case API limit is reached)(set version of index db to current date)
 - Add: Store datet of fetched data, refresh if is too old
 - Add: Choose time of entry for each position
@@ -46,5 +56,3 @@ Being annoyed by the current application architecture is the key indicator for n
 - Add: Different Backends to call stock data from different sources
 - Clean up README.md: Add UCs, scenarios, technoglogies...
 - Add timeframe for all data
-
-- Add/Style/Remove/Optimize/Refactor/Fix
