@@ -27,12 +27,14 @@ class DataStore {
       portfolioStartingDate: observable,
       toggleSymbolVisibility: action,
       addSymbol: action,
+      removeSelectedSymbol: action,
       setValueForTicker: action,
       setPerformanceSincePortfolioStartForTicker: action,
       setTriggerRecalculatePortfolio: action,
       setTriggerRerenderVisibleLines: action,
       setPortfolioStartingDate: action,
       totalValueOfSymbols: computed,
+      listOfSymbolTickers: computed,
     });
 
     this.portfolioStartingDate = moment().subtract(1, "years").format("YYYY-MM-DD");
@@ -113,6 +115,13 @@ class DataStore {
     this.setTriggerRecalculatePortfolio(true);
   }
 
+  removeSelectedSymbol(symbolTickerToDelete) {
+    this.removeColorInUse(this.getSymbolSetForTicker(symbolTickerToDelete).color);
+    this.symbols = this.symbols.filter((symbolSet) => symbolSet.symbolTicker !== symbolTickerToDelete);
+    this.setTriggerRerenderVisibleLines(true);
+    this.setTriggerRecalculatePortfolio(true);
+  }
+
   toggleSymbolVisibility(changedSymbolbyTicker) {
     console.log(changedSymbolbyTicker);
     this.symbols.forEach((symbol) => {
@@ -138,8 +147,12 @@ class DataStore {
     return toJS(this.symbols.find((symbolSet) => symbolSet.symbolTicker === symbolTicker));
   }
 
-  getSymbolsWithoutAll() {
+  getSymbolsWithoutPortfolio() {
     return this.symbols.filter((symbolSet) => symbolSet.symbolTicker !== "Portfolio");
+  }
+
+  get listOfSymbolTickers() {
+    return this.symbols.map((symbolSet) => symbolSet.symbolTicker);
   }
 
   setValueForTicker(changedSymbolByTicker, value) {

@@ -26,7 +26,7 @@ const SelectedSymbolsBar = observer(({ dataStore }) => {
   };
 
   const handleDelete = (symbolTickerToDelete) => {
-    console.log("Deleting symbol: " + symbolTickerToDelete);
+    dataStore.removeSelectedSymbol(symbolTickerToDelete);
   };
 
   return (
