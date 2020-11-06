@@ -26,7 +26,7 @@ class ConfigStore {
     notificationStore.enqueueSnackbar({
       message: "Stored new API-Token",
       options: {
-        variant: "info",
+        variant: "success",
       },
       key: notificationStore.keys.API_TOKEN_STORED,
     });
