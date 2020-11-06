@@ -3,6 +3,7 @@ import { action, extendObservable } from "mobx";
 const NotificationStore = function () {
   extendObservable(this, {
     notifications: [],
+    keys: { API_TOKEN_MISSING: "API_TOKEN_MISSING", PORTFOLIO_CALCULATING: "PORTFOLIO_CALCULATING" },
 
     enqueueSnackbar: action((note) => {
       this.notifications.push({

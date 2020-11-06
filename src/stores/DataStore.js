@@ -1,6 +1,7 @@
 import { makeObservable, observable, action, computed, toJS, autorun } from "mobx";
 import moment from "moment";
 import FetchDataService from "../services/FetchDataService";
+import configStore from "./ConfigStore";
 import idbSymbolDataStore from "./idbSymbolDataStore";
 import notificationStore from "./NotificationStore";
 class DataStore {
@@ -92,8 +93,21 @@ class DataStore {
     const doesDataAlreadyExists = await idbSymbolDataStore.doesTimesSeriesDailyAdjustedExistForSymbol(
       symbolSetSearchResult.symbolTicker
     );
-    if (!doesDataAlreadyExists)
-      await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(symbolSetSearchResult.symbolTicker);
+    if (!doesDataAlreadyExists) {
+      // Check if api token is set
+      if (configStore.alphaVantage.apiToken) {
+        await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(symbolSetSearchResult.symbolTicker);
+      } else {
+        notificationStore.enqueueSnackbar({
+          message: `Please enter an API key on the Settings Page`,
+          options: {
+            variant: "error",
+            autoHideDuration: 10000,
+          },
+          key: notificationStore.keys.API_TOKEN_MISSING,
+        });
+      }
+    }
     //  TODO check if this  could be optimized
     this.setTriggerRerenderVisibleLines(true);
     this.setTriggerRecalculatePortfolio(true);

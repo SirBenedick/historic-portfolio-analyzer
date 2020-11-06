@@ -20,6 +20,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 
 // Content
 import dataStore from "./stores/DataStore";
+import notificationStore from "./stores/NotificationStore";
 import configStore from "./stores/ConfigStore";
 import ChartingPage from "./pages/ChartingPage";
 import SettingsPage from "./pages/SettingsPage";
@@ -120,7 +121,7 @@ function App() {
 
   return (
     <div className={classes.root}>
-      <Notifier />
+      <Notifier notificationStore={notificationStore} />
       <CssBaseline />
       <AppBar
         position="fixed"

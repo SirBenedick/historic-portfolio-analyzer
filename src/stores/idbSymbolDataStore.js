@@ -4,6 +4,7 @@ import moment from "moment";
 import FetchDataService from "../services/FetchDataService";
 import idbPortfolioStore from "./idbPortfolioStore";
 import notificationStore from "./NotificationStore";
+import configStore from "./ConfigStore";
 
 const idbSymbolDataStore = {
   async get(key) {
@@ -44,8 +45,20 @@ const idbSymbolDataStore = {
         if (symbolData && "Time Series (Daily)" in symbolData && symbolData["Time Series (Daily)"]) {
           return formateDataToChartFormat(symbolData);
         } else {
-          const wasDataFetched = await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(key);
-          if (wasDataFetched) return this.getDataChartFormatBySymbol(key);
+          // Check if api token exist
+          if (configStore.alphaVantage.apiToken) {
+            const wasDataFetched = await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(key);
+            if (wasDataFetched) return this.getDataChartFormatBySymbol(key);
+          } else {
+            notificationStore.enqueueSnackbar({
+              message: `Please enter an API key on the Settings Page`,
+              options: {
+                variant: "error",
+                autoHideDuration: 10000,
+              },
+              key: notificationStore.keys.API_TOKEN_MISSING,
+            });
+          }
         }
       });
     }
@@ -67,6 +80,7 @@ const idbSymbolDataStore = {
         variant: "info",
         autoHideDuration: 2000,
       },
+      key: notificationStore.keys.PORTFOLIO_CALCULATING,
     });
 
     //  Calculate for each asset the quantity at portfolio start and the performance since
