@@ -137,7 +137,7 @@ function App() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Financial-Charting-Tool
+            Historic-Portfolio-Analyzer
           </Typography>
         </Toolbar>
       </AppBar>
