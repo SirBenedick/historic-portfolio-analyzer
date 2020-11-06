@@ -95,7 +95,7 @@ class DataStore {
           message: `Please enter an API key on the Settings Page`,
           options: {
             variant: "error",
-            autoHideDuration: 10000,
+            autoHideDuration: 2500,
           },
           key: notificationStore.keys.API_TOKEN_MISSING,
         });
