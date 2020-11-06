@@ -207,6 +207,14 @@ const chartColorsForSeries = [
   { colorValue: "#4caf50", isBegingUsed: false },
   { colorValue: "#8bc34a", isBegingUsed: false },
   { colorValue: "#cddc39", isBegingUsed: false },
+  { colorValue: "#ffeb3b", isBegingUsed: false },
+  { colorValue: "#ffc107", isBegingUsed: false },
+  { colorValue: "#ff9800", isBegingUsed: false },
+  { colorValue: "#ff5722", isBegingUsed: false },
+  { colorValue: "#f44336", isBegingUsed: false },
+  { colorValue: "#e91e63", isBegingUsed: false },
+  { colorValue: "#9c27b0", isBegingUsed: false },
+  { colorValue: "#673ab7", isBegingUsed: false },
 ];
 
 const dataStore = new DataStore();
