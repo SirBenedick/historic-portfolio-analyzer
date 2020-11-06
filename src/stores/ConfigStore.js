@@ -28,6 +28,7 @@ class ConfigStore {
       options: {
         variant: "info",
       },
+      key: notificationStore.keys.API_TOKEN_STORED,
     });
     this.setAlphaVantageAPIToken(newToken);
   }
