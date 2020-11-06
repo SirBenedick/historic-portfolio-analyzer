@@ -67,6 +67,7 @@ const FetchDataService = {
       return false;
     } else {
       const matches = res.data["bestMatches"];
+      if (!matches) return [];
       const searchResultsFormated = matches.map((result) => ({
         symbolTicker: result["1. symbol"],
         name: result["2. name"],

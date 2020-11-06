@@ -20,7 +20,7 @@ const SearchForSymbolInput = observer(({ dataStore }) => {
       setIsLoadingSearch(true);
       const res = await FetchDataService.searchAlphaVantageByKeywords(keywords);
       setIsLoadingSearch(false);
-      setSearchOptions(res);
+      if (res) setSearchOptions(res);
     };
 
     if (searchTimeout) clearTimeout(searchTimeout);
