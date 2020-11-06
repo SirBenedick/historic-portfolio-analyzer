@@ -1,5 +1,5 @@
 import axios from "axios";
-import idbSymbolDataStore from "../stores/SymbolDataStore";
+import idbSymbolDataStore from "../stores/idbSymbolDataStore";
 import notificationStore from "../stores/NotificationStore";
 import configStore from "../stores/ConfigStore";
 

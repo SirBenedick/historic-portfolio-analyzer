@@ -1,8 +1,8 @@
 ## To-Do:
 
-- Add configuration page to enter API keys and configure dataset (store api token in indexdb)
 - Style: Find a place for DatePicker
 - Style: Switch default/percent
+- Fix: Storage error on first web site call
 - Optimize: Perform a performance test and improve/optimize
 - Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
 - Add: License (just in case, you never know...)
@@ -21,7 +21,7 @@
 - Clean up README.md: Add UCs, scenarios, technoglogies...
 - Add timeframe for all data
 
-- Add/Style/Remove/Optimize/Refactor
+- Add/Style/Remove/Optimize/Refactor/Fix
 
 ### Minor To-Dos:
 

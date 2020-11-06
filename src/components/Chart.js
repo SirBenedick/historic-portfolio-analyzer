@@ -2,7 +2,7 @@ import React from "react";
 import { createChart, PriceScaleMode } from "lightweight-charts";
 import { Paper } from "@material-ui/core";
 import ChartSwitchStyle from "./ChartSwitchStyle";
-import idbSymbolDataStore from "../stores/SymbolDataStore";
+import idbSymbolDataStore from "../stores/idbSymbolDataStore";
 import TriggerRecalculatePortfolio from "./TriggerRecalculatePortfolio";
 import TriggerShowVisibleLines from "./TriggerShowVisibleLines";
 
