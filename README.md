@@ -1,7 +1,6 @@
 ## To-Do:
 
 - Optimize: Perform a performance test and improve/optimize
-- Fix: Double input of Symbol
 - Style: Find a place for DatePicker
 - Style: Switch default/percent
 - Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
