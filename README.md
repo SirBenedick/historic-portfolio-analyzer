@@ -2,7 +2,6 @@
 
 - Style: Find a place for DatePicker
 - Style: Switch default/percent
-- Fix: Storage error on first web site call
 - Optimize: Perform a performance test and improve/optimize
 - Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
 - Add: License (just in case, you never know...)
