@@ -1,5 +1,5 @@
 import axios from "axios";
-import idbSymbolDataStore from "../stores/SymbolDataStore";
+import idbSymbolDataStore from "../stores/idbSymbolDataStore";
 import notificationStore from "../stores/NotificationStore";
 import configStore from "../stores/ConfigStore";
 
@@ -11,7 +11,9 @@ const FetchDataService = {
       message: `Fetching data for: ${symbolTicker}`,
       options: {
         variant: "info",
+        autoHideDuration: 1500,
       },
+      key: `FETCHING-${symbolTicker}`,
     });
     try {
       const res = await axios.get(configStore.alphaVantage.url, {
@@ -28,7 +30,9 @@ const FetchDataService = {
           message: `Failed to fetch data for: ${symbolTicker}`,
           options: {
             variant: "warning",
+            autoHideDuration: 1500,
           },
+          key: `FETCHING-FAILED-${symbolTicker}`,
         });
         return false;
       } else {
@@ -39,7 +43,9 @@ const FetchDataService = {
           message: `Successfully fetched data for: ${symbolTicker}`,
           options: {
             variant: "success",
+            autoHideDuration: 1500,
           },
+          key: `FETCHING-SUCCESS-${symbolTicker}`,
         });
         return symbolTicker;
       }
@@ -67,6 +73,7 @@ const FetchDataService = {
       return false;
     } else {
       const matches = res.data["bestMatches"];
+      if (!matches) return [];
       const searchResultsFormated = matches.map((result) => ({
         symbolTicker: result["1. symbol"],
         name: result["2. name"],

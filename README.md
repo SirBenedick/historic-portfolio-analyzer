@@ -1,16 +1,15 @@
 ## To-Do:
 
-- Add configuration page to enter API keys and configure dataset
+- Optimize: Perform a performance test and improve/optimize
 - Style: Find a place for DatePicker
 - Style: Switch default/percent
-- Optimize: Perform a performance test and improve/optimize
 - Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
 - Add: License (just in case, you never know...)
 - Version: bump to 0.2.0 (if all of the above are completed)
 - Refactor: Change repository name to... ?
 - Setup github actions/pages
 - Add: Calculation of dividends to portfolio performance
-- Add: Store for symbols to be fetched (in case API limit is reached)
+- Add: Store for symbols to be fetched (in case API limit is reached)(set version of index db to current date)
 - Add: Store datet of fetched data, refresh if is too old
 - Refactor: Chart Component
 - Add: Choose time of entry for each position
@@ -21,7 +20,7 @@
 - Clean up README.md: Add UCs, scenarios, technoglogies...
 - Add timeframe for all data
 
-- Add/Style/Remove/Optimize/Refactor
+- Add/Style/Remove/Optimize/Refactor/Fix
 
 ### Minor To-Dos:
 
@@ -39,7 +38,15 @@
 2. Add metrics to quantify portfolio performance based on research
 3. Automate portfolio optimization
 
-## Technologies
+## Development
+
+### Feature focused annoyance driven development
+
+Only features that result in a direct increase in usability or performance will be implemented.
+There is no benefit in changing the application to suit features that might be implemented.
+Being annoyed by the current application architecture is the key indicator for needed changes. If it does not feel right change it.
+
+### Technologies
 
 - [react](https://reactjs.org)
 - [mobx](https://mobx.js.org/README.html)

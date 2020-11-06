@@ -15,14 +15,15 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
-import DashboardIcon from "@material-ui/icons/Dashboard";
 import HomeIcon from "@material-ui/icons/Home";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 // Content
 import dataStore from "./stores/DataStore";
+import notificationStore from "./stores/NotificationStore";
+import configStore from "./stores/ConfigStore";
 import ChartingPage from "./pages/ChartingPage";
+import SettingsPage from "./pages/SettingsPage";
 
 import Notifier from "./components/Notifier";
 
@@ -94,6 +95,7 @@ function App() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [pages, setPages] = React.useState({ chartingPage: { showPage: true }, settingsPage: { showPage: false } });
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -103,9 +105,18 @@ function App() {
     setOpen(false);
   };
 
+  const handlePageSelect = (pageToShow) => {
+    const tempPages = {};
+    for (const [page] of Object.entries(pages)) {
+      if (page === pageToShow) tempPages[page] = { showPage: true };
+      else tempPages[page] = { showPage: false };
+    }
+    setPages(tempPages);
+  };
+
   return (
     <div className={classes.root}>
-      <Notifier />
+      <Notifier notificationStore={notificationStore} />
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -126,7 +137,7 @@ function App() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Financial-Charting-Tool
+            Historic-Portfolio-Analyzer
           </Typography>
         </Toolbar>
       </AppBar>
@@ -150,26 +161,29 @@ function App() {
         </div>
         <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <HomeIcon /> : <DashboardIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button key={"charting-page"} onClick={() => handlePageSelect("chartingPage")}>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Chart"} />
+          </ListItem>
         </List>
         <Divider />
         <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button key={"serttings-page"} onClick={() => handlePageSelect("settingsPage")}>
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Settings"} />
+          </ListItem>
         </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <ChartingPage dataStore={dataStore} />
+        {pages.chartingPage.showPage ? (
+          <ChartingPage dataStore={dataStore} notificationStore={notificationStore} />
+        ) : null}
+        {pages.settingsPage.showPage ? <SettingsPage configStore={configStore} /> : null}
       </main>
     </div>
   );

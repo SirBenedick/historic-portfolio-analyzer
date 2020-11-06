@@ -1,7 +1,8 @@
 import { makeObservable, observable, action, computed, toJS, autorun } from "mobx";
 import moment from "moment";
 import FetchDataService from "../services/FetchDataService";
-import idbSymbolDataStore from "./SymbolDataStore";
+import configStore from "./ConfigStore";
+import idbSymbolDataStore from "./idbSymbolDataStore";
 import notificationStore from "./NotificationStore";
 class DataStore {
   symbols = [
@@ -26,12 +27,14 @@ class DataStore {
       portfolioStartingDate: observable,
       toggleSymbolVisibility: action,
       addSymbol: action,
+      removeSelectedSymbol: action,
       setValueForTicker: action,
       setPerformanceSincePortfolioStartForTicker: action,
       setTriggerRecalculatePortfolio: action,
       setTriggerRerenderVisibleLines: action,
       setPortfolioStartingDate: action,
       totalValueOfSymbols: computed,
+      listOfSymbolTickers: computed,
     });
 
     this.portfolioStartingDate = moment().subtract(1, "years").format("YYYY-MM-DD");
@@ -69,15 +72,6 @@ class DataStore {
       return 0;
     };
 
-    if (this.getSymbolSetForTicker(symbolSetSearchResult)) {
-      notificationStore.enqueueSnackbar({
-        message: `Symbol: ${symbolSetSearchResult.symbolTicker} already part of portfolio`,
-        options: {
-          variant: "info",
-        },
-      });
-      return false;
-    }
     if (!symbolSetSearchResult) return false;
     this.symbols.push({
       symbolTicker: symbolSetSearchResult.symbolTicker,
@@ -92,9 +86,29 @@ class DataStore {
     const doesDataAlreadyExists = await idbSymbolDataStore.doesTimesSeriesDailyAdjustedExistForSymbol(
       symbolSetSearchResult.symbolTicker
     );
-    if (!doesDataAlreadyExists)
-      await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(symbolSetSearchResult.symbolTicker);
+    if (!doesDataAlreadyExists) {
+      // Check if api token is set
+      if (configStore.alphaVantage.apiToken) {
+        await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(symbolSetSearchResult.symbolTicker);
+      } else {
+        notificationStore.enqueueSnackbar({
+          message: `Please enter an API key on the Settings Page`,
+          options: {
+            variant: "error",
+            autoHideDuration: 10000,
+          },
+          key: notificationStore.keys.API_TOKEN_MISSING,
+        });
+      }
+    }
     //  TODO check if this  could be optimized
+    this.setTriggerRerenderVisibleLines(true);
+    this.setTriggerRecalculatePortfolio(true);
+  }
+
+  removeSelectedSymbol(symbolTickerToDelete) {
+    this.removeColorInUse(this.getSymbolSetForTicker(symbolTickerToDelete).color);
+    this.symbols = this.symbols.filter((symbolSet) => symbolSet.symbolTicker !== symbolTickerToDelete);
     this.setTriggerRerenderVisibleLines(true);
     this.setTriggerRecalculatePortfolio(true);
   }
@@ -120,12 +134,26 @@ class DataStore {
     }, 0);
   }
 
+  async doesSymbolExist(symbolTicker) {
+    let doesExist = false;
+    this.symbols.forEach((symbolSet) => {
+      if (symbolSet.symbolTicker === symbolTicker) {
+        doesExist = true;
+      }
+    });
+    return doesExist;
+  }
+
   getSymbolSetForTicker(symbolTicker) {
     return toJS(this.symbols.find((symbolSet) => symbolSet.symbolTicker === symbolTicker));
   }
 
-  getSymbolsWithoutAll() {
+  getSymbolsWithoutPortfolio() {
     return this.symbols.filter((symbolSet) => symbolSet.symbolTicker !== "Portfolio");
+  }
+
+  get listOfSymbolTickers() {
+    return this.symbols.map((symbolSet) => symbolSet.symbolTicker);
   }
 
   setValueForTicker(changedSymbolByTicker, value) {
@@ -179,6 +207,14 @@ const chartColorsForSeries = [
   { colorValue: "#4caf50", isBegingUsed: false },
   { colorValue: "#8bc34a", isBegingUsed: false },
   { colorValue: "#cddc39", isBegingUsed: false },
+  { colorValue: "#ffeb3b", isBegingUsed: false },
+  { colorValue: "#ffc107", isBegingUsed: false },
+  { colorValue: "#ff9800", isBegingUsed: false },
+  { colorValue: "#ff5722", isBegingUsed: false },
+  { colorValue: "#f44336", isBegingUsed: false },
+  { colorValue: "#e91e63", isBegingUsed: false },
+  { colorValue: "#9c27b0", isBegingUsed: false },
+  { colorValue: "#673ab7", isBegingUsed: false },
 ];
 
 const dataStore = new DataStore();

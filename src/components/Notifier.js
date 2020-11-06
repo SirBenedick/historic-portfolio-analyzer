@@ -10,6 +10,10 @@ class Notifier extends Component {
     this.displayed = [...this.displayed, id];
   };
 
+  removeDisplayedNotificationByKey(removeKey) {
+    this.displayed = this.displayed.filter((key) => removeKey !== key);
+  }
+
   componentDidMount() {
     autorun(() => {
       const { notifications = [] } = this.props.notificationStore;
@@ -23,6 +27,21 @@ class Notifier extends Component {
         this.storeDisplayed(notification.key);
         // Dispatch action to remove snackbar from mobx store
         this.props.notificationStore.removeSnackbar(notification.key);
+
+        // Calculate delay to remove notification from this.displayed
+        let delayUntilRemoveMs = 0;
+        if (notification.options && notification.options.autoHideDuration) {
+          delayUntilRemoveMs = notification.options.autoHideDuration + 100;
+        } else {
+          delayUntilRemoveMs = 2100;
+        }
+        // Remove notifaction from this.disyplayed after dealy
+        setTimeout(
+          function () {
+            this.removeDisplayedNotificationByKey(notification.key);
+          }.bind(this),
+          delayUntilRemoveMs
+        );
       });
     });
   }

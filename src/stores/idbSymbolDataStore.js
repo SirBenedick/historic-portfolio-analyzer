@@ -2,8 +2,9 @@ import dbPromise from "./dbPromise";
 import dataStore from "./DataStore";
 import moment from "moment";
 import FetchDataService from "../services/FetchDataService";
-import idbPortfolioStore from "./PortfolioStore";
+import idbPortfolioStore from "./idbPortfolioStore";
 import notificationStore from "./NotificationStore";
+import configStore from "./ConfigStore";
 
 const idbSymbolDataStore = {
   async get(key) {
@@ -44,8 +45,20 @@ const idbSymbolDataStore = {
         if (symbolData && "Time Series (Daily)" in symbolData && symbolData["Time Series (Daily)"]) {
           return formateDataToChartFormat(symbolData);
         } else {
-          const wasDataFetched = await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(key);
-          if (wasDataFetched) return this.getDataChartFormatBySymbol(key);
+          // Check if api token exist
+          if (configStore.alphaVantage.apiToken) {
+            const wasDataFetched = await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(key);
+            if (wasDataFetched) return this.getDataChartFormatBySymbol(key);
+          } else {
+            notificationStore.enqueueSnackbar({
+              message: `Please enter an API key on the Settings Page`,
+              options: {
+                variant: "error",
+                autoHideDuration: 10000,
+              },
+              key: notificationStore.keys.API_TOKEN_MISSING,
+            });
+          }
         }
       });
     }
@@ -67,6 +80,7 @@ const idbSymbolDataStore = {
         variant: "info",
         autoHideDuration: 2000,
       },
+      key: notificationStore.keys.PORTFOLIO_CALCULATING,
     });
 
     //  Calculate for each asset the quantity at portfolio start and the performance since
@@ -75,7 +89,7 @@ const idbSymbolDataStore = {
     let startingDate = moment(dataStore.portfolioStartingDate);
     let endDate = moment();
     await Promise.all(
-      dataStore.getSymbolsWithoutAll().map(async (symbolSet) => {
+      dataStore.getSymbolsWithoutPortfolio().map(async (symbolSet) => {
         // Get price of asset for the portfolio starting date
         let startingDatePriceValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(
           symbolSet.symbolTicker,
@@ -129,7 +143,7 @@ const idbSymbolDataStore = {
     console.log("Portfolio - calculating for each day");
     let tempSymbolDatasetMap = {};
     await Promise.all(
-      dataStore.getSymbolsWithoutAll().map(async (symbolSet) => {
+      dataStore.getSymbolsWithoutPortfolio().map(async (symbolSet) => {
         let tempDataSet = await idbSymbolDataStore.getTimeSeriesDailyByTicker(symbolSet.symbolTicker);
         tempSymbolDatasetMap[symbolSet.symbolTicker] = tempDataSet;
       })

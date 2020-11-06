@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SelectedSymbolsBar = observer(({ dataStore }) => {
+const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
   const classes = useStyles();
 
   const toggleVisibility = (symbolTickerToHide) => () => {
@@ -26,7 +26,7 @@ const SelectedSymbolsBar = observer(({ dataStore }) => {
   };
 
   const handleDelete = (symbolTickerToDelete) => {
-    console.log("Deleting symbol: " + symbolTickerToDelete);
+    dataStore.removeSelectedSymbol(symbolTickerToDelete);
   };
 
   return (
@@ -52,7 +52,7 @@ const SelectedSymbolsBar = observer(({ dataStore }) => {
         </Grid>
         <Grid item xs={4}>
           <Grid container direction="row" justify="center" alignItems="center">
-            <SearchForSymbolInput dataStore={dataStore} />
+            <SearchForSymbolInput dataStore={dataStore} notificationStore={notificationStore} />
           </Grid>
         </Grid>
       </Grid>

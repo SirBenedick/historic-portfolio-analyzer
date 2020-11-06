@@ -2,7 +2,7 @@ import React from "react";
 import { createChart, PriceScaleMode } from "lightweight-charts";
 import { Paper } from "@material-ui/core";
 import ChartSwitchStyle from "./ChartSwitchStyle";
-import idbSymbolDataStore from "../stores/SymbolDataStore";
+import idbSymbolDataStore from "../stores/idbSymbolDataStore";
 import TriggerRecalculatePortfolio from "./TriggerRecalculatePortfolio";
 import TriggerShowVisibleLines from "./TriggerShowVisibleLines";
 
@@ -60,6 +60,16 @@ export default class Chart extends React.Component {
   async createGraphForSelectedSymbols() {
     console.log("createGraphForSelectedSymbols");
 
+    // Remove lines for deleted symbols
+    const tempListOfAllSymbols = this.props.dataStore.listOfSymbolTickers;
+    for (const [symbolTicker, lineSeries] of Object.entries(this.lineSeriesObj)) {
+      // Check if ticker in dataStore symbols, if then remove lineseries
+      if (!tempListOfAllSymbols.includes(symbolTicker)) {
+        this.chart.removeSeries(lineSeries["series"]);
+        delete this.lineSeriesObj[symbolTicker];
+      }
+    }
+
     this.props.dataStore.symbols.forEach((symbolSet) => {
       if (symbolSet.isVisible) {
         this.addLineSeriesData(symbolSet);
@@ -67,7 +77,7 @@ export default class Chart extends React.Component {
         if (this.lineSeriesObj[symbolSet.symbolTicker] && this.lineSeriesObj[symbolSet.symbolTicker]["series"]) {
           let tempLineSeries = this.lineSeriesObj[symbolSet.symbolTicker]["series"];
           this.chart.removeSeries(tempLineSeries);
-          this.lineSeriesObj[symbolSet.symbolTicker] = null;
+          delete this.lineSeriesObj[symbolSet.symbolTicker];
         }
       }
     });
