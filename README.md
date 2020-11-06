@@ -43,9 +43,9 @@
 
 ### Feature focused annoyance driven development
 
-Only features that result in a direct increase in performance or usability will be implemented.
+Only features that result in a direct increase in usability or performance will be implemented.
 There is no benefit in changing the application to suit features that might be implemented.
-Being annoyed by the current application architecture is the key indicator for needed changes. If it "does not feel right" change it.
+Being annoyed by the current application architecture is the key indicator for needed changes. If it does not feel right change it.
 
 ### Technologies
 
