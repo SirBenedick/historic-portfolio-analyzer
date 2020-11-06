@@ -1,4 +1,29 @@
-## To-Do:
+# Historic-Portfolio-Analyzer
+
+## Roadmap
+
+1. Create a plattform to analyze historic portfolio performance
+2. Add metrics to quantify portfolio performance based on research
+3. Automate portfolio optimization
+
+## Development
+
+### Feature focused annoyance driven development
+
+Only features that result in a direct increase in usability or performance will be implemented.
+There is no benefit in changing the application to suit features that might be implemented.
+Being annoyed by the current application architecture is the key indicator for needed changes. If it does not feel right change it.
+
+### Technologies
+
+- [react](https://reactjs.org)
+- [mobx](https://mobx.js.org/README.html)
+- [material-ui](https://material-ui.com)
+- [lightweight-charts](https://github.com/tradingview/lightweight-charts) by [tradingview](https://www.tradingview.com/lightweight-charts/)
+- [IndexDB](https://developer.mozilla.org/de/docs/Web/API/IndexedDB_API)
+- Stock data API: [Alpha Vantage](https://www.alphavantage.co)
+
+### To-Dos:
 
 - Optimize: Perform a performance test and improve/optimize
 - Style: Find a place for DatePicker
@@ -29,31 +54,6 @@
 ### Bugs
 
 - On init load data is being fetched twice
-
-# Portfolio Analyzer / STONKs / Financial-Charting-Tool
-
-## Roadmap
-
-1. Create a plattform to analyze historic portfolio performance
-2. Add metrics to quantify portfolio performance based on research
-3. Automate portfolio optimization
-
-## Development
-
-### Feature focused annoyance driven development
-
-Only features that result in a direct increase in usability or performance will be implemented.
-There is no benefit in changing the application to suit features that might be implemented.
-Being annoyed by the current application architecture is the key indicator for needed changes. If it does not feel right change it.
-
-### Technologies
-
-- [react](https://reactjs.org)
-- [mobx](https://mobx.js.org/README.html)
-- [material-ui](https://material-ui.com)
-- [lightweight-charts](https://github.com/tradingview/lightweight-charts) by [tradingview](https://www.tradingview.com/lightweight-charts/)
-- [IndexDB](https://developer.mozilla.org/de/docs/Web/API/IndexedDB_API)
-- Stock data API: [Alpha Vantage](https://www.alphavantage.co)
 
 # Getting Started with Create React App
 
