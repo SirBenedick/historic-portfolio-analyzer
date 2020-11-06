@@ -20,10 +20,11 @@ const SettingsPage = ({ configStore }) => {
           onChange={(e) => configStore.setAlphaVantageAPITokenIDB(e.target.value)}
         />
         <Typography variant="caption" display="block" gutterBottom>
-          Get your free token here:
+          Get your free token here:{" "}
           <Link href="https://www.alphavantage.co/support/#api-key" target="_blank" rel="noreferrer">
             Alpha Vantage
-          </Link>
+          </Link>{" "}
+          (Hint: try a random key)
         </Typography>
       </Paper>
     </div>
