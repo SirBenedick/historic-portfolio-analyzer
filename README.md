@@ -1,8 +1,9 @@
 ## To-Do:
 
+- Optimize: Perform a performance test and improve/optimize
+- Fix: Double input of Symbol
 - Style: Find a place for DatePicker
 - Style: Switch default/percent
-- Optimize: Perform a performance test and improve/optimize
 - Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
 - Add: License (just in case, you never know...)
 - Version: bump to 0.2.0 (if all of the above are completed)
