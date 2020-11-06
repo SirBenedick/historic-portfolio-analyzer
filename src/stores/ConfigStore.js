@@ -5,7 +5,6 @@ import notificationStore from "./NotificationStore";
 class ConfigStore {
   alphaVantage = { url: "https://www.alphavantage.co/query", apiToken: "" };
   alphaVantageConstants = { SYMBOL_SEARCH: "SYMBOL_SEARCH", TIME_SERIES_DAILY_ADJUSTED: "TIME_SERIES_DAILY_ADJUSTED" };
-  alphaVantageSearchExample = alphaVantageSearchMockedData;
 
   constructor() {
     // Load stored API token from idbConfigStore

@@ -2,7 +2,7 @@ import dbPromise from "./dbPromise";
 import dataStore from "./DataStore";
 import moment from "moment";
 import FetchDataService from "../services/FetchDataService";
-import idbPortfolioStore from "./PortfolioStore";
+import idbPortfolioStore from "./idbPortfolioStore";
 import notificationStore from "./NotificationStore";
 
 const idbSymbolDataStore = {

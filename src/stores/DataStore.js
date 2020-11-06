@@ -1,7 +1,7 @@
 import { makeObservable, observable, action, computed, toJS, autorun } from "mobx";
 import moment from "moment";
 import FetchDataService from "../services/FetchDataService";
-import idbSymbolDataStore from "./SymbolDataStore";
+import idbSymbolDataStore from "./idbSymbolDataStore";
 import notificationStore from "./NotificationStore";
 class DataStore {
   symbols = [
