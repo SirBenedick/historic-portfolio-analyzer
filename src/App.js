@@ -106,17 +106,12 @@ function App() {
   };
 
   const handlePageSelect = (pageToShow) => {
-    console.log(pageToShow);
-
     const tempPages = {};
-    for (const [page, val] of Object.entries(pages)) {
-      console.log(page);
-      console.log(val);
+    for (const [page] of Object.entries(pages)) {
       if (page === pageToShow) tempPages[page] = { showPage: true };
       else tempPages[page] = { showPage: false };
     }
     setPages(tempPages);
-    console.log(pages);
   };
 
   return (
