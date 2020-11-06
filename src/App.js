@@ -20,6 +20,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 
 // Content
 import dataStore from "./stores/DataStore";
+import configStore from "./stores/ConfigStore";
 import ChartingPage from "./pages/ChartingPage";
 import SettingsPage from "./pages/SettingsPage";
 
@@ -184,7 +185,7 @@ function App() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {pages.chartingPage.showPage ? <ChartingPage dataStore={dataStore} /> : null}
-        {pages.settingsPage.showPage ? <SettingsPage dataStore={dataStore} /> : null}
+        {pages.settingsPage.showPage ? <SettingsPage configStore={configStore} /> : null}
       </main>
     </div>
   );
