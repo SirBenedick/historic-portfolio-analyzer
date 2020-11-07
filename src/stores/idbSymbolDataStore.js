@@ -88,6 +88,7 @@ const idbSymbolDataStore = {
     let symbolQuantityMap = {};
     let startingDate = moment(dataStore.portfolioStartingDate);
     let endDate = moment();
+    const daysSinceStart = endDate.diff(startingDate, "days") + 1;
     await Promise.all(
       dataStore.getSymbolsWithoutPortfolio().map(async (symbolSet) => {
         // Get price of asset for the portfolio starting date
@@ -119,8 +120,11 @@ const idbSymbolDataStore = {
         }
 
         // Calculate performanceSinceStart for this symbol and store the value
-        const performanceSinceStart = parseFloat(endDatePriceValue) / parseFloat(startingDatePriceValue);
+        const performanceSinceStart = parseFloat(endDatePriceValue) / parseFloat(startingDatePriceValue) - 1;
         dataStore.setPerformanceSincePortfolioStartForTicker(symbolSet.symbolTicker, performanceSinceStart);
+        // Calculate yearlyPerformanceSinceStart for this symbol and store the value
+        const yearlyPerformanceSinceStart = performanceSinceStart * (365 / daysSinceStart);
+        dataStore.setYearlyPerformanceSincePortfolioStartForTicker(symbolSet.symbolTicker, yearlyPerformanceSinceStart);
 
         // Calculate quantity for this symbol
         const startingDateValueOfThisSymbol = dataStore.getSymbolSetForTicker(symbolSet.symbolTicker)["value"];

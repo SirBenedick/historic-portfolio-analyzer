@@ -30,6 +30,7 @@ class DataStore {
       removeSelectedSymbol: action,
       setValueForTicker: action,
       setPerformanceSincePortfolioStartForTicker: action,
+      setYearlyPerformanceSincePortfolioStartForTicker: action,
       setTriggerRecalculatePortfolio: action,
       setTriggerRerenderVisibleLines: action,
       setPortfolioStartingDate: action,
@@ -76,6 +77,7 @@ class DataStore {
       name: symbolSetSearchResult.name,
       currency: symbolSetSearchResult.currency,
       performanceSincePortfolioStart: 1,
+      yearlyPerformanceSincePortfolioStart: 1,
       isVisible: true,
       value: 100,
       color: this.nextAvailableColorValue(),
@@ -168,6 +170,15 @@ class DataStore {
     this.symbols.forEach((symbol) => {
       if (symbol.symbolTicker === changedSymbolByTicker) {
         symbol.performanceSincePortfolioStart = value;
+      }
+    });
+  }
+
+  setYearlyPerformanceSincePortfolioStartForTicker(changedSymbolByTicker, value) {
+    console.log("Updating performanceSincePortfolioStart: " + value);
+    this.symbols.forEach((symbol) => {
+      if (symbol.symbolTicker === changedSymbolByTicker) {
+        symbol.yearlyPerformanceSincePortfolioStart = value;
       }
     });
   }

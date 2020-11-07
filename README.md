@@ -37,7 +37,7 @@ Being annoyed by the current application architecture is the key indicator for n
 - [x] Style: Switch default/percent
 - [x] Style: Increase searchbar width
 - [ ] Add: Calculation of yearly portfolio performance
-- [ ] Add: Calculation of average year asset performance
+- [x] Add: Calculation of average year asset performance
 - [x] Fix: On init page it is unclear what to do
 
 #### 0.3.0

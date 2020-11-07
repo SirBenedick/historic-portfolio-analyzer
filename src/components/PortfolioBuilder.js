@@ -26,17 +26,11 @@ const PortfolioBuilder = observer(({ dataStore }) => {
           <TableRow>
             <TableCell>Symbol</TableCell>
             <TableCell>Name</TableCell>
-            <TableCell
-              align="right"
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Tooltip title="Performance of each asset since the starting date of the portfolio" placement="top">
-                <InfoOutlinedIcon fontSize="small" />
-              </Tooltip>
-              Performance
+            <TableCell id="annualized" align="right">
+              Annualized Performance
+            </TableCell>
+            <TableCell id="performance" align="right">
+              Performance since start
             </TableCell>
             <TableCell align="right" style={{ maxWidth: "80px" }}>
               Value
@@ -52,6 +46,9 @@ const PortfolioBuilder = observer(({ dataStore }) => {
                     {symbolSet.symbolTicker}
                   </TableCell>
                   <TableCell align="left">{symbolSet.name}</TableCell>
+                  <TableCell align="right">
+                    {performanceToPercent(symbolSet.yearlyPerformanceSincePortfolioStart)}
+                  </TableCell>
                   <TableCell align="right">{performanceToPercent(symbolSet.performanceSincePortfolioStart)}</TableCell>
                   <TableCell align="right">
                     <input
@@ -68,6 +65,7 @@ const PortfolioBuilder = observer(({ dataStore }) => {
           <TableCell />
           <TableCell />
           <TableCell />
+          <TableCell />
           <TableCell align="right">
             <Typography noWrap>Total: ${dataStore.totalValueOfSymbols}</Typography>
           </TableCell>
@@ -78,7 +76,7 @@ const PortfolioBuilder = observer(({ dataStore }) => {
 });
 
 function performanceToPercent(performance) {
-  return ((parseFloat(performance) - 1) * 100).toFixed(2) + "%";
+  return (parseFloat(performance) * 100).toFixed(2) + "%";
 }
 
 export default PortfolioBuilder;
