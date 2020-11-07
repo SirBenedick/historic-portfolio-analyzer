@@ -31,15 +31,16 @@ Being annoyed by the current application architecture is the key indicator for n
 - MINOR: Bumps on the next completed feature set
 - X: Increase towards the next feature set (Is going to be forgotten often)
 
-### To-Dos (Add/Style/Remove/Optimize/Refactor/Fix):
+### To-Dos (Add/Style/Remove/Improve/Refactor/Fix):
 
 #### 0.2.0
 
-- Style: Find a place for DatePicker
-- Style: Switch default/percent
-- Style: Increase searchbar width
-- Add: Calculation of yearly portfolio performance
-- Add: Calculation of average year asset performance
+- [x] Style: Find a place for DatePicker
+- [x] Style: Switch default/percent
+- [x] Style: Increase searchbar width
+- [x] Add: Calculation of yearly portfolio performance
+- [x] Add: Calculation of average year asset performance
+- [x] Fix: On init page it is unclear what to do
 
 #### 0.3.0
 
@@ -47,6 +48,7 @@ Being annoyed by the current application architecture is the key indicator for n
 - Add: Calculation of dividends to portfolio performance
 - Add: Calculation of sharp ratio
 - Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
+- Improve: Search with space (if api allows this)
 
 #### Idea dump
 
@@ -58,3 +60,5 @@ Being annoyed by the current application architecture is the key indicator for n
 - Add: Different Backends to call stock data from different sources
 - Clean up README.md: Add UCs, scenarios, technoglogies...
 - Add timeframe for all data
+- Remove: moment.js to decrease bundle size
+- Add: Setting to fetch monthly data, or daily

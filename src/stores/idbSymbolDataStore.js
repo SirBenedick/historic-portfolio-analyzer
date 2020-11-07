@@ -88,6 +88,7 @@ const idbSymbolDataStore = {
     let symbolQuantityMap = {};
     let startingDate = moment(dataStore.portfolioStartingDate);
     let endDate = moment();
+    const daysSinceStart = endDate.diff(startingDate, "days") + 1;
     await Promise.all(
       dataStore.getSymbolsWithoutPortfolio().map(async (symbolSet) => {
         // Get price of asset for the portfolio starting date
@@ -119,14 +120,20 @@ const idbSymbolDataStore = {
         }
 
         // Calculate performanceSinceStart for this symbol and store the value
-        const performanceSinceStart = parseFloat(endDatePriceValue) / parseFloat(startingDatePriceValue);
+        const performanceSinceStart = parseFloat(endDatePriceValue) / parseFloat(startingDatePriceValue) - 1;
         dataStore.setPerformanceSincePortfolioStartForTicker(symbolSet.symbolTicker, performanceSinceStart);
+        // Calculate yearlyPerformanceSinceStart for this symbol and store the value
+        const yearlyPerformanceSinceStart = performanceSinceStart * (365 / daysSinceStart);
+        dataStore.setYearlyPerformanceSincePortfolioStartForTicker(symbolSet.symbolTicker, yearlyPerformanceSinceStart);
 
         // Calculate quantity for this symbol
         const startingDateValueOfThisSymbol = dataStore.getSymbolSetForTicker(symbolSet.symbolTicker)["value"];
         const quantity = parseFloat(startingDateValueOfThisSymbol) / parseFloat(startingDatePriceValue);
 
         symbolQuantityMap[symbolSet.symbolTicker] = quantity;
+
+        const endValue = endDatePriceValue * quantity;
+        dataStore.setEndValueForTicker(symbolSet.symbolTicker, endValue);
       })
     );
 
@@ -160,7 +167,22 @@ const idbSymbolDataStore = {
       if (tempSumForDate) result.push({ time: date, value: tempSumForDate });
     });
 
-    await idbPortfolioStore.set("dataSeries", result);
+    idbPortfolioStore.set("dataSeries", result).then((res) => {
+      if (result.length !== 0) {
+        const endDatePriceValuePortfolio = result[0].value;
+        const startingDatePriceValuePortfolio = result[result.length - 1].value;
+        // Calculate performanceSinceStart for portfolio and store the value
+        const performanceSinceStartPortfolio =
+          parseFloat(startingDatePriceValuePortfolio) / parseFloat(endDatePriceValuePortfolio) - 1;
+        dataStore.setPerformanceSincePortfolioStartForTicker("Portfolio", performanceSinceStartPortfolio);
+        // Calculate yearlyPerformanceSinceStart for portfolio and store the value
+        const yearlyPerformanceSinceStartPortfolio = performanceSinceStartPortfolio * (365 / daysSinceStart);
+        dataStore.setYearlyPerformanceSincePortfolioStartForTicker("Portfolio", yearlyPerformanceSinceStartPortfolio);
+
+        dataStore.setEndValueForTicker("Portfolio", startingDatePriceValuePortfolio);
+      }
+    });
+
     return result;
   },
 };

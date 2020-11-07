@@ -8,9 +8,14 @@ class DataStore {
   symbols = [
     {
       symbolTicker: "Portfolio",
+      name: "Portfolio",
       isVisible: true,
       value: 0,
+      currency: "USD",
+      performanceSincePortfolioStart: 1,
+      yearlyPerformanceSincePortfolioStart: 1,
       color: this.nextAvailableColorValue(),
+      endValue: 0,
     },
   ];
   pendingRequests = 0;
@@ -30,6 +35,8 @@ class DataStore {
       removeSelectedSymbol: action,
       setValueForTicker: action,
       setPerformanceSincePortfolioStartForTicker: action,
+      setYearlyPerformanceSincePortfolioStartForTicker: action,
+      setEndValueForTicker: action,
       setTriggerRecalculatePortfolio: action,
       setTriggerRerenderVisibleLines: action,
       setPortfolioStartingDate: action,
@@ -38,8 +45,6 @@ class DataStore {
     });
 
     this.portfolioStartingDate = moment().subtract(1, "years").format("YYYY-MM-DD");
-
-    this.addSymbol({ symbolTicker: "AAPL", name: "Apple Inc.", region: "testRegion", currency: "USD" });
 
     autorun(() => {
       const trigger = this.portfolioStartingDate;
@@ -72,14 +77,16 @@ class DataStore {
       return 0;
     };
 
-    if (!symbolSetSearchResult) return false;
+    if (!symbolSetSearchResult || !symbolSetSearchResult.symbolTicker) return false;
     this.symbols.push({
       symbolTicker: symbolSetSearchResult.symbolTicker,
       name: symbolSetSearchResult.name,
       currency: symbolSetSearchResult.currency,
       performanceSincePortfolioStart: 1,
+      yearlyPerformanceSincePortfolioStart: 1,
       isVisible: true,
       value: 100,
+      endValue: 0,
       color: this.nextAvailableColorValue(),
     });
     this.symbols.sort(compareSymbolSets);
@@ -170,6 +177,24 @@ class DataStore {
     this.symbols.forEach((symbol) => {
       if (symbol.symbolTicker === changedSymbolByTicker) {
         symbol.performanceSincePortfolioStart = value;
+      }
+    });
+  }
+
+  setYearlyPerformanceSincePortfolioStartForTicker(changedSymbolByTicker, value) {
+    console.log("Updating setYearlyPerformanceSincePortfolioStartForTicker: " + value);
+    this.symbols.forEach((symbol) => {
+      if (symbol.symbolTicker === changedSymbolByTicker) {
+        symbol.yearlyPerformanceSincePortfolioStart = value;
+      }
+    });
+  }
+
+  setEndValueForTicker(changedSymbolByTicker, value) {
+    console.log("Updating setEndValueForTicker: " + value);
+    this.symbols.forEach((symbol) => {
+      if (symbol.symbolTicker === changedSymbolByTicker) {
+        symbol.endValue = value;
       }
     });
   }

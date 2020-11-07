@@ -1,31 +1,49 @@
 import { makeObservable, observable, action } from "mobx";
 import idbConfigStore from "./idbConfigStore";
 import notificationStore from "./NotificationStore";
+import dataStore from "./DataStore";
 
 class ConfigStore {
   alphaVantage = { url: "https://www.alphavantage.co/query", apiToken: "" };
+  isRunningSetup = true;
   alphaVantageConstants = { SYMBOL_SEARCH: "SYMBOL_SEARCH", TIME_SERIES_DAILY_ADJUSTED: "TIME_SERIES_DAILY_ADJUSTED" };
 
   constructor() {
-    // Load stored API token from idbConfigStore or create a Token
-    idbConfigStore.get("alphaVantagAPIToken").then((token) => {
-      if (token) this.setAlphaVantageAPITokenHelper(token);
-      else {
-        this.setAlphaVantageAPITokenIDB(fakeToken(16));
-      }
-    });
+    this.startSetup();
 
     makeObservable(this, {
       alphaVantage: observable,
+      isRunningSetup: observable,
       setAlphaVantageAPITokenHelper: action,
+      setIsRunningSetup: action,
     });
+  }
+
+  async startSetup() {
+    console.log("startSetup");
+    // Load stored API token from idbConfigStore or create a Token
+    const token = await idbConfigStore.get("alphaVantagAPIToken");
+    if (token) this.setAlphaVantageAPITokenHelper(token);
+    else {
+      await this.setAlphaVantageAPITokenIDB(fakeToken(16));
+    }
+
+    // Add default symbols
+    // If no deafult symbols added then dataStore trigger have to be called manually
+    dataStore.addSymbol({ symbolTicker: "AAPL", name: "Apple Inc.", region: "testRegion", currency: "USD" });
+
+    this.setIsRunningSetup(false);
+  }
+
+  setIsRunningSetup(bool) {
+    this.isRunningSetup = bool;
   }
 
   // Store new alphaVantagAPIToken to idbConfigStore then store in mobx store
   async setAlphaVantageAPITokenIDB(newToken) {
     await idbConfigStore.set("alphaVantagAPIToken", newToken);
     notificationStore.enqueueSnackbar({
-      message: "Stored new API-Token",
+      message: `Stored new API-Token${this.alphaVantage.apiToken}`,
       options: {
         variant: "success",
         autoHideDuration: 1000,
@@ -36,6 +54,7 @@ class ConfigStore {
   }
 
   setAlphaVantageAPITokenHelper(newToken) {
+    console.log("setAlphaVantageAPITokenHelper: " + newToken);
     this.alphaVantage.apiToken = newToken;
   }
 }
