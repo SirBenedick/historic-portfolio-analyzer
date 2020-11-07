@@ -72,7 +72,7 @@ class DataStore {
       return 0;
     };
 
-    if (!symbolSetSearchResult) return false;
+    if (!symbolSetSearchResult || !symbolSetSearchResult.symbolTicker) return false;
     this.symbols.push({
       symbolTicker: symbolSetSearchResult.symbolTicker,
       name: symbolSetSearchResult.name,
