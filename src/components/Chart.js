@@ -26,7 +26,6 @@ export default class Chart extends React.Component {
 
   async componentDidMount() {
     this.renderChart();
-    this.createGraphForSelectedSymbols();
   }
 
   renderChart() {

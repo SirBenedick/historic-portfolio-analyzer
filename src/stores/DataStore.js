@@ -39,8 +39,6 @@ class DataStore {
 
     this.portfolioStartingDate = moment().subtract(1, "years").format("YYYY-MM-DD");
 
-    this.addSymbol({ symbolTicker: "AAPL", name: "Apple Inc.", region: "testRegion", currency: "USD" });
-
     autorun(() => {
       const trigger = this.portfolioStartingDate;
       const trigger2 = this.totalValueOfSymbols;
