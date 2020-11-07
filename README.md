@@ -33,11 +33,12 @@ Being annoyed by the current application architecture is the key indicator for n
 
 #### 0.2.0
 
-- Style: Find a place for DatePicker
-- Style: Switch default/percent
-- Style: Increase searchbar width
-- Add: Calculation of yearly portfolio performance
-- Add: Calculation of average year asset performance
+- [x] Style: Find a place for DatePicker
+- [x] Style: Switch default/percent
+- [ ] Style: Increase searchbar width
+- [ ] Add: Calculation of yearly portfolio performance
+- [ ] Add: Calculation of average year asset performance
+- [ ] Fix: On init page it is unclear what to do
 
 #### 0.3.0
 

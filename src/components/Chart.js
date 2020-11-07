@@ -11,7 +11,7 @@ export default class Chart extends React.Component {
     super(props);
     this.state = {
       data: [],
-      selectedChartStyleType: "default",
+      selectedChartStyleType: "percent",
     };
     this.myRef = React.createRef();
     this.chart = {};
@@ -34,7 +34,10 @@ export default class Chart extends React.Component {
       this.myRef.current.removeChild(this.myRef.current.firstChild);
       this.chart = null;
     }
-    this.chart = createChart(this.myRef.current, styleDefault);
+    this.chart = createChart(
+      this.myRef.current,
+      this.state.selectedChartStyleType === "percent" ? stylePercent : styleAbsolut
+    );
   }
 
   async recalculateAndRenderPortfolio() {
@@ -48,12 +51,12 @@ export default class Chart extends React.Component {
 
   switchStyle() {
     console.log("switching style");
-    if (this.state.selectedChartStyleType === "default") {
+    if (this.state.selectedChartStyleType === "absolut") {
       this.setState({ selectedChartStyleType: "percent" });
       this.chart.applyOptions(stylePercent);
     } else if (this.state.selectedChartStyleType === "percent") {
-      this.setState({ selectedChartStyleType: "default" });
-      this.chart.applyOptions(styleDefault);
+      this.setState({ selectedChartStyleType: "absolut" });
+      this.chart.applyOptions(styleAbsolut);
     }
   }
 
@@ -112,7 +115,7 @@ export default class Chart extends React.Component {
         <ChartSwitchStyle
           refreshData={this.refreshData}
           switchStyle={this.switchStyle}
-          selectedChartStyleType={this.state.selectedChartStyleType === "default" ? "default" : "percent"}
+          selectedChartStyleType={this.state.selectedChartStyleType === "absolut" ? "absolut" : "percent"}
           dataStore={this.props.dataStore}
         />
         <div ref={this.myRef} id="chart-ref"></div>
@@ -126,7 +129,7 @@ export default class Chart extends React.Component {
   }
 }
 
-const styleDefault = {
+const styleAbsolut = {
   height: 300,
   rightPriceScale: {
     scaleMargins: {
