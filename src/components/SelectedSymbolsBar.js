@@ -51,9 +51,7 @@ const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
           </Grid>
         </Grid>
         <Grid item xs={4}>
-          <Grid container direction="row" justify="center" alignItems="center">
-            <SearchForSymbolInput dataStore={dataStore} notificationStore={notificationStore} />
-          </Grid>
+          <SearchForSymbolInput dataStore={dataStore} notificationStore={notificationStore} />
         </Grid>
       </Grid>
     </Paper>

@@ -75,7 +75,7 @@ const SearchForSymbolInput = observer(({ dataStore, notificationStore }) => {
           onChange={(event) => handleValueChange(event.target.value)}
         />
       )}
-      style={{ minWidth: "250px" }}
+      style={{ minWidth: "100px", paddingRight: "10px" }}
     />
   );
 });

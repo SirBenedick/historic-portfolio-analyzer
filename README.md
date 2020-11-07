@@ -35,7 +35,7 @@ Being annoyed by the current application architecture is the key indicator for n
 
 - [x] Style: Find a place for DatePicker
 - [x] Style: Switch default/percent
-- [ ] Style: Increase searchbar width
+- [x] Style: Increase searchbar width
 - [ ] Add: Calculation of yearly portfolio performance
 - [ ] Add: Calculation of average year asset performance
 - [ ] Fix: On init page it is unclear what to do
