@@ -29,7 +29,7 @@ Being annoyed by the current application architecture is the key indicator for n
 - MINOR: Bumps on the next completed feature set
 - X: Increase towards the next feature set (Is going to be forgotten often)
 
-### To-Dos (Add/Style/Remove/Optimize/Refactor/Fix):
+### To-Dos (Add/Style/Remove/Improve/Refactor/Fix):
 
 #### 0.2.0
 
@@ -46,6 +46,7 @@ Being annoyed by the current application architecture is the key indicator for n
 - Add: Calculation of dividends to portfolio performance
 - Add: Calculation of sharp ratio
 - Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
+- Improve: Search with space (if api allows this)
 
 #### Idea dump
 
