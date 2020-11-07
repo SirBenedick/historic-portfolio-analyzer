@@ -58,3 +58,4 @@ Being annoyed by the current application architecture is the key indicator for n
 - Add: Different Backends to call stock data from different sources
 - Clean up README.md: Add UCs, scenarios, technoglogies...
 - Add timeframe for all data
+- Remove: moment.js to decrease bundle size
