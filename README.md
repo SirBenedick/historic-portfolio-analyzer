@@ -47,21 +47,22 @@ Being annoyed by the current application architecture is the key indicator for n
   - [x] Dividend
   - [x] Sharpratio
 
-- [ ] Add: Chart-Settings-Card
-  - [ ] Add: portfolio calculation granularity
+- [x] Add: Chart-Settings-Card
+  - [ ] ~~Add: portfolio calculation granularity~~ (move to backlog)
   - [x] Style: Move datepicker into new Chart-Settings-Card
   - [x] Set risk free rate for sharpratio
 
 #### 0.4.0
 
-- Refactor: Dataflow, no direct acces from outside to idb\_\_\_Store,
-- Refactor: Store calculated data ini symbolDataStore
-- Improve: Sharpratio calculation should not trigger rercalculation of portfolio
-- Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed
-- Fix: Check if sharp ratio is calculated correctly (risk free rate has little impact atm)
+- [ ] Refactor: Dataflow, no direct acces from outside to idb\_\_\_Store,
+- [ ] Refactor: Store calculated data in symbolDataStore (symbolDataStore should wraps idbSymbolDataStore)
+- [ ] Improve: Sharpratio calculation should not trigger recalculation of portfolio (needs portfolio stored somewhere)
+- [ ] Fix: Check if sharp ratio is calculated correctly (risk free rate has little impact atm)
+- [ ] Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed
 
 #### Idea dump
 
+- Add: portfolio calculation granularity to speed up calculation
 - Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
 - Add: Store for symbols to be fetched (in case API limit is reached)(set version of index db to current date)
 - Add: Store datet of fetched data, refresh if is too old
