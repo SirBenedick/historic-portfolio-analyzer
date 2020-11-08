@@ -31,27 +31,26 @@ Being annoyed by the current application architecture is the key indicator for n
 - MINOR: Bumps on the next completed feature set
 - X: Increase towards the next feature set (Is going to be forgotten often)
 
-### To-Dos (Add/Style/Remove/Improve/Refactor/Fix):
-
-#### 0.2.0
-
-- [x] Style: Find a place for DatePicker
-- [x] Style: Switch default/percent
-- [x] Style: Increase searchbar width
-- [x] Add: Calculation of yearly portfolio performance
-- [x] Add: Calculation of average year asset performance
-- [x] Fix: On init page it is unclear what to do
+### Progress (Add/Style/Remove/Improve/Refactor/Fix):
 
 #### 0.3.0
 
-- Add Loading indicator while Portfolio is calculating (Backdrop)
-- Add: Calculation of dividends to portfolio performance
-- Add: Calculation of sharp ratio
-- Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
-- Improve: Search with space (if api allows this)
+- [ ] Fix: Trigger Chart rerender when switching from Settings page to Chart page
+- [ ] Add Loading indicator while Portfolio is calculating (Backdrop)
+- [ ] Add: Calculation of dividends to portfolio performance
+- [ ] Improve: Search with space (if api allows this)
+- [ ] Add: Calculation of sharp ratio,
+- [ ] Add: Row of cards with key portfolio result
+  - [ ] Performace
+  - [ ] Annualized
+  - [ ] Dividend
+  - [ ] Sharpratio
+- [ ] Add: Chart-Settings-Card for portfolio calculation granularity
+- [ ] Style: Move datepicker into new Chart-Settings-Card
 
 #### Idea dump
 
+- Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
 - Add: Store for symbols to be fetched (in case API limit is reached)(set version of index db to current date)
 - Add: Store datet of fetched data, refresh if is too old
 - Add: Choose time of entry for each position
