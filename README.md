@@ -38,7 +38,7 @@ Being annoyed by the current application architecture is the key indicator for n
 - [x] Fix: Trigger Chart rerender when switching from Settings page to Chart page
 - [x] Add Loading indicator while Portfolio is calculating (Backdrop)
 - [x] Add: Calculation of dividends to portfolio performance
-- [ ] Improve: Search with space (if api allows this)
+- [ ] ~~Improve: Search with space (if api allows this)~~ (Not possible with alphavantage api)
 - [ ] Add: Calculation of sharp ratio,
 - [ ] Add: Row of cards with key portfolio result
   - [x] Performace
