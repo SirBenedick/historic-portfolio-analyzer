@@ -35,7 +35,7 @@ Being annoyed by the current application architecture is the key indicator for n
 
 #### 0.4.0
 
-- [ ] Refactor: Dataflow, no direct acces from outside to idb\_\_\_Store,
+- [ ] Refactor: Dataflow, no direct acces from outside to idb\_\_\_Stores,
 - [ ] Refactor: Store calculated data in symbolDataStore (symbolDataStore should wraps idbSymbolDataStore)
 - [ ] Improve: Sharpratio calculation should not trigger recalculation of portfolio (needs portfolio stored somewhere)
 - [ ] Fix: Check if sharp ratio is calculated correctly (risk free rate has little impact atm)
@@ -51,10 +51,16 @@ Being annoyed by the current application architecture is the key indicator for n
 - Add: Store for symbols to be fetched (in case API limit is reached)(set version of index db to current date)
 - Add: Store datet of fetched data, refresh if is too old
 - Add: Choose time of entry for each position
-- Add: Heatmap for daily/weekly/montly return
-- Add: Card performance weighted compared to single asset and market
 - Add: Different Backends to call stock data from different sources
 - Clean up README.md: Add UCs, scenarios, technoglogies...
 - Add timeframe for all data
-- Remove: moment.js to decrease bundle size
+- Remove: moment.js to decrease bundle size(?)
 - Add: Setting to fetch monthly data, or daily
+
+#### 1.0.0
+
+- Add: Sortino Ratio
+- Add: Jensen-Alpha
+- Add: tooltip with link to ratio definition
+- Add: Heatmap for daily/weekly/montly return
+- Add: Card performance weighted compared to single asset and market
