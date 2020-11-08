@@ -2,15 +2,15 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Typography, Slider, Grid } from "@material-ui/core";
 import { observer } from "mobx-react-lite";
+import DatePicker from "./DatePicker";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexWrap: "wrap",
     listStyle: "none",
-    padding: theme.spacing(0.5),
-    margin: 0,
+    padding: theme.spacing(2),
   },
-  paper: {
+  gridItem: {
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
@@ -44,34 +44,33 @@ function valuetext(value) {
   return `${value}%`;
 }
 
-const ChartConfigurationCard = observer(({ configStore }) => {
+const ChartConfigurationCard = observer(({ configStore, dataStore }) => {
   const classes = useStyles();
 
   return (
     <Paper className={classes.root} elevation={1}>
-      <Grid container spacing={3} xs={8}>
-        <Grid item>
-          <Typography variant="h4" gutterBottom>
-            Configurations
-          </Typography>
+      <Typography variant="h4" gutterBottom>
+        Configurations
+      </Typography>
+      <Grid container spacing={3} xs={12} justify="center" alignItems="center">
+        <Grid item xs={6} style={{ backgroundColor: "" }} className={classes.gridItem}>
+          <DatePicker dataStore={dataStore} />
         </Grid>
-        <Grid container item>
-          <Grid item xs={6}>
-            <Typography>Risk free Rate</Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Slider
-              defaultValue={configStore.riskFreeRate}
-              getAriaValueText={valuetext}
-              aria-labelledby="discrete-slider-custom"
-              min={-1.5}
-              max={10}
-              step={0.1}
-              valueLabelDisplay="auto"
-              marks={marks}
-              onChangeCommitted={(e, val) => configStore.setRiskFreeRate(val)}
-            />
-          </Grid>
+        <Grid item xs={6} style={{ backgroundColor: "" }} className={classes.gridItem}>
+          <Typography id="discrete-slider-custom" gutterBottom>
+            Risk Free Rate: {JSON.stringify(configStore.riskFreeRate)}%
+          </Typography>
+          <Slider
+            defaultValue={configStore.riskFreeRate}
+            getAriaValueText={valuetext}
+            aria-labelledby="discrete-slider-custom"
+            min={-1.5}
+            max={10}
+            step={0.1}
+            valueLabelDisplay="auto"
+            marks={marks}
+            onChangeCommitted={(e, val) => configStore.setRiskFreeRate(val)}
+          />
         </Grid>
       </Grid>
     </Paper>

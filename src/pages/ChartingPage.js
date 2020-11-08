@@ -24,7 +24,7 @@ const ChartingPage = ({ dataStore, notificationStore, configStore, symbolDataSto
           <PortfolioBuilder dataStore={dataStore} />
         </Grid>
         <Grid item xs={12}>
-          <ChartConfigurationCard configStore={configStore} />
+          <ChartConfigurationCard configStore={configStore} dataStore={dataStore} />
         </Grid>
       </Grid>
     </div>

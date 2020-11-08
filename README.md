@@ -40,7 +40,7 @@ Being annoyed by the current application architecture is the key indicator for n
 - [x] Add: Calculation of dividends to portfolio performance
 - [ ] ~~Improve: Search with space (if api allows this)~~ (Not possible with alphavantage api)
 - [x] Add: Calculation of sharp ratio,
-- [ ] Add: Row of cards with key portfolio result
+- [x] Add: Row of cards with key portfolio result
 
   - [x] Performace
   - [x] Annualized
@@ -49,7 +49,7 @@ Being annoyed by the current application architecture is the key indicator for n
 
 - [ ] Add: Chart-Settings-Card
   - [ ] Add: portfolio calculation granularity
-  - [ ] Style: Move datepicker into new Chart-Settings-Card
+  - [x] Style: Move datepicker into new Chart-Settings-Card
   - [x] Set risk free rate for sharpratio
 
 #### 0.4.0

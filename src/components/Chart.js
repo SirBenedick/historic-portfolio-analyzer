@@ -117,7 +117,6 @@ export default class Chart extends React.Component {
           refreshData={this.refreshData}
           switchStyle={this.switchStyle}
           selectedChartStyleType={this.state.selectedChartStyleType === "absolut" ? "absolut" : "percent"}
-          dataStore={this.props.dataStore}
         />
         <CalculatingProgress symbolDataStore={this.props.symbolDataStore} />
         <div ref={this.myRef} id="chart-ref"></div>
