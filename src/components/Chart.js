@@ -112,7 +112,7 @@ export default class Chart extends React.Component {
 
   render() {
     return (
-      <Paper style={{ padding: "10px", marginTop: "10px" }}>
+      <Paper style={{ padding: "10px" }}>
         <ChartSwitchStyle
           refreshData={this.refreshData}
           switchStyle={this.switchStyle}

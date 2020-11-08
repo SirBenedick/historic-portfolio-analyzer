@@ -41,9 +41,9 @@ Being annoyed by the current application architecture is the key indicator for n
 - [ ] Improve: Search with space (if api allows this)
 - [ ] Add: Calculation of sharp ratio,
 - [ ] Add: Row of cards with key portfolio result
-  - [ ] Performace
-  - [ ] Annualized
-  - [ ] Dividend
+  - [x] Performace
+  - [x] Annualized
+  - [x] Dividend
   - [ ] Sharpratio
 - [ ] Add: Chart-Settings-Card for portfolio calculation granularity
 - [ ] Style: Move datepicker into new Chart-Settings-Card
