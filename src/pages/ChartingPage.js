@@ -5,6 +5,7 @@ import SelectedSymbolsBar from "../components/SelectedSymbolsBar";
 import Chart from "../components/Chart";
 import PortfolioBuilder from "../components/PortfolioBuilder";
 import KeyMetricRow from "../components/KeyMetricRow";
+import ChartConfigurationCard from "../components/ChartConfigurationCard";
 
 const ChartingPage = ({ dataStore, notificationStore, configStore, symbolDataStore }) => {
   return (
@@ -21,6 +22,9 @@ const ChartingPage = ({ dataStore, notificationStore, configStore, symbolDataSto
         </Grid>
         <Grid item xs={12}>
           <PortfolioBuilder dataStore={dataStore} />
+        </Grid>
+        <Grid item xs={12}>
+          <ChartConfigurationCard configStore={configStore} />
         </Grid>
       </Grid>
     </div>
