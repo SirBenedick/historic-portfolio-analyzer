@@ -39,6 +39,7 @@ class DataStore {
       setEndValueForTicker: action,
       setTriggerRecalculatePortfolio: action,
       setTriggerRerenderVisibleLines: action,
+      setTotalDividendPayout: action,
       setPortfolioStartingDate: action,
       totalValueOfSymbols: computed,
       listOfSymbolTickers: computed,
@@ -87,6 +88,7 @@ class DataStore {
       isVisible: true,
       value: 100,
       endValue: 0,
+      totalDividendPayout: 0,
       color: this.nextAvailableColorValue(),
     });
     this.symbols.sort(compareSymbolSets);
@@ -152,7 +154,7 @@ class DataStore {
   }
 
   getSymbolSetForTicker(symbolTicker) {
-    return toJS(this.symbols.find((symbolSet) => symbolSet.symbolTicker === symbolTicker));
+    return this.symbols.find((symbolSet) => symbolSet.symbolTicker === symbolTicker);
   }
 
   getSymbolsWithoutPortfolio() {
@@ -195,6 +197,15 @@ class DataStore {
     this.symbols.forEach((symbol) => {
       if (symbol.symbolTicker === changedSymbolByTicker) {
         symbol.endValue = value;
+      }
+    });
+  }
+
+  setTotalDividendPayout(changedSymbolByTicker, value) {
+    console.log("Updating setEndValueForTicker: " + value);
+    this.symbols.forEach((symbol) => {
+      if (symbol.symbolTicker === changedSymbolByTicker) {
+        symbol.totalDividendPayout = value;
       }
     });
   }

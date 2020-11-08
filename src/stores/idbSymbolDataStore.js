@@ -159,12 +159,15 @@ const idbSymbolDataStore = {
     );
 
     let result = [];
+    let sumOfDividends = 0;
     datesToCheck.forEach((date) => {
       let tempSumForDate = 0;
       for (const [symbolTicker, dataset] of Object.entries(tempSymbolDatasetMap)) {
         if (!(date in dataset)) return;
-        let tempValue = dataset[date]["5. adjusted close"];
-        tempSumForDate += tempValue * symbolQuantityMap[symbolTicker];
+        const dividend = dataset[date]["7. dividend amount"];
+        sumOfDividends += dividend * symbolQuantityMap[symbolTicker];
+        const stockValue = dataset[date]["5. adjusted close"];
+        tempSumForDate += stockValue * symbolQuantityMap[symbolTicker];
       }
       if (tempSumForDate) result.push({ time: date, value: tempSumForDate });
     });
@@ -181,6 +184,7 @@ const idbSymbolDataStore = {
         const yearlyPerformanceSinceStartPortfolio = performanceSinceStartPortfolio * (365 / daysSinceStart);
         dataStore.setYearlyPerformanceSincePortfolioStartForTicker("Portfolio", yearlyPerformanceSinceStartPortfolio);
 
+        dataStore.setTotalDividendPayout("Portfolio", sumOfDividends);
         dataStore.setEndValueForTicker("Portfolio", startingDatePriceValuePortfolio);
       }
     });

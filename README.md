@@ -37,7 +37,7 @@ Being annoyed by the current application architecture is the key indicator for n
 
 - [x] Fix: Trigger Chart rerender when switching from Settings page to Chart page
 - [x] Add Loading indicator while Portfolio is calculating (Backdrop)
-- [ ] Add: Calculation of dividends to portfolio performance
+- [x] Add: Calculation of dividends to portfolio performance
 - [ ] Improve: Search with space (if api allows this)
 - [ ] Add: Calculation of sharp ratio,
 - [ ] Add: Row of cards with key portfolio result
@@ -50,7 +50,9 @@ Being annoyed by the current application architecture is the key indicator for n
 
 #### 0.4.0
 
-- Refactor: Dataflow, no direct acces from outside to idbSymbolStore, add mobx store layer inbetween
+- Refactor: Dataflow, no direct acces from outside to idb\_\_\_Store,
+- Refactor: Store calculated data ini symbolDataStore
+- Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed
 
 #### Idea dump
 
