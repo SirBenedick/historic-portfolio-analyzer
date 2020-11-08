@@ -1,7 +1,8 @@
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable, action, autorun } from "mobx";
 import idbConfigStore from "./idbConfigStore";
 import notificationStore from "./NotificationStore";
 import dataStore from "./DataStore";
+import symbolDataStore from "./SymbolDataStore";
 
 class ConfigStore {
   alphaVantage = { url: "https://www.alphavantage.co/query", apiToken: "" };
@@ -19,6 +20,13 @@ class ConfigStore {
       setAlphaVantageAPITokenHelper: action,
       setIsRunningSetup: action,
       setRiskFreeRate: action,
+    });
+
+    autorun(() => {
+      const trigger = this.riskFreeRate;
+
+      if (!this.isRunningSetup) symbolDataStore.calculateAndStoreHistoricPortfolioPerformance();
+      console.log("Autorun: triggering sharp ratio rercalculation: " + JSON.stringify(trigger));
     });
   }
 

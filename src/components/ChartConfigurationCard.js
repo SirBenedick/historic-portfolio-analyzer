@@ -31,12 +31,12 @@ const marks = [
     label: "1%",
   },
   {
-    value: 2,
-    label: "2%",
-  },
-  {
     value: 5,
     label: "5%",
+  },
+  {
+    value: 10,
+    label: "10%",
   },
 ];
 
@@ -65,7 +65,7 @@ const ChartConfigurationCard = observer(({ configStore }) => {
               getAriaValueText={valuetext}
               aria-labelledby="discrete-slider-custom"
               min={-1.5}
-              max={5}
+              max={10}
               step={0.1}
               valueLabelDisplay="auto"
               marks={marks}

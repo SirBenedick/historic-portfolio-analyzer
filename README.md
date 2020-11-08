@@ -50,13 +50,15 @@ Being annoyed by the current application architecture is the key indicator for n
 - [ ] Add: Chart-Settings-Card
   - [ ] Add: portfolio calculation granularity
   - [ ] Style: Move datepicker into new Chart-Settings-Card
-  - [ ] set risk free rate for sharpratio
+  - [x] Set risk free rate for sharpratio
 
 #### 0.4.0
 
 - Refactor: Dataflow, no direct acces from outside to idb\_\_\_Store,
 - Refactor: Store calculated data ini symbolDataStore
+- Improve: Sharpratio calculation should not trigger rercalculation of portfolio
 - Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed
+- Fix: Check if sharp ratio is calculated correctly (risk free rate has little impact atm)
 
 #### Idea dump
 
