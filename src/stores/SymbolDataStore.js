@@ -1,4 +1,5 @@
 import { makeObservable, observable, action } from "mobx";
+import idbSymbolDataStore from "../stores/idbSymbolDataStore";
 
 class SymbolDataStore {
   isCalculatingPortfolioPerformance = false;
@@ -12,6 +13,14 @@ class SymbolDataStore {
 
   setIsCalculatingPortfolioPerformance(bool) {
     this.isCalculatingPortfolioPerformance = bool;
+  }
+
+  async calculateAndStoreHistoricPortfolioPerformance() {
+    return await idbSymbolDataStore.calculateAndStoreHistoricPortfolioPerformance();
+  }
+
+  async getDataChartFormatBySymbol(symbolTicker) {
+    return await idbSymbolDataStore.getDataChartFormatBySymbol(symbolTicker);
   }
 }
 

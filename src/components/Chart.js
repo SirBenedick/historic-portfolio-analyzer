@@ -3,9 +3,9 @@ import { observer } from "mobx-react-lite";
 import { createChart, PriceScaleMode } from "lightweight-charts";
 import { Paper, LinearProgress } from "@material-ui/core";
 import ChartSwitchStyle from "./ChartSwitchStyle";
-import idbSymbolDataStore from "../stores/idbSymbolDataStore";
 import TriggerRecalculatePortfolio from "./TriggerRecalculatePortfolio";
 import TriggerShowVisibleLines from "./TriggerShowVisibleLines";
+import symbolDataStore from "../stores/SymbolDataStore";
 
 export default class Chart extends React.Component {
   constructor(props) {
@@ -42,7 +42,7 @@ export default class Chart extends React.Component {
   }
 
   async recalculateAndRenderPortfolio() {
-    await idbSymbolDataStore.calculateAndStoreHistoricPortfolioPerformance();
+    await symbolDataStore.calculateAndStoreHistoricPortfolioPerformance();
     this.addLineSeriesData(this.props.dataStore.getSymbolSetForTicker("Portfolio"));
   }
 
@@ -91,7 +91,7 @@ export default class Chart extends React.Component {
     console.log("addLineSeriesData: " + symbolSet.symbolTicker);
 
     // TODO If data not availible then fetch data
-    const dataForSymbol = await idbSymbolDataStore.getDataChartFormatBySymbol(symbolSet.symbolTicker);
+    const dataForSymbol = await symbolDataStore.getDataChartFormatBySymbol(symbolSet.symbolTicker);
 
     if (!this.lineSeriesObj[symbolSet.symbolTicker]) {
       // If lineSeriesObj for ticker does not exist then create new lineSeriesObj
