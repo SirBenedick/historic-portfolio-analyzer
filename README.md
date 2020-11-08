@@ -36,7 +36,7 @@ Being annoyed by the current application architecture is the key indicator for n
 #### 0.3.0
 
 - [x] Fix: Trigger Chart rerender when switching from Settings page to Chart page
-- [ ] Add Loading indicator while Portfolio is calculating (Backdrop)
+- [x] Add Loading indicator while Portfolio is calculating (Backdrop)
 - [ ] Add: Calculation of dividends to portfolio performance
 - [ ] Improve: Search with space (if api allows this)
 - [ ] Add: Calculation of sharp ratio,
@@ -47,6 +47,10 @@ Being annoyed by the current application architecture is the key indicator for n
   - [ ] Sharpratio
 - [ ] Add: Chart-Settings-Card for portfolio calculation granularity
 - [ ] Style: Move datepicker into new Chart-Settings-Card
+
+#### 0.4.0
+
+- Refactor: Dataflow, no direct acces from outside to idbSymbolStore, add mobx store layer inbetween
 
 #### Idea dump
 

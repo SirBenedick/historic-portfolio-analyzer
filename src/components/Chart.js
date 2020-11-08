@@ -1,6 +1,7 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 import { createChart, PriceScaleMode } from "lightweight-charts";
-import { Paper } from "@material-ui/core";
+import { Paper, LinearProgress } from "@material-ui/core";
 import ChartSwitchStyle from "./ChartSwitchStyle";
 import idbSymbolDataStore from "../stores/idbSymbolDataStore";
 import TriggerRecalculatePortfolio from "./TriggerRecalculatePortfolio";
@@ -118,6 +119,7 @@ export default class Chart extends React.Component {
           selectedChartStyleType={this.state.selectedChartStyleType === "absolut" ? "absolut" : "percent"}
           dataStore={this.props.dataStore}
         />
+        <CalculatingProgress symbolDataStore={this.props.symbolDataStore} />
         <div ref={this.myRef} id="chart-ref"></div>
         <TriggerRecalculatePortfolio
           dataStore={this.props.dataStore}
@@ -128,6 +130,10 @@ export default class Chart extends React.Component {
     );
   }
 }
+
+const CalculatingProgress = observer(({ symbolDataStore }) => (
+  <div>{symbolDataStore.isCalculatingPortfolioPerformance ? <LinearProgress /> : null}</div>
+));
 
 const styleAbsolut = {
   height: 300,

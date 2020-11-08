@@ -5,6 +5,7 @@ import FetchDataService from "../services/FetchDataService";
 import idbPortfolioStore from "./idbPortfolioStore";
 import notificationStore from "./NotificationStore";
 import configStore from "./ConfigStore";
+import symbolDataStore from "./SymbolDataStore";
 
 const idbSymbolDataStore = {
   async get(key) {
@@ -82,6 +83,7 @@ const idbSymbolDataStore = {
       },
       key: notificationStore.keys.PORTFOLIO_CALCULATING,
     });
+    symbolDataStore.setIsCalculatingPortfolioPerformance(true);
 
     //  Calculate for each asset the quantity at portfolio start and the performance since
     console.log("Portfolio - calculating quantity");
@@ -183,6 +185,7 @@ const idbSymbolDataStore = {
       }
     });
 
+    symbolDataStore.setIsCalculatingPortfolioPerformance(false);
     return result;
   },
 };
