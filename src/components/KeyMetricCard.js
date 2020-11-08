@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
   },
 }));
-const KeyIndicatorCard = ({ titel, description, value = 0, showPercent = false }) => {
+const KeyMetricCard = ({ titel, description, value = 0, showPercent = false }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -47,4 +47,4 @@ function performanceToPercent(performance) {
   return (parseFloat(performance) * 100).toFixed(0) + "%";
 }
 
-export default KeyIndicatorCard;
+export default KeyMetricCard;

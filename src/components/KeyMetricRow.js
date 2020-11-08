@@ -2,7 +2,7 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
-import KeyIndicatorCard from "./KeyIndicatorCard";
+import KeyMetricCard from "./KeyMetricCard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +27,7 @@ const KeyIndicatorRow = observer(({ dataStore, notificationStore, configStore, s
     <div className={classes.root}>
       <Grid container spacing={3} justify="space-evenly" alignItems="center">
         <Grid item xs={2}>
-          <KeyIndicatorCard
+          <KeyMetricCard
             titel={"Peformance"}
             description={"Portfolio performance since start"}
             value={dataStore.getSymbolSetForTicker("Portfolio").performanceSincePortfolioStart}
@@ -35,7 +35,7 @@ const KeyIndicatorRow = observer(({ dataStore, notificationStore, configStore, s
           />
         </Grid>
         <Grid item xs={2}>
-          <KeyIndicatorCard
+          <KeyMetricCard
             titel={"Peformance"}
             description={"Portfolio performance annualized since start"}
             value={dataStore.getSymbolSetForTicker("Portfolio").yearlyPerformanceSincePortfolioStart}
@@ -43,7 +43,7 @@ const KeyIndicatorRow = observer(({ dataStore, notificationStore, configStore, s
           />
         </Grid>
         <Grid item xs={2}>
-          <KeyIndicatorCard
+          <KeyMetricCard
             titel={"Dividend"}
             description={"Dividends payed out since start"}
             value={dataStore.getSymbolSetForTicker("Portfolio").totalDividendPayout}
