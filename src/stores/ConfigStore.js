@@ -7,6 +7,7 @@ class ConfigStore {
   alphaVantage = { url: "https://www.alphavantage.co/query", apiToken: "" };
   isRunningSetup = true;
   alphaVantageConstants = { SYMBOL_SEARCH: "SYMBOL_SEARCH", TIME_SERIES_DAILY_ADJUSTED: "TIME_SERIES_DAILY_ADJUSTED" };
+  riskFreeRate = 1;
 
   constructor() {
     this.startSetup();
@@ -14,8 +15,10 @@ class ConfigStore {
     makeObservable(this, {
       alphaVantage: observable,
       isRunningSetup: observable,
+      riskFreeRate: observable,
       setAlphaVantageAPITokenHelper: action,
       setIsRunningSetup: action,
+      setRiskFreeRate: action,
     });
   }
 
@@ -56,6 +59,10 @@ class ConfigStore {
   setAlphaVantageAPITokenHelper(newToken) {
     console.log("setAlphaVantageAPITokenHelper: " + newToken);
     this.alphaVantage.apiToken = newToken;
+  }
+  setRiskFreeRate(newRate) {
+    console.log("setRiskFreeRate: " + newRate);
+    this.riskFreeRate = newRate;
   }
 }
 

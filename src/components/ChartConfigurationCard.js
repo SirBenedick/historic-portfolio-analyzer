@@ -46,6 +46,7 @@ function valuetext(value) {
 
 const ChartConfigurationCard = observer(({ configStore }) => {
   const classes = useStyles();
+
   return (
     <Paper className={classes.root} elevation={1}>
       <Grid container spacing={3} xs={8}>
@@ -60,7 +61,7 @@ const ChartConfigurationCard = observer(({ configStore }) => {
           </Grid>
           <Grid item xs={6}>
             <Slider
-              defaultValue={20}
+              defaultValue={configStore.riskFreeRate}
               getAriaValueText={valuetext}
               aria-labelledby="discrete-slider-custom"
               min={-1.5}
@@ -68,6 +69,7 @@ const ChartConfigurationCard = observer(({ configStore }) => {
               step={0.1}
               valueLabelDisplay="auto"
               marks={marks}
+              onChangeCommitted={(e, val) => configStore.setRiskFreeRate(val)}
             />
           </Grid>
         </Grid>
