@@ -44,6 +44,8 @@ Being annoyed by the current application architecture is the key indicator for n
 #### 0.5.0
 
 - Add: portfolio calculation granularity to speed up calculation
+- Improve: Redesign KeyMetricsService
+  - Every indicator should have its own loading indicator
 
 #### Idea dump
 
@@ -56,6 +58,7 @@ Being annoyed by the current application architecture is the key indicator for n
 - Add timeframe for all data
 - Remove: moment.js to decrease bundle size(?)
 - Add: Setting to fetch monthly data, or daily
+- Add: Store different portfolio setups to save for later and to compare
 
 #### 1.0.0
 
