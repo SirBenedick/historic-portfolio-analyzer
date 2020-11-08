@@ -39,7 +39,8 @@ class DataStore {
       setEndValueForTicker: action,
       setTriggerRecalculatePortfolio: action,
       setTriggerRerenderVisibleLines: action,
-      setTotalDividendPayout: action,
+      setTotalDividendPayoutForTicker: action,
+      setSharpRatioForTicker: action,
       setPortfolioStartingDate: action,
       totalValueOfSymbols: computed,
       listOfSymbolTickers: computed,
@@ -201,11 +202,20 @@ class DataStore {
     });
   }
 
-  setTotalDividendPayout(changedSymbolByTicker, value) {
-    console.log("Updating setEndValueForTicker: " + value);
+  setTotalDividendPayoutForTicker(changedSymbolByTicker, value) {
+    console.log("Updating setTotalDividendPayoutForTicker: " + value);
     this.symbols.forEach((symbol) => {
       if (symbol.symbolTicker === changedSymbolByTicker) {
         symbol.totalDividendPayout = value;
+      }
+    });
+  }
+
+  setSharpRatioForTicker(changedSymbolByTicker, value) {
+    console.log("Updating setSharpRatioForTicker: " + value);
+    this.symbols.forEach((symbol) => {
+      if (symbol.symbolTicker === changedSymbolByTicker) {
+        symbol["sharpRatio"] = value;
       }
     });
   }

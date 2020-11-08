@@ -39,14 +39,18 @@ Being annoyed by the current application architecture is the key indicator for n
 - [x] Add Loading indicator while Portfolio is calculating (Backdrop)
 - [x] Add: Calculation of dividends to portfolio performance
 - [ ] ~~Improve: Search with space (if api allows this)~~ (Not possible with alphavantage api)
-- [ ] Add: Calculation of sharp ratio,
+- [x] Add: Calculation of sharp ratio,
 - [ ] Add: Row of cards with key portfolio result
+
   - [x] Performace
   - [x] Annualized
   - [x] Dividend
-  - [ ] Sharpratio
-- [ ] Add: Chart-Settings-Card for portfolio calculation granularity
-- [ ] Style: Move datepicker into new Chart-Settings-Card
+  - [x] Sharpratio
+
+- [ ] Add: Chart-Settings-Card
+  - [ ] Add: portfolio calculation granularity
+  - [ ] Style: Move datepicker into new Chart-Settings-Card
+  - [ ] set risk free rate for sharpratio
 
 #### 0.4.0
 

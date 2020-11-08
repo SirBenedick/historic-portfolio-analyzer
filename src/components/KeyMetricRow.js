@@ -49,6 +49,13 @@ const KeyIndicatorRow = observer(({ dataStore, notificationStore, configStore, s
             value={dataStore.getSymbolSetForTicker("Portfolio").totalDividendPayout}
           />
         </Grid>
+        <Grid item xs={2}>
+          <KeyMetricCard
+            titel={"Sharp Ratio"}
+            description={"Calculated based on set risk free rate"}
+            value={dataStore.getSymbolSetForTicker("Portfolio").sharpRatio}
+          />
+        </Grid>
       </Grid>
     </div>
   );

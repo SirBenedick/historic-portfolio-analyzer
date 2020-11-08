@@ -2,6 +2,7 @@ import dbPromise from "./dbPromise";
 import dataStore from "./DataStore";
 import moment from "moment";
 import FetchDataService from "../services/FetchDataService";
+import KeyMetricsService from "../services/KeyMetricsService";
 import idbPortfolioStore from "./idbPortfolioStore";
 import notificationStore from "./NotificationStore";
 import configStore from "./ConfigStore";
@@ -184,8 +185,11 @@ const idbSymbolDataStore = {
         const yearlyPerformanceSinceStartPortfolio = performanceSinceStartPortfolio * (365 / daysSinceStart);
         dataStore.setYearlyPerformanceSincePortfolioStartForTicker("Portfolio", yearlyPerformanceSinceStartPortfolio);
 
-        dataStore.setTotalDividendPayout("Portfolio", sumOfDividends);
+        dataStore.setTotalDividendPayoutForTicker("Portfolio", sumOfDividends);
         dataStore.setEndValueForTicker("Portfolio", startingDatePriceValuePortfolio);
+
+        // calculate sharp
+        KeyMetricsService.calculateAndStoreSharpRatio(result, yearlyPerformanceSinceStartPortfolio);
       }
     });
 
