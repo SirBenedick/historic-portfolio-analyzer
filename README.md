@@ -33,25 +33,6 @@ Being annoyed by the current application architecture is the key indicator for n
 
 ### Progress (Add/Style/Remove/Improve/Refactor/Fix):
 
-#### 0.3.0
-
-- [x] Fix: Trigger Chart rerender when switching from Settings page to Chart page
-- [x] Add Loading indicator while Portfolio is calculating (Backdrop)
-- [x] Add: Calculation of dividends to portfolio performance
-- [ ] ~~Improve: Search with space (if api allows this)~~ (Not possible with alphavantage api)
-- [x] Add: Calculation of sharp ratio,
-- [x] Add: Row of cards with key portfolio result
-
-  - [x] Performace
-  - [x] Annualized
-  - [x] Dividend
-  - [x] Sharpratio
-
-- [x] Add: Chart-Settings-Card
-  - [ ] ~~Add: portfolio calculation granularity~~ (move to backlog)
-  - [x] Style: Move datepicker into new Chart-Settings-Card
-  - [x] Set risk free rate for sharpratio
-
 #### 0.4.0
 
 - [ ] Refactor: Dataflow, no direct acces from outside to idb\_\_\_Store,
@@ -60,9 +41,12 @@ Being annoyed by the current application architecture is the key indicator for n
 - [ ] Fix: Check if sharp ratio is calculated correctly (risk free rate has little impact atm)
 - [ ] Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed
 
-#### Idea dump
+#### 0.5.0
 
 - Add: portfolio calculation granularity to speed up calculation
+
+#### Idea dump
+
 - Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
 - Add: Store for symbols to be fetched (in case API limit is reached)(set version of index db to current date)
 - Add: Store datet of fetched data, refresh if is too old
