@@ -35,7 +35,7 @@ Being annoyed by the current application architecture is the key indicator for n
 
 #### 0.3.0
 
-- [ ] Fix: Trigger Chart rerender when switching from Settings page to Chart page
+- [x] Fix: Trigger Chart rerender when switching from Settings page to Chart page
 - [ ] Add Loading indicator while Portfolio is calculating (Backdrop)
 - [ ] Add: Calculation of dividends to portfolio performance
 - [ ] Improve: Search with space (if api allows this)

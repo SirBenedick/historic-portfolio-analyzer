@@ -5,7 +5,7 @@ import SelectedSymbolsBar from "../components/SelectedSymbolsBar";
 import Chart from "../components/Chart";
 import PortfolioBuilder from "../components/PortfolioBuilder";
 
-const ChartingPage = ({ dataStore, notificationStore }) => {
+const ChartingPage = ({ dataStore, notificationStore, configStore }) => {
   return (
     <div>
       <Grid container spacing={3}>
@@ -13,7 +13,7 @@ const ChartingPage = ({ dataStore, notificationStore }) => {
           <SelectedSymbolsBar dataStore={dataStore} notificationStore={notificationStore} />
         </Grid>
         <Grid item xs={12}>
-          <Chart dataStore={dataStore} />
+          <Chart dataStore={dataStore} configStore={configStore} />
         </Grid>
         <Grid item xs={12}>
           <PortfolioBuilder dataStore={dataStore} />

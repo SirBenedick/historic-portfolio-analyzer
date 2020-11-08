@@ -181,7 +181,7 @@ function App() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {pages.chartingPage.showPage ? (
-          <ChartingPage dataStore={dataStore} notificationStore={notificationStore} />
+          <ChartingPage dataStore={dataStore} notificationStore={notificationStore} configStore={configStore} />
         ) : null}
         {pages.settingsPage.showPage ? <SettingsPage configStore={configStore} /> : null}
       </main>
