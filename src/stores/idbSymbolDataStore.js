@@ -129,7 +129,7 @@ const idbSymbolDataStore = {
     datesToCheck.forEach((date) => {
       let tempSumForDate = 0;
       for (const [symbolTicker, dataset] of Object.entries(tempSymbolDatasetMap)) {
-        if (!(date in dataset)) return;
+        if (dataset && !(date in dataset)) return;
         const dividend = dataset[date]["7. dividend amount"];
         sumOfDividends += dividend * symbolQuantityMap[symbolTicker];
         const stockValue = dataset[date]["5. adjusted close"];
