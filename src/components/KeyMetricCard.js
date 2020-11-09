@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper, Typography } from "@material-ui/core";
+import { Grid, Paper, Typography, CircularProgress } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -29,7 +29,7 @@ const KeyMetricCard = ({ titel, description, value = 0, showPercent = false }) =
           </Grid>
           <Grid item>
             <Typography variant="h3" component="h2">
-              {showPercent ? performanceToPercent(value) : value.toFixed(2)}
+              {value ? showPercent ? performanceToPercent(value) : value.toFixed(2) : <CircularProgress />}
             </Typography>
           </Grid>
           <Grid item>
