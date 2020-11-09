@@ -71,3 +71,5 @@ Being annoyed by the current application architecture is the key indicator for n
 - Add: tooltip with link to ratio definition
 - Add: Heatmap for daily/weekly/montly return
 - Add: Card performance weighted compared to single asset and market
+
+(Testing if actions cache is working)
