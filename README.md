@@ -35,18 +35,18 @@ Being annoyed by the current application architecture is the key indicator for n
 
 #### 0.4.0
 
-- [ ] Refactor: Dataflow, no direct acces from outside to idb\_\_\_Stores,
-- [ ] Refactor: Store calculated data in symbolDataStore (symbolDataStore should wraps idbSymbolDataStore)
-- [ ] Improve: Sharpratio calculation should not trigger recalculation of portfolio (needs portfolio stored somewhere)
+- [x] Refactor: Dataflow, no direct acces from outside to idb\_\_\_Stores,
+- [x] Refactor: Store calculated data in symbolDataStore (symbolDataStore should wraps idbSymbolDataStore)
 - [ ] Fix: Check if sharp ratio is calculated correctly (risk free rate has little impact atm)
 - [ ] Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed
-  - Improve: Portfoliocalculation, store calculation and delete when a new one starts
+  - [ ] Improve: Portfoliocalculation, store calculation and delete when a new one starts
+- [ ] Improve: Redesign KeyMetricsService
+  - [ ] Every indicator should have its own loading indicator
+  - [ ] Improve: Sharpratio calculation should not trigger recalculation of portfolio (needs portfolio stored somewhere)
 
 #### 0.5.0
 
 - Add: portfolio calculation granularity to speed up calculation
-- Improve: Redesign KeyMetricsService
-  - Every indicator should have its own loading indicator
 
 #### Idea dump
 
