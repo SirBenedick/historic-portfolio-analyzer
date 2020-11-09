@@ -1,11 +1,8 @@
 import dbPromise from "./dbPromise";
 import dataStore from "./DataStore";
 import moment from "moment";
-import FetchDataService from "../services/FetchDataService";
 import KeyMetricsService from "../services/KeyMetricsService";
-import idbPortfolioStore from "./idbPortfolioStore";
 import notificationStore from "./NotificationStore";
-import configStore from "./ConfigStore";
 import symbolDataStore from "./SymbolDataStore";
 
 const idbSymbolDataStore = {
@@ -31,46 +28,13 @@ const idbSymbolDataStore = {
     }
     return false;
   },
-  async getDataChartFormatBySymbol(key) {
-    console.log("getDataChartFormatBySymbol: " + key);
-    // TODO ensure consistent order old -> new
-    if (key === "Portfolio") {
-      const doesPortfolioDataExist = await idbPortfolioStore.doesDataSeriesExist();
-      if (doesPortfolioDataExist) {
-        return idbPortfolioStore.get("dataSeries");
-      } else {
-        return this.calculateAndStoreHistoricPortfolioPerformance();
-      }
-    } else {
-      return (await dbPromise).get("symbolDataStore", key).then(async (symbolData) => {
-        // Check doesTimesSeriesDailyAdjustedExistForSymbol else fetch data
-        if (symbolData && "Time Series (Daily)" in symbolData && symbolData["Time Series (Daily)"]) {
-          return formateDataToChartFormat(symbolData);
-        } else {
-          // Check if api token exist
-          if (configStore.alphaVantage.apiToken) {
-            const wasDataFetched = await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(key);
-            if (wasDataFetched) return this.getDataChartFormatBySymbol(key);
-          } else {
-            notificationStore.enqueueSnackbar({
-              message: `Please enter an API key on the Settings Page`,
-              options: {
-                variant: "error",
-                autoHideDuration: 2500,
-              },
-              key: notificationStore.keys.API_TOKEN_MISSING,
-            });
-          }
-        }
-      });
-    }
-  },
   async getTimeSeriesDailyByTicker(key) {
     const data = await this.get(key);
     if (data && "Time Series (Daily)" in data && data["Time Series (Daily)"]) return data["Time Series (Daily)"];
     return false;
   },
   async getTimeSeriesDailyByTickerFormated(key) {
+    console.log("getTimeSeriesDailyByTickerFormated: " + key);
     const data = await this.get(key);
     if (data && "Time Series (Daily)" in data && data["Time Series (Daily)"]) return formateDataToChartFormat(data);
     return false;
@@ -174,7 +138,7 @@ const idbSymbolDataStore = {
       if (tempSumForDate) result.push({ time: date, value: tempSumForDate });
     });
 
-    idbPortfolioStore.set("dataSeries", result).then((res) => {
+    symbolDataStore.setTimeseriesForTicker("Portfolio", result).then((res) => {
       if (result.length !== 0) {
         const endDatePriceValuePortfolio = result[0].value;
         const startingDatePriceValuePortfolio = result[result.length - 1].value;

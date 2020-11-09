@@ -13,10 +13,6 @@ const dbPromise = openDB("historic-portfolio-analyzer", 1, {
         autoIncrement: false,
       });
     }
-    if (!db.objectStoreNames.contains("portfolioStore")) {
-      console.log("Creating new portfolioStore");
-      db.createObjectStore("portfolioStore");
-    }
     if (!db.objectStoreNames.contains("configStore")) {
       console.log("Creating new configStore");
       db.createObjectStore("configStore");

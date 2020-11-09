@@ -5,15 +5,16 @@ import notificationStore from "./NotificationStore";
 import FetchDataService from "../services/FetchDataService";
 class SymbolDataStore {
   isCalculatingPortfolioPerformance = false;
-  symbolChartDataMap = {};
+  symbolChartTimeseriesDataMap = { Portfolio: [] };
 
   constructor() {
     makeObservable(this, {
       isCalculatingPortfolioPerformance: observable,
-      symbolChartDataMap: observable,
+      symbolChartTimeseriesDataMap: observable,
       setIsCalculatingPortfolioPerformance: action,
       addSymbolToMap: action,
       removeSymbolFromMap: action,
+      setTimeseriesForTicker: action,
     });
   }
 
@@ -22,15 +23,16 @@ class SymbolDataStore {
   }
 
   async addSymbolToMap(symbolTicker) {
+    console.log("addSymbolToMap: " + symbolTicker);
     const dataForSymbol = await idbSymbolDataStore.getTimeSeriesDailyByTickerFormated(symbolTicker);
     if (dataForSymbol) {
-      this.symbolChartDataMap[symbolTicker] = dataForSymbol;
+      this.setTimeseriesForTicker(symbolTicker, dataForSymbol);
     } else {
       // Check if api token is set
       if (configStore.alphaVantage.apiToken) {
         await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(symbolTicker);
         const dataForSymbol = await idbSymbolDataStore.getTimeSeriesDailyByTickerFormated(symbolTicker);
-        if (dataForSymbol) this.symbolChartDataMap[symbolTicker] = dataForSymbol;
+        if (dataForSymbol) this.setTimeseriesForTicker(symbolTicker, dataForSymbol);
       } else {
         notificationStore.enqueueSnackbar({
           message: `Please enter an API key on the Settings Page`,
@@ -45,25 +47,31 @@ class SymbolDataStore {
   }
 
   async removeSymbolFromMap(symbolTicker) {
-    delete this.symbolChartDataMap[symbolTicker];
+    delete this.symbolChartTimeseriesDataMap[symbolTicker];
   }
 
-  async getSymbolDataFromMap(symbolTicker) {
-    if (symbolDataStore[symbolTicker]) return symbolDataStore[symbolTicker];
+  async getSymbolTimeseriesDataFromMap(symbolTicker) {
+    console.log("getSymbolTimeseriesDataFromMap: " + symbolTicker);
+    if (this.symbolChartTimeseriesDataMap[symbolTicker]) return this.symbolChartTimeseriesDataMap[symbolTicker];
     else {
-      await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(symbolTicker);
-      const dataForSymbol = await idbSymbolDataStore.getTimeSeriesDailyByTickerFormated(symbolTicker);
-      if (dataForSymbol) this.symbolChartDataMap[symbolTicker] = dataForSymbol;
-      return dataForSymbol;
+      if (symbolTicker === "Portfolio") {
+        return;
+      } else {
+        await FetchDataService.fetchDataDailyAdjustedForSymbolAlphaVantage(symbolTicker);
+        const dataForSymbol = await idbSymbolDataStore.getTimeSeriesDailyByTickerFormated(symbolTicker);
+        if (dataForSymbol) this.setTimeseriesForTicker(symbolTicker, dataForSymbol);
+        return dataForSymbol;
+      }
     }
+  }
+
+  async setTimeseriesForTicker(symbolTicker, timeseries) {
+    console.log("setTimeseriesForTicker: " + symbolTicker);
+    this.symbolChartTimeseriesDataMap[symbolTicker] = timeseries;
   }
 
   async calculateAndStoreHistoricPortfolioPerformance() {
     return await idbSymbolDataStore.calculateAndStoreHistoricPortfolioPerformance();
-  }
-
-  async getDataChartFormatBySymbol(symbolTicker) {
-    return await idbSymbolDataStore.getDataChartFormatBySymbol(symbolTicker);
   }
 }
 

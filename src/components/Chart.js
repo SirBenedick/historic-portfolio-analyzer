@@ -91,7 +91,7 @@ export default class Chart extends React.Component {
     console.log("addLineSeriesData: " + symbolSet.symbolTicker);
 
     // TODO If data not availible then fetch data
-    const dataForSymbol = await symbolDataStore.getDataChartFormatBySymbol(symbolSet.symbolTicker);
+    const dataForSymbol = await symbolDataStore.getSymbolTimeseriesDataFromMap(symbolSet.symbolTicker);
 
     if (!this.lineSeriesObj[symbolSet.symbolTicker]) {
       // If lineSeriesObj for ticker does not exist then create new lineSeriesObj
