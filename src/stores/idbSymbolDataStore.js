@@ -65,14 +65,15 @@ const idbSymbolDataStore = {
       });
     }
   },
-  async doesTimesSeriesDailyAdjustedExistForSymbol(key) {
+  async getTimeSeriesDailyByTicker(key) {
     const data = await this.get(key);
-    if (data && "Time Series (Daily)" in data && data["Time Series (Daily)"]) return true;
+    if (data && "Time Series (Daily)" in data && data["Time Series (Daily)"]) return data["Time Series (Daily)"];
     return false;
   },
-  async getTimeSeriesDailyByTicker(symbolTicker) {
-    const data = await this.get(symbolTicker);
-    return data["Time Series (Daily)"];
+  async getTimeSeriesDailyByTickerFormated(key) {
+    const data = await this.get(key);
+    if (data && "Time Series (Daily)" in data && data["Time Series (Daily)"]) return formateDataToChartFormat(data);
+    return false;
   },
   async calculateAndStoreHistoricPortfolioPerformance() {
     console.log("calculateAndStoreHistoricPortfolioPerformance");
