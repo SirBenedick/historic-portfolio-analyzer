@@ -3,10 +3,14 @@ import configStore from "../stores/ConfigStore";
 
 const KeyMetricsService = {
   async calculateAndStoreSharpRatio(timeseries, annualizedPerformanceSinceStartPortfolio) {
-    const dataSet = timeseries.map((entry) => entry.value);
+    const startValue = timeseries[0].value;
+    const riskFreeRate = configStore.riskFreeRate;
+
+    let dataSet = timeseries.map((entry) => entry.value);
+    dataSet = dataSet.map((value) => (value / startValue) * 100 - riskFreeRate);
+
     const standardDeviation = std(dataSet);
 
-    const riskFreeRate = configStore.riskFreeRate;
     const sharpRatio = (annualizedPerformanceSinceStartPortfolio * 100 - riskFreeRate) / standardDeviation;
 
     return sharpRatio;

@@ -37,9 +37,9 @@ Being annoyed by the current application architecture is the key indicator for n
 
 - [x] Refactor: Dataflow, no direct acces from outside to idb\_\_\_Stores,
 - [x] Refactor: Store calculated data in symbolDataStore (symbolDataStore should wraps idbSymbolDataStore)
-- [ ] Fix: Check if sharp ratio is calculated correctly (risk free rate has little impact atm)
-- [ ] Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed
-  - [ ] Improve: Portfoliocalculation, store calculation and delete when a new one starts
+- [x] Fix: Check if sharp ratio is calculated correctly (risk free rate has little impact atm)
+- [ ] ~~Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed~~
+  - [ ] ~~Improve: Portfoliocalculation, store calculation and delete when a new one starts~~
 - [x] Improve: Redesign KeyMetricsService
   - [x] Every indicator should have its own loading indicator
   - [x] Improve: Sharpratio calculation should not trigger recalculation of portfolio (needs portfolio stored somewhere)
@@ -47,6 +47,7 @@ Being annoyed by the current application architecture is the key indicator for n
 #### 0.5.0
 
 - Add: portfolio calculation granularity to speed up calculation
+- Improve: Debounce value input inside portfoliobuilder
 
 #### Idea dump
 
@@ -61,6 +62,7 @@ Being annoyed by the current application architecture is the key indicator for n
 - Remove: moment.js to decrease bundle size(?)
 - Add: Setting to fetch monthly data, or daily
 - Add: Store different portfolio setups to save for later and to compare
+- Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed
 
 #### 1.0.0
 
