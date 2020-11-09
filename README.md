@@ -40,6 +40,7 @@ Being annoyed by the current application architecture is the key indicator for n
 - [ ] Improve: Sharpratio calculation should not trigger recalculation of portfolio (needs portfolio stored somewhere)
 - [ ] Fix: Check if sharp ratio is calculated correctly (risk free rate has little impact atm)
 - [ ] Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed
+  - Improve: Portfoliocalculation, store calculation and delete when a new one starts
 
 #### 0.5.0
 
@@ -49,6 +50,7 @@ Being annoyed by the current application architecture is the key indicator for n
 
 #### Idea dump
 
+- Style: Indicate which symbols have been downloaded
 - Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
 - Add: Store for symbols to be fetched (in case API limit is reached)(set version of index db to current date)
 - Add: Store datet of fetched data, refresh if is too old
