@@ -7,7 +7,7 @@ import PortfolioBuilder from "../components/PortfolioBuilder";
 import KeyMetricRow from "../components/KeyMetricRow";
 import ChartConfigurationCard from "../components/ChartConfigurationCard";
 
-const ChartingPage = ({ dataStore, notificationStore, configStore, symbolDataStore }) => {
+const ChartingPage = ({ dataStore, notificationStore, configStore, symbolDataStore, keyMetricsStore }) => {
   return (
     <div>
       <Grid container spacing={3}>
@@ -15,7 +15,7 @@ const ChartingPage = ({ dataStore, notificationStore, configStore, symbolDataSto
           <SelectedSymbolsBar dataStore={dataStore} notificationStore={notificationStore} />
         </Grid>
         <Grid item xs={12} spacing={3}>
-          <KeyMetricRow dataStore={dataStore} configStore={configStore} symbolDataStore={symbolDataStore} />
+          <KeyMetricRow dataStore={dataStore} keyMetricsStore={keyMetricsStore} />
         </Grid>
         <Grid item xs={12}>
           <Chart dataStore={dataStore} configStore={configStore} symbolDataStore={symbolDataStore} />

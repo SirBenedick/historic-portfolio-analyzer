@@ -1,9 +1,9 @@
 import dbPromise from "./dbPromise";
 import dataStore from "./DataStore";
 import moment from "moment";
-import KeyMetricsService from "../services/KeyMetricsService";
 import notificationStore from "./NotificationStore";
 import symbolDataStore from "./SymbolDataStore";
+import keyMetricsStore from "./KeyMetricsStore";
 
 const idbSymbolDataStore = {
   async get(key) {
@@ -153,8 +153,8 @@ const idbSymbolDataStore = {
         dataStore.setTotalDividendPayoutForTicker("Portfolio", sumOfDividends);
         dataStore.setEndValueForTicker("Portfolio", startingDatePriceValuePortfolio);
 
-        // calculate sharp
-        KeyMetricsService.calculateAndStoreSharpRatio(result, yearlyPerformanceSinceStartPortfolio);
+        // Calculate key metrics
+        keyMetricsStore.calculateAndSetPortfolioSharpRatio();
       }
     });
 

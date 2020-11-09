@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
   },
 }));
-const KeyIndicatorRow = observer(({ dataStore, notificationStore, configStore, symbolDataStore }) => {
+const KeyIndicatorRow = observer(({ dataStore, keyMetricsStore }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -53,7 +53,7 @@ const KeyIndicatorRow = observer(({ dataStore, notificationStore, configStore, s
           <KeyMetricCard
             titel={"Sharp Ratio"}
             description={"Calculated based on set risk free rate"}
-            value={dataStore.getSymbolSetForTicker("Portfolio").sharpRatio}
+            value={keyMetricsStore.portfolioSharpRatio}
           />
         </Grid>
       </Grid>

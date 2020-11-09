@@ -25,7 +25,7 @@ import configStore from "./stores/ConfigStore";
 import symbolDataStore from "./stores/SymbolDataStore";
 import ChartingPage from "./pages/ChartingPage";
 import SettingsPage from "./pages/SettingsPage";
-
+import keyMetricsStore from "./stores/KeyMetricsStore";
 import Notifier from "./components/Notifier";
 
 const drawerWidth = 240;
@@ -187,6 +187,7 @@ function App() {
             notificationStore={notificationStore}
             configStore={configStore}
             symbolDataStore={symbolDataStore}
+            keyMetricsStore={keyMetricsStore}
           />
         ) : null}
         {pages.settingsPage.showPage ? <SettingsPage configStore={configStore} /> : null}
