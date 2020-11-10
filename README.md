@@ -33,36 +33,29 @@ Being annoyed by the current application architecture is the key indicator for n
 
 ### Progress (Add/Style/Remove/Improve/Refactor/Fix):
 
-#### 0.4.0
-
-- [x] Refactor: Dataflow, no direct acces from outside to idb\_\_\_Stores,
-- [x] Refactor: Store calculated data in symbolDataStore (symbolDataStore should wraps idbSymbolDataStore)
-- [x] Fix: Check if sharp ratio is calculated correctly (risk free rate has little impact atm)
-- [ ] ~~Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed~~
-  - [ ] ~~Improve: Portfoliocalculation, store calculation and delete when a new one starts~~
-- [x] Improve: Redesign KeyMetricsService
-  - [x] Every indicator should have its own loading indicator
-  - [x] Improve: Sharpratio calculation should not trigger recalculation of portfolio (needs portfolio stored somewhere)
-
 #### 0.5.0
 
-- Add: portfolio calculation granularity to speed up calculation
-- Improve: Debounce value input inside portfoliobuilder
+- [ ] Improve: Sharpratio calculation does not trigger portfoliorecalculation
+- [ ] Improve: Debounce value input inside portfoliobuilder and DatePicker
+- [ ] Style: KeyMetric annualized needs to be more self explaining (change title)
+- [ ] Style: Portfoliobuilder number of Assets
+- [ ] Style: Indicate which symbols have been downloaded
 
 #### Idea dump
 
-- Style: Indicate which symbols have been downloaded
-- Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
-- Add: Store for symbols to be fetched (in case API limit is reached)(set version of index db to current date)
-- Add: Store datet of fetched data, refresh if is too old
-- Add: Choose time of entry for each position
-- Add: Different Backends to call stock data from different sources
-- Clean up README.md: Add UCs, scenarios, technoglogies...
 - Add timeframe for all data
-- Remove: moment.js to decrease bundle size(?)
 - Add: Setting to fetch monthly data, or daily
 - Add: Store different portfolio setups to save for later and to compare
 - Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed
+- Remove: moment.js to decrease bundle size(?)
+- Add: Choose time of entry for each position
+- Improve: Portfoliobuilder sort by each row
+- Add: Drawdownchart
+- Add: Store datset of fetched data, refresh if is too old
+- Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
+- Add: portfolio calculation granularity to speed up calculation
+- Add: Store for symbols to be fetched (in case API limit is reached)(set version of index db to current date)
+- Add: Different Backends to call stock data from different sources
 
 #### 1.0.0
 
