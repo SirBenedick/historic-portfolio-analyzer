@@ -20,11 +20,15 @@ class KeyMetricsStore {
     const annualizedPerformanceSinceStartPortfolio = dataStore.getSymbolSetForTicker("Portfolio")
       .yearlyPerformanceSincePortfolioStart;
 
-    const res = await KeyMetricsService.calculateAndStoreSharpRatio(
-      timeseries,
-      annualizedPerformanceSinceStartPortfolio
-    );
-    this.portfolioSharpRatio = res;
+    if (timeseries.length !== 0) {
+      const res = await KeyMetricsService.calculateAndStoreSharpRatio(
+        timeseries,
+        annualizedPerformanceSinceStartPortfolio
+      );
+      this.portfolioSharpRatio = res;
+    } else {
+      this.portfolioSharpRatio = 0;
+    }
   }
 }
 

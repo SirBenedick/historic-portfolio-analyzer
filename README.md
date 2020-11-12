@@ -35,7 +35,7 @@ Being annoyed by the current application architecture is the key indicator for n
 
 #### 0.5.0
 
-- [ ] Improve: Sharpratio calculation does not trigger portfoliorecalculation
+- [x] Improve: Sharpratio calculation does not trigger portfoliorecalculation
 - [ ] Improve: Debounce value input inside portfoliobuilder and DatePicker
 - [ ] Style: KeyMetric annualized needs to be more self explaining (change title)
 - [ ] Style: Portfoliobuilder number of Assets
