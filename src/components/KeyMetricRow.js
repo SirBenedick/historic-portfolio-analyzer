@@ -36,8 +36,8 @@ const KeyIndicatorRow = observer(({ dataStore, keyMetricsStore }) => {
         </Grid>
         <Grid item xs={2}>
           <KeyMetricCard
-            titel={"Peformance"}
-            description={"Portfolio performance annualized since start"}
+            titel={"Annualized"}
+            description={"Annualized portfolio performance since start"}
             value={dataStore.getSymbolSetForTicker("Portfolio").yearlyPerformanceSincePortfolioStart}
             showPercent={true}
           />
