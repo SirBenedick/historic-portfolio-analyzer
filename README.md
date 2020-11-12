@@ -40,14 +40,6 @@ Read: -
 Update: Fix, Improve, Refactor, Style
 Delete: Remove
 
-#### 0.5.0
-
-- [x] Improve: Sharpratio calculation does not trigger portfoliorecalculation
-- [x] Improve: Debounce value input inside portfoliobuilder and DatePicker
-- [x] Style: KeyMetric annualized needs to be more self explaining (change title)
-- [x] Style: Portfoliobuilder number of Assets
-- [ ] ~~Style: Indicate which symbols have been downloaded~~(Move to 0.6.0)
-
 #### 0.6.0
 
 - [ ] Improve: Datastructure, store data inside idbSymbolData wit a clean format
