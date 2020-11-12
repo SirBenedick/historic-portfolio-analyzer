@@ -36,13 +36,14 @@ Being annoyed by the current application architecture is the key indicator for n
 #### 0.5.0
 
 - [x] Improve: Sharpratio calculation does not trigger portfoliorecalculation
-- [ ] Improve: Debounce value input inside portfoliobuilder and DatePicker
+- [x] Improve: Debounce value input inside portfoliobuilder and DatePicker
 - [ ] Style: KeyMetric annualized needs to be more self explaining (change title)
 - [ ] Style: Portfoliobuilder number of Assets
 - [ ] Style: Indicate which symbols have been downloaded
 
 #### Idea dump
 
+- Improve: Check if DatePicker delivers a valid date
 - Add timeframe for all data
 - Add: Setting to fetch monthly data, or daily
 - Add: Store different portfolio setups to save for later and to compare

@@ -19,6 +19,7 @@ class DataStore {
   appleData = [];
   portfolioStartingDate = "";
   triggerRecalculatePortfolio = false;
+  triggerRecalculatePortfolioTimeout = null;
   triggerRerenderVisibleLines = false;
 
   constructor() {
@@ -46,11 +47,24 @@ class DataStore {
     this.portfolioStartingDate = moment().subtract(1, "years").format("YYYY-MM-DD");
 
     autorun(() => {
+      // triggerRecalculatePortfolio
       const trigger = this.portfolioStartingDate;
       const trigger2 = this.totalValueOfSymbols;
 
-      this.setTriggerRecalculatePortfolio(true);
-      console.log("Autorun: triggering portfolio rercalculation" + JSON.stringify(trigger) + JSON.stringify(trigger2));
+      // Debounce
+      const debouncePortfolioRecalculation = () => {
+        this.setTriggerRecalculatePortfolio(true);
+        console.log(
+          "Autorun: triggering portfolio rercalculation" + JSON.stringify(trigger) + JSON.stringify(trigger2)
+        );
+      };
+
+      //  Check if timeout exists, if so clear and start a new one
+      if (this.triggerRecalculatePortfolioTimeout) clearTimeout(this.triggerRecalculatePortfolioTimeout);
+      const timeout = setTimeout(async () => {
+        debouncePortfolioRecalculation();
+      }, 500);
+      this.triggerRecalculatePortfolioTimeout = timeout;
     });
   }
 
