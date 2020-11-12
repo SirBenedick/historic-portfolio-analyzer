@@ -13,6 +13,7 @@ const PortfolioBuilder = observer(({ dataStore }) => {
       <Table className={classes.table} aria-label="simple table" size="small">
         <TableHead>
           <TableRow>
+            <TableCell>No.</TableCell>
             <TableCell>Symbol</TableCell>
             <TableCell>Name</TableCell>
             <TableCell id="annualized" align="right">
@@ -27,9 +28,12 @@ const PortfolioBuilder = observer(({ dataStore }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {dataStore.symbols.map((symbolSet) => {
+          {dataStore.symbols.map((symbolSet, index) => {
             return (
               <TableRow key={symbolSet.symbolTicker}>
+                <TableCell component="th" scope="row">
+                  {index !== 0 ? index + "." : null}
+                </TableCell>
                 <TableCell component="th" scope="row">
                   {symbolSet.symbolTicker}
                 </TableCell>
