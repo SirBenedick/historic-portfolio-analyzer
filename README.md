@@ -31,7 +31,14 @@ Being annoyed by the current application architecture is the key indicator for n
 - MINOR: Bumps on the next completed feature set
 - X: Increase towards the next feature set (Is going to be forgotten often)
 
-### Progress (Add/Style/Remove/Improve/Refactor/Fix):
+### Progress
+
+###### To-Do-Types
+
+Create: Add
+Read: -
+Update: Fix, Improve, Refactor, Style
+Delete: Remove
 
 #### 0.5.0
 
@@ -39,10 +46,19 @@ Being annoyed by the current application architecture is the key indicator for n
 - [x] Improve: Debounce value input inside portfoliobuilder and DatePicker
 - [x] Style: KeyMetric annualized needs to be more self explaining (change title)
 - [x] Style: Portfoliobuilder number of Assets
-- [ ] Style: Indicate which symbols have been downloaded
+- [ ] ~~Style: Indicate which symbols have been downloaded~~(Move to 0.6.0)
+
+#### 0.6.0
+
+- [ ] Improve: Datastructure, store data inside idbSymbolData wit a clean format
+- [ ] Add: Popper menu to SelectedSymbolsBar
+  - [ ] Showing remove
+  - [ ] Information about the symbol
+  - [ ] Date of data download
 
 #### Idea dump
 
+- Add: Drawdownchart
 - Improve: Check if DatePicker delivers a valid date
 - Add timeframe for all data
 - Add: Setting to fetch monthly data, or daily
@@ -51,7 +67,6 @@ Being annoyed by the current application architecture is the key indicator for n
 - Remove: moment.js to decrease bundle size(?)
 - Add: Choose time of entry for each position
 - Improve: Portfoliobuilder sort by each row
-- Add: Drawdownchart
 - Add: Store datset of fetched data, refresh if is too old
 - Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
 - Add: portfolio calculation granularity to speed up calculation
