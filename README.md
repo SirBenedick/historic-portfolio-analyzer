@@ -40,17 +40,22 @@ Read: -
 Update: Fix, Improve, Refactor, Style
 Delete: Remove
 
+#### 0.7.0
+
+- Style: Portfoliobuilder make it clear that the "Portfolio" row is different (thick border?)
+- Improve: Check if DatePicker delivers a valid date
+- Improve: Portfoliobuilder sort by each row
+- Style: Portfoliobuilder move "Total: \$XXX" to the right
+
 #### Idea dump
 
 - Add: Drawdownchart
-- Improve: Check if DatePicker delivers a valid date
 - Add timeframe for all data
 - Add: Setting to fetch monthly data, or daily
 - Add: Store different portfolio setups to save for later and to compare
 - Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed
 - Remove: moment.js to decrease bundle size(?)
 - Add: Choose time of entry for each position
-- Improve: Portfoliobuilder sort by each row
 - Add: Store datset of fetched data, refresh if is too old
 - Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
 - Add: portfolio calculation granularity to speed up calculation
