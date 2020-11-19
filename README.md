@@ -42,7 +42,7 @@ Delete: Remove
 
 #### 0.6.0
 
-- [ ] Improve: Datastructure, store data inside idbSymbolData wit a clean format
+- [x] Improve: Datastructure, store data inside idbSymbolData wit a clean format
 - [ ] Add: Popper menu to SelectedSymbolsBar
   - [ ] Showing remove
   - [ ] Information about the symbol
@@ -72,5 +72,3 @@ Delete: Remove
 - Add: tooltip with link to ratio definition
 - Add: Heatmap for daily/weekly/montly return
 - Add: Card performance weighted compared to single asset and market
-
-(Testing if actions cache is working)

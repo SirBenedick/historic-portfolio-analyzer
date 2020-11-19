@@ -5,6 +5,21 @@ import notificationStore from "./NotificationStore";
 import symbolDataStore from "./SymbolDataStore";
 import keyMetricsStore from "./KeyMetricsStore";
 
+/**
+ * primary key: symbol
+ * Format of object stored (example):
+{
+  symbol: "AAPL", 
+  meta_data: {
+  symbol_ticker: "AAPL"
+  data_fetched: "2020-11-18",
+  time_zone: "US/Eastern",
+  },
+  time_series_daily:{
+    "2020-11-10": {...}
+  } 
+}
+ */
 const idbSymbolDataStore = {
   async get(key) {
     return (await dbPromise).get("symbolDataStore", key);
@@ -23,21 +38,35 @@ const idbSymbolDataStore = {
   },
   async getAdjustedCloseByTickerAndDate(key, date) {
     const data = await this.get(key);
-    if (data && "Time Series (Daily)" in data) {
-      if (data["Time Series (Daily)"][date]) return data["Time Series (Daily)"][date]["5. adjusted close"];
+    if (data && "time_series_daily" in data) {
+      if (data["time_series_daily"][date]) return data["time_series_daily"][date]["5. adjusted close"];
     }
     return false;
   },
   async getTimeSeriesDailyByTicker(key) {
     const data = await this.get(key);
-    if (data && "Time Series (Daily)" in data && data["Time Series (Daily)"]) return data["Time Series (Daily)"];
+    if (data && "time_series_daily" in data && data["time_series_daily"]) return data["time_series_daily"];
     return false;
   },
   async getTimeSeriesDailyByTickerFormated(key) {
     console.log("getTimeSeriesDailyByTickerFormated: " + key);
     const data = await this.get(key);
-    if (data && "Time Series (Daily)" in data && data["Time Series (Daily)"]) return formateDataToChartFormat(data);
+    if (data && "time_series_daily" in data && data["time_series_daily"]) return formateDataToChartFormat(data);
     return false;
+  },
+  async formatAndStoreSymbolData(symbolTicker, rawData) {
+    let meta_data = {
+      symbol: rawData["Meta Data"]["2. Symbol"],
+      date_fetched: rawData["Meta Data"]["3. Last Refreshed"],
+      time_zone: rawData["Meta Data"]["5. Time Zone"],
+    };
+
+    let formatedData = {
+      symbol_ticker: symbolTicker,
+      meta_data: meta_data,
+      time_series_daily: rawData["Time Series (Daily)"],
+    };
+    await this.set(formatedData);
   },
   async calculateAndStoreHistoricPortfolioPerformance() {
     console.log("calculateAndStoreHistoricPortfolioPerformance");
@@ -165,7 +194,7 @@ const idbSymbolDataStore = {
 
 const formateDataToChartFormat = (symbolData) => {
   let temp = [];
-  for (const [key, dailyInformation] of Object.entries(symbolData["Time Series (Daily)"])) {
+  for (const [key, dailyInformation] of Object.entries(symbolData["time_series_daily"])) {
     temp.push({ time: String(key), value: parseFloat(dailyInformation["5. adjusted close"]) });
   }
   return temp.reverse();

@@ -16,6 +16,7 @@ const FetchDataService = {
       key: `FETCHING-${symbolTicker}`,
     });
     try {
+      //  Call API
       const res = await axios.get(configStore.alphaVantage.url, {
         params: {
           function: configStore.alphaVantageConstants.TIME_SERIES_DAILY_ADJUSTED,
@@ -24,6 +25,7 @@ const FetchDataService = {
           apikey: configStore.alphaVantage.apiToken,
         },
       });
+      // Failed request
       if ("Note" in res.data) {
         console.log("Failed to fetch for: " + symbolTicker);
         notificationStore.enqueueSnackbar({
@@ -36,9 +38,9 @@ const FetchDataService = {
         });
         return false;
       } else {
-        res.data["symbol"] = symbolTicker;
-        await idbSymbolDataStore.set(res.data);
+        //  Store request results
         // TODO check if received data was valid
+        await idbSymbolDataStore.formatAndStoreSymbolData(symbolTicker, res.data);
         notificationStore.enqueueSnackbar({
           message: `Successfully fetched data for: ${symbolTicker}`,
           options: {
