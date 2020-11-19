@@ -40,14 +40,6 @@ Read: -
 Update: Fix, Improve, Refactor, Style
 Delete: Remove
 
-#### 0.6.0
-
-- [x] Improve: Datastructure, store data inside idbSymbolData wit a clean format
-- [x] Add: Popper menu to SelectedSymbolsBar
-  - [x] Showing remove
-  - [x] Information about the symbol
-  - [x] Date of data download
-
 #### Idea dump
 
 - Add: Drawdownchart
