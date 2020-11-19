@@ -13,6 +13,7 @@ class DataStore {
       yearlyPerformanceSincePortfolioStart: 1,
       color: this.nextAvailableColorValue(),
       endValue: 0,
+      dateFetched: "-",
     },
   ];
   pendingRequests = 0;
@@ -102,10 +103,14 @@ class DataStore {
       endValue: 0,
       totalDividendPayout: 0,
       color: this.nextAvailableColorValue(),
+      dateFetched: "-",
     });
     this.symbols.sort(compareSymbolSets);
 
     await symbolDataStore.addSymbolToMap(symbolSetSearchResult.symbolTicker);
+    //  Get meta data and store it inside this store
+    const metaData = await symbolDataStore.getMetaDataForSymbol(symbolSetSearchResult.symbolTicker);
+    this.setDateFetchedForTicker(symbolSetSearchResult.symbolTicker, metaData.date_fetched);
     //  TODO check if this  could be optimized
     this.setTriggerRerenderVisibleLines(true);
     this.setTriggerRecalculatePortfolio(true);
@@ -169,6 +174,15 @@ class DataStore {
     this.symbols.forEach((symbol) => {
       if (symbol.symbolTicker === changedSymbolByTicker) {
         symbol.value = value;
+      }
+    });
+  }
+
+  setDateFetchedForTicker(changedSymbolByTicker, date) {
+    console.log("Updating dateFetched: " + date);
+    this.symbols.forEach((symbol) => {
+      if (symbol.symbolTicker === changedSymbolByTicker) {
+        symbol.dateFetched = date;
       }
     });
   }

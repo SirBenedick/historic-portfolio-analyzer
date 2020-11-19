@@ -73,6 +73,11 @@ class SymbolDataStore {
   async calculateAndStoreHistoricPortfolioPerformance() {
     return await idbSymbolDataStore.calculateAndStoreHistoricPortfolioPerformance();
   }
+
+  async getMetaDataForSymbol(symbolTicker) {
+    const data = await idbSymbolDataStore.get(symbolTicker);
+    return data.meta_data;
+  }
 }
 
 const symbolDataStore = new SymbolDataStore();

@@ -56,13 +56,13 @@ const idbSymbolDataStore = {
   },
   async formatAndStoreSymbolData(symbolTicker, rawData) {
     let meta_data = {
-      symbol: rawData["Meta Data"]["2. Symbol"],
+      symbol_ticker: rawData["Meta Data"]["2. Symbol"],
       date_fetched: rawData["Meta Data"]["3. Last Refreshed"],
       time_zone: rawData["Meta Data"]["5. Time Zone"],
     };
 
     let formatedData = {
-      symbol_ticker: symbolTicker,
+      symbol: symbolTicker,
       meta_data: meta_data,
       time_series_daily: rawData["Time Series (Daily)"],
     };
