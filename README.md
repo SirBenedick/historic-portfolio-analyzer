@@ -42,14 +42,20 @@ Delete: Remove
 
 #### 0.7.0
 
-- Style: Portfoliobuilder make it clear that the "Portfolio" row is different (thick border?)
-- Improve: Check if DatePicker delivers a valid date
-- Improve: Portfoliobuilder sort by each row
-- Style: Portfoliobuilder move "Total: \$XXX" to the right
+- [ ] Style: Portfoliobuilder make it clear that the "Portfolio" row is different (thick border?)
+- [ ] Improve: Check if DatePicker delivers a valid date
+- [ ] Improve: Portfoliobuilder sort by each row
+- [ ] Style: Portfoliobuilder move "Total: \$XXX" to the right
+
+#### 0.8.0
+
+- Add: Drawdownchart
+  - Calculate Drawdown time series store in KeyMetricsStore
+  - Draw chart
+- Add: Tab to switch to drawdownchart
 
 #### Idea dump
 
-- Add: Drawdownchart
 - Add timeframe for all data
 - Add: Setting to fetch monthly data, or daily
 - Add: Store different portfolio setups to save for later and to compare
