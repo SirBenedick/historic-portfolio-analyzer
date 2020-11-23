@@ -1,19 +1,23 @@
-import { std } from "mathjs";
 import configStore from "../stores/ConfigStore";
+import PortfolioAnalytics from "portfolio-analytics";
 
 const KeyMetricsService = {
-  async calculateAndStoreSharpRatio(timeseries, annualizedPerformanceSinceStartPortfolio) {
-    const startValue = timeseries[0].value;
-    const riskFreeRate = configStore.riskFreeRate;
+  async calculateAndStoreSharpRatio(timeseries) {
+    const riskFreeRate = configStore.riskFreeRate / 100 + 1;
 
-    let dataSet = timeseries.map((entry) => entry.value);
-    dataSet = dataSet.map((value) => (value / startValue) * 100 - riskFreeRate);
+    // Create lists for PortfolioAnalytics.sharpRatio()
+    let dataSetTemp = [];
+    let riskFreeTemp = [];
+    timeseries.forEach((entry, i) => {
+      dataSetTemp.push(entry.value);
+      riskFreeTemp.push(riskFreeRate ** ((1 / 252) * i));
+    });
 
-    const standardDeviation = std(dataSet);
-
-    const sharpRatio = (annualizedPerformanceSinceStartPortfolio * 100 - riskFreeRate) / standardDeviation;
-
-    return sharpRatio;
+    const sharpDaily = PortfolioAnalytics.sharpeRatio(dataSetTemp, riskFreeTemp);
+    // Multiply sharpDaily ratio by square root of trading days in a year
+    // Assumption: 252 trading days in a regular year
+    const sharpAnnulized = sharpDaily * 252 ** 0.5;
+    return sharpAnnulized;
   },
 };
 export default KeyMetricsService;

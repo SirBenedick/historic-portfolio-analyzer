@@ -42,7 +42,7 @@ Delete: Remove
 
 #### 0.7.0
 
-- [ ] Fix: Sharp calculation [source](https://towardsdatascience.com/calculating-sharpe-ratio-with-python-755dcb346805)
+- [x] Fix: Sharp calculation [source](https://towardsdatascience.com/calculating-sharpe-ratio-with-python-755dcb346805)
 - [ ] Style: Portfoliobuilder make it clear that the "Portfolio" row is different (thick border?)
 - [ ] Improve: Check if DatePicker delivers a valid date
 - [ ] Improve: Portfoliobuilder sort by each row
@@ -54,6 +54,7 @@ Delete: Remove
   - Calculate Drawdown time series store in KeyMetricsStore
   - Draw chart
 - Add: Tab to switch to drawdownchart
+- Add: description, calculation reinvestes dividends, no payout
 
 #### Idea dump
 
