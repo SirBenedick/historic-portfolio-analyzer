@@ -42,6 +42,7 @@ Delete: Remove
 
 #### 0.7.0
 
+- [ ] Fix: Sharp calculation [source](https://towardsdatascience.com/calculating-sharpe-ratio-with-python-755dcb346805)
 - [ ] Style: Portfoliobuilder make it clear that the "Portfolio" row is different (thick border?)
 - [ ] Improve: Check if DatePicker delivers a valid date
 - [ ] Improve: Portfoliobuilder sort by each row
@@ -56,6 +57,7 @@ Delete: Remove
 
 #### Idea dump
 
+- Add: Screenshot to github readme
 - Add timeframe for all data
 - Add: Setting to fetch monthly data, or daily
 - Add: Store different portfolio setups to save for later and to compare
