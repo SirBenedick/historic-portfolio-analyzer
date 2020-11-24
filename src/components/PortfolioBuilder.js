@@ -58,9 +58,11 @@ const PortfolioBuilder = observer(({ dataStore }) => {
                   {getItemNumber(symbolSet.symbolTicker)}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  {symbolSet.symbolTicker}
+                  {symbolSet.symbolTicker === "Portfolio" ? <b>{symbolSet.symbolTicker}</b> : symbolSet.symbolTicker}
                 </TableCell>
-                <TableCell align="left">{symbolSet.name}</TableCell>
+                <TableCell align="left">
+                  {symbolSet.name === "Portfolio" ? <b>{symbolSet.name}</b> : symbolSet.name}
+                </TableCell>
                 <TableCell align="right">
                   {performanceToPercent(symbolSet.yearlyPerformanceSincePortfolioStart)}
                 </TableCell>
