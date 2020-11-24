@@ -51,7 +51,7 @@ const PortfolioBuilder = observer(({ dataStore }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {dataStore.symbolsSortedByPortfolioBuilderSetting.map((symbolSet, index) => {
+          {dataStore.symbolsSortedByPortfolioBuilderSetting.map((symbolSet) => {
             return (
               <TableRow key={symbolSet.symbolTicker}>
                 <TableCell component="th" scope="row">
@@ -82,6 +82,7 @@ const PortfolioBuilder = observer(({ dataStore }) => {
               </TableRow>
             );
           })}
+          <TableCell />
           <TableCell />
           <TableCell />
           <TableCell />
