@@ -160,7 +160,7 @@ class DataStore {
   }
 
   get symbolPortfolioOnly() {
-    return this.symbols.filter((symbolSet) => symbolSet.symbolTicker == "Portfolio");
+    return this.symbols.filter((symbolSet) => symbolSet.symbolTicker === "Portfolio");
   }
 
   get symbolsSortedByTickerPortfolioFirst() {
@@ -190,10 +190,6 @@ class DataStore {
     temp = temp.filter((symbolSet) => symbolSet.symbolTicker !== "Portfolio");
     temp = temp.slice().sort(compareSymbolSetsByTickerPortfolioFirst);
     return temp;
-  }
-
-  get listOfSymbolTickers() {
-    return this.symbols.map((symbolSet) => symbolSet.symbolTicker);
   }
 
   get listOfSymbolTickers() {

@@ -1,5 +1,4 @@
 import { makeObservable, observable, action } from "mobx";
-import dataStore from "./DataStore";
 import symbolDataStore from "./SymbolDataStore";
 import KeyMetricsService from "../services/KeyMetricsService";
 
