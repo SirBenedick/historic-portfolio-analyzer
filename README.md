@@ -40,14 +40,6 @@ Read: -
 Update: Fix, Improve, Refactor, Style
 Delete: Remove
 
-#### 0.7.0
-
-- [x] Fix: Sharp calculation [source](https://towardsdatascience.com/calculating-sharpe-ratio-with-python-755dcb346805)
-- [x] Style: Portfoliobuilder make it clear that the "Portfolio" row is different (thick border?)
-- [x] Improve: Check if DatePicker delivers a valid date
-- [x] Improve: Portfoliobuilder sort by each row
-- [x] Style: Portfoliobuilder move "Total: \$XXX" to the right
-
 #### 0.8.0
 
 - [ ] Add: Drawdownchart
