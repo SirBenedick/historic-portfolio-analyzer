@@ -5,7 +5,15 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/picker
 
 const DatePicker = observer(({ dataStore }) => {
   const handleDateChange = (date) => {
-    dataStore.setPortfolioStartingDate(date.format("YYYY-MM-DD"));
+    const dateString = date.format("YYYY-MM-DD");
+
+    // Regex to evaluate YYYY-MM-DD  format
+    const patternDateFormat = /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/;
+
+    // If a match exists then set portfolioStartingDate
+    if (patternDateFormat.exec(dateString)) {
+      dataStore.setPortfolioStartingDate(dateString);
+    }
   };
 
   return (

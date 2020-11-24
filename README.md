@@ -44,20 +44,20 @@ Delete: Remove
 
 - [x] Fix: Sharp calculation [source](https://towardsdatascience.com/calculating-sharpe-ratio-with-python-755dcb346805)
 - [x] Style: Portfoliobuilder make it clear that the "Portfolio" row is different (thick border?)
-- [ ] Improve: Check if DatePicker delivers a valid date
+- [x] Improve: Check if DatePicker delivers a valid date
 - [x] Improve: Portfoliobuilder sort by each row
 - [x] Style: Portfoliobuilder move "Total: \$XXX" to the right
 
 #### 0.8.0
 
-- Add: Drawdownchart
-  - Calculate Drawdown time series store in KeyMetricsStore
-  - Draw chart
-- Add: Tab to switch to drawdownchart
-- Add: InfoIcon to everycard with explanation
-  - Description, calculation reinvestes dividends, no payout
-  - Shap Calculation
-  - Annulized
+- [ ] Add: Drawdownchart
+  - [ ] Calculate Drawdown time series store in KeyMetricsStore
+  - [ ] Draw chart
+  - [ ] Tab to switch to drawdownchart
+- [ ] Add: InfoIcon to everycard with explanation
+  - [ ] Description, calculation reinvestes dividends, no payout
+  - [ ] Shap Calculation
+  - [ ] Annulized
 
 #### Idea dump
 
