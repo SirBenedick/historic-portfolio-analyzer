@@ -43,6 +43,10 @@ class DataStore {
       setPortfolioStartingDate: action,
       totalValueOfSymbols: computed,
       listOfSymbolTickers: computed,
+      symbolsWithoutPortfolio: computed,
+      symbolPortfolioOnly: computed,
+      symbolsSortedByTicker: computed,
+      symbolsSortedByTickerWithoutPortfolio: computed,
     });
 
     this.portfolioStartingDate = moment().subtract(1, "years").format("YYYY-MM-DD");
@@ -78,19 +82,6 @@ class DataStore {
   }
 
   async addSymbol(symbolSetSearchResult) {
-    const compareSymbolSets = (a, b) => {
-      if (b.symbolTicker === "Portfolio") {
-        return 1;
-      }
-      if (a.symbolTicker < b.symbolTicker) {
-        return -1;
-      }
-      if (a.symbolTicker > b.symbolTicker) {
-        return 1;
-      }
-      return 0;
-    };
-
     if (!symbolSetSearchResult || !symbolSetSearchResult.symbolTicker) return false;
     this.symbols.push({
       symbolTicker: symbolSetSearchResult.symbolTicker,
@@ -105,7 +96,6 @@ class DataStore {
       color: this.nextAvailableColorValue(),
       dateFetched: "-",
     });
-    this.symbols.sort(compareSymbolSets);
 
     await symbolDataStore.addSymbolToMap(symbolSetSearchResult.symbolTicker);
     //  Get meta data and store it inside this store
@@ -161,8 +151,29 @@ class DataStore {
     return this.symbols.find((symbolSet) => symbolSet.symbolTicker === symbolTicker);
   }
 
-  getSymbolsWithoutPortfolio() {
+  get symbolsWithoutPortfolio() {
     return this.symbols.filter((symbolSet) => symbolSet.symbolTicker !== "Portfolio");
+  }
+
+  get symbolPortfolioOnly() {
+    return this.symbols.filter((symbolSet) => symbolSet.symbolTicker == "Portfolio");
+  }
+
+  get symbolsSortedByTicker() {
+    let temp = this.symbols;
+    temp.slice().sort(compareSymbolSets);
+    return temp;
+  }
+
+  get symbolsSortedByTickerWithoutPortfolio() {
+    let temp = this.symbols;
+    temp = temp.filter((symbolSet) => symbolSet.symbolTicker !== "Portfolio");
+    temp.slice().sort(compareSymbolSets);
+    return temp;
+  }
+
+  get listOfSymbolTickers() {
+    return this.symbols.map((symbolSet) => symbolSet.symbolTicker);
   }
 
   get listOfSymbolTickers() {
@@ -274,6 +285,17 @@ const chartColorsForSeries = [
   { colorValue: "#9c27b0", isBegingUsed: false },
   { colorValue: "#673ab7", isBegingUsed: false },
 ];
-
+const compareSymbolSets = (a, b) => {
+  if (b.symbolTicker === "Portfolio") {
+    return 1;
+  }
+  if (a.symbolTicker < b.symbolTicker) {
+    return -1;
+  }
+  if (a.symbolTicker > b.symbolTicker) {
+    return 1;
+  }
+  return 0;
+};
 const dataStore = new DataStore();
 export default dataStore;

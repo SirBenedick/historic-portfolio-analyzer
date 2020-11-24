@@ -54,7 +54,10 @@ Delete: Remove
   - Calculate Drawdown time series store in KeyMetricsStore
   - Draw chart
 - Add: Tab to switch to drawdownchart
-- Add: description, calculation reinvestes dividends, no payout
+- Add: InfoIcon to everycard with explanation
+  - Description, calculation reinvestes dividends, no payout
+  - Shap Calculation
+  - Annulized
 
 #### Idea dump
 

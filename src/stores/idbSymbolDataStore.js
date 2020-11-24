@@ -87,7 +87,7 @@ const idbSymbolDataStore = {
     let endDate = moment();
     const daysSinceStart = endDate.diff(startingDate, "days") + 1;
     await Promise.all(
-      dataStore.getSymbolsWithoutPortfolio().map(async (symbolSet) => {
+      dataStore.symbolsWithoutPortfolio.map(async (symbolSet) => {
         // Get price of asset for the portfolio starting date
         let startingDatePriceValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(
           symbolSet.symbolTicker,
@@ -147,7 +147,7 @@ const idbSymbolDataStore = {
     console.log("Portfolio - calculating for each day");
     let tempSymbolDatasetMap = {};
     await Promise.all(
-      dataStore.getSymbolsWithoutPortfolio().map(async (symbolSet) => {
+      dataStore.symbolsWithoutPortfolio.map(async (symbolSet) => {
         let tempDataSet = await idbSymbolDataStore.getTimeSeriesDailyByTicker(symbolSet.symbolTicker);
         tempSymbolDatasetMap[symbolSet.symbolTicker] = tempDataSet;
       })
