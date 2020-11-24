@@ -22,10 +22,12 @@ class DataStore {
   triggerRecalculatePortfolio = false;
   triggerRecalculatePortfolioTimeout = null;
   triggerRerenderVisibleLines = false;
+  portfolioBuilderSetting = "ticker"; // "ticker", "name", "value", "performance_since_start", "performance_annualized"
 
   constructor() {
     makeObservable(this, {
       symbols: observable,
+      portfolioBuilderSetting: observable,
       triggerRecalculatePortfolio: observable,
       triggerRerenderVisibleLines: observable,
       portfolioStartingDate: observable,
@@ -41,12 +43,14 @@ class DataStore {
       setTotalDividendPayoutForTicker: action,
       setSharpRatioForTicker: action,
       setPortfolioStartingDate: action,
+      setPortfolioBuilderSetting: action,
       totalValueOfSymbols: computed,
       listOfSymbolTickers: computed,
       symbolsWithoutPortfolio: computed,
       symbolPortfolioOnly: computed,
-      symbolsSortedByTicker: computed,
+      symbolsSortedByTickerPortfolioFirst: computed,
       symbolsSortedByTickerWithoutPortfolio: computed,
+      symbolsSortedByPortfolioBuilderSetting: computed,
     });
 
     this.portfolioStartingDate = moment().subtract(1, "years").format("YYYY-MM-DD");
@@ -159,16 +163,32 @@ class DataStore {
     return this.symbols.filter((symbolSet) => symbolSet.symbolTicker == "Portfolio");
   }
 
-  get symbolsSortedByTicker() {
+  get symbolsSortedByTickerPortfolioFirst() {
     let temp = this.symbols;
-    temp.slice().sort(compareSymbolSets);
+    temp = temp.slice().sort(compareSymbolSetsByTickerPortfolioFirst);
+    return temp;
+  }
+
+  get symbolsSortedByPortfolioBuilderSetting() {
+    let temp = this.symbols;
+    if (this.portfolioBuilderSetting === "ticker") {
+      temp = temp.slice().sort(compareSymbolSetsByTicker);
+    } else if (this.portfolioBuilderSetting === "name") {
+      temp = temp.slice().sort(compareSymbolSetsByName);
+    } else if (this.portfolioBuilderSetting === "performance_annualized") {
+      temp = temp.slice().sort(compareSymbolSetsByPerformanceAnnulized);
+    } else if (this.portfolioBuilderSetting === "performance_since_start") {
+      temp = temp.slice().sort(compareSymbolSetsByPerformanceSinceStart);
+    } else if (this.portfolioBuilderSetting === "value") {
+      temp = temp.slice().sort(compareSymbolSetsByValue);
+    }
     return temp;
   }
 
   get symbolsSortedByTickerWithoutPortfolio() {
     let temp = this.symbols;
     temp = temp.filter((symbolSet) => symbolSet.symbolTicker !== "Portfolio");
-    temp.slice().sort(compareSymbolSets);
+    temp = temp.slice().sort(compareSymbolSetsByTickerPortfolioFirst);
     return temp;
   }
 
@@ -243,6 +263,10 @@ class DataStore {
     });
   }
 
+  setPortfolioBuilderSetting(newVal) {
+    this.portfolioBuilderSetting = newVal;
+  }
+
   nextAvailableColorValue() {
     let availableColorValue = null;
     for (let index = 0; index < chartColorsForSeries.length; index++) {
@@ -285,7 +309,16 @@ const chartColorsForSeries = [
   { colorValue: "#9c27b0", isBegingUsed: false },
   { colorValue: "#673ab7", isBegingUsed: false },
 ];
-const compareSymbolSets = (a, b) => {
+const compareSymbolSetsByTicker = (a, b) => {
+  if (a.symbolTicker < b.symbolTicker) {
+    return -1;
+  }
+  if (a.symbolTicker > b.symbolTicker) {
+    return 1;
+  }
+  return 0;
+};
+const compareSymbolSetsByTickerPortfolioFirst = (a, b) => {
   if (b.symbolTicker === "Portfolio") {
     return 1;
   }
@@ -293,6 +326,42 @@ const compareSymbolSets = (a, b) => {
     return -1;
   }
   if (a.symbolTicker > b.symbolTicker) {
+    return 1;
+  }
+  return 0;
+};
+const compareSymbolSetsByPerformanceAnnulized = (a, b) => {
+  if (a.yearlyPerformanceSincePortfolioStart > b.yearlyPerformanceSincePortfolioStart) {
+    return -1;
+  }
+  if (a.yearlyPerformanceSincePortfolioStart < b.yearlyPerformanceSincePortfolioStart) {
+    return 1;
+  }
+  return 0;
+};
+const compareSymbolSetsByPerformanceSinceStart = (a, b) => {
+  if (a.performanceSincePortfolioStart > b.performanceSincePortfolioStart) {
+    return -1;
+  }
+  if (a.performanceSincePortfolioStart < b.performanceSincePortfolioStart) {
+    return 1;
+  }
+  return 0;
+};
+const compareSymbolSetsByName = (a, b) => {
+  if (a.name < b.name) {
+    return -1;
+  }
+  if (a.name > b.name) {
+    return 1;
+  }
+  return 0;
+};
+const compareSymbolSetsByValue = (a, b) => {
+  if (a.value > b.value) {
+    return -1;
+  }
+  if (a.value < b.value) {
     return 1;
   }
   return 0;

@@ -7,6 +7,21 @@ const useStyles = makeStyles({});
 
 const PortfolioBuilder = observer(({ dataStore }) => {
   const classes = useStyles();
+  let index = 1;
+
+  const getItemNumber = (symbolTicker) => {
+    if (symbolTicker === "Portfolio") {
+      return null;
+    } else {
+      const result = index + ".";
+      index++;
+      return result;
+    }
+  };
+
+  const setPortfolioBuilderSetting = (newVal) => {
+    dataStore.setPortfolioBuilderSetting(newVal);
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -14,25 +29,33 @@ const PortfolioBuilder = observer(({ dataStore }) => {
         <TableHead>
           <TableRow>
             <TableCell>No.</TableCell>
-            <TableCell>Symbol</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell id="annualized" align="right">
+            <TableCell onClick={() => setPortfolioBuilderSetting("ticker")}>Symbol</TableCell>
+            <TableCell onClick={() => setPortfolioBuilderSetting("name")}>Name</TableCell>
+            <TableCell
+              id="annualized"
+              align="right"
+              onClick={() => setPortfolioBuilderSetting("performance_annualized")}
+            >
               Annualized Performance
             </TableCell>
-            <TableCell id="performance" align="right">
+            <TableCell
+              id="performance"
+              align="right"
+              onClick={() => setPortfolioBuilderSetting("performance_since_start")}
+            >
               Performance since start
             </TableCell>
-            <TableCell align="right" style={{ maxWidth: "80px" }}>
+            <TableCell align="right" style={{ maxWidth: "80px" }} onClick={() => setPortfolioBuilderSetting("value")}>
               Value
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {dataStore.symbols.map((symbolSet, index) => {
+          {dataStore.symbolsSortedByPortfolioBuilderSetting.map((symbolSet, index) => {
             return (
               <TableRow key={symbolSet.symbolTicker}>
                 <TableCell component="th" scope="row">
-                  {index !== 0 ? index + "." : null}
+                  {getItemNumber(symbolSet.symbolTicker)}
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {symbolSet.symbolTicker}

@@ -85,7 +85,7 @@ const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
       <Grid container spacing={1} alignItems="center">
         <Grid item xs={8}>
           <Grid container direction="row" justify="center" alignItems="center">
-            {dataStore.symbolsSortedByTicker.map((symbolSet) => {
+            {dataStore.symbolsSortedByTickerPortfolioFirst.map((symbolSet) => {
               return (
                 <Chip
                   key={symbolSet.symbolTicker}
