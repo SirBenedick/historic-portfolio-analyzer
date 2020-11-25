@@ -46,10 +46,17 @@ Delete: Remove
   - [ ] Calculate Drawdown time series store in KeyMetricsStore
   - [ ] Draw chart
   - [ ] Tab to switch to drawdownchart
-- [ ] Add: InfoIcon to everycard with explanation
-  - [ ] Description, calculation reinvestes dividends, no payout
-  - [ ] Shap Calculation
-  - [ ] Annulized
+- [ ] Improve: Change Site title from "alpha" to version number
+
+#### 0.9.0
+
+- Add: InfoIcon to every card with explanation
+  - Description, calculation reinvestes dividends, no payout
+  - Shap Calculation
+  - Annulized
+- Fix: Chip Dropdown menu doesnt update date of downloaded data
+- Add: Chip Dropdown delete existing data set
+- Add: Chip Dropdown full name of asset
 
 #### Idea dump
 
@@ -65,6 +72,8 @@ Delete: Remove
 - Add: portfolio calculation granularity to speed up calculation
 - Add: Store for symbols to be fetched (in case API limit is reached)(set version of index db to current date)
 - Add: Different Backends to call stock data from different sources
+- Improve: Swtich to typescript
+- Improve: Add testing for components
 
 #### 1.0.0
 
