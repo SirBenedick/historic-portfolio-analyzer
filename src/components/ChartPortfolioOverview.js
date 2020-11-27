@@ -7,7 +7,7 @@ import TriggerRecalculatePortfolio from "./TriggerRecalculatePortfolio";
 import TriggerShowVisibleLines from "./TriggerShowVisibleLines";
 import symbolDataStore from "../stores/SymbolDataStore";
 
-export default class Chart extends React.Component {
+export default class ChartPortfolioOverview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

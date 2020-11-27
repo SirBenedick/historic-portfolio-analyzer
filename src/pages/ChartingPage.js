@@ -2,10 +2,10 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 
 import SelectedSymbolsBar from "../components/SelectedSymbolsBar";
-import Chart from "../components/Chart";
 import PortfolioBuilder from "../components/PortfolioBuilder";
 import KeyMetricRow from "../components/KeyMetricRow";
 import ChartConfigurationCard from "../components/ChartConfigurationCard";
+import TabBar from "../components/TabBar";
 
 const ChartingPage = ({ dataStore, notificationStore, configStore, symbolDataStore, keyMetricsStore }) => {
   return (
@@ -18,7 +18,7 @@ const ChartingPage = ({ dataStore, notificationStore, configStore, symbolDataSto
           <KeyMetricRow dataStore={dataStore} keyMetricsStore={keyMetricsStore} />
         </Grid>
         <Grid item xs={12}>
-          <Chart dataStore={dataStore} configStore={configStore} symbolDataStore={symbolDataStore} />
+          <TabBar dataStore={dataStore} configStore={configStore} symbolDataStore={symbolDataStore} />
         </Grid>
         <Grid item xs={12}>
           <PortfolioBuilder dataStore={dataStore} />
