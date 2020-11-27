@@ -48,7 +48,7 @@ Delete: Remove
   - [x] Calculate Drawdown time series store in KeyMetricsStore
   - [x] Draw chart
   - [x] Tab to switch to drawdownchart
-- [ ] Improve: Change Site title from "alpha" to version number
+- [x] Improve: Change Site title from "alpha" to version number
 
 #### 0.9.0 (miscelangelous)
 
