@@ -1,14 +1,17 @@
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable, action, toJS } from "mobx";
 import symbolDataStore from "./SymbolDataStore";
 import KeyMetricsService from "../services/KeyMetricsService";
 
 class KeyMetricsStore {
   portfolioSharpRatio = 0;
+  portfolioDrawdownTimeSeries = null;
 
   constructor() {
     makeObservable(this, {
       portfolioSharpRatio: observable,
       calculateAndSetPortfolioSharpRatio: action,
+      portfolioDrawdownTimeSeries: observable,
+      calculateAndSetPortfolioDrawdown: action,
     });
   }
 
@@ -23,6 +26,12 @@ class KeyMetricsStore {
     } else {
       this.portfolioSharpRatio = 0;
     }
+  }
+
+  async calculateAndSetPortfolioDrawdown(portfolioTimeseries) {
+    this.portfolioDrawdownTimeSeries = await KeyMetricsService.calculatePortfolioDrawdownTimeSeries(
+      portfolioTimeseries
+    );
   }
 }
 

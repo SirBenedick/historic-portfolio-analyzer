@@ -184,6 +184,9 @@ const idbSymbolDataStore = {
 
         // Calculate key metrics
         keyMetricsStore.calculateAndSetPortfolioSharpRatio();
+
+        // Calculate drawdown function
+        keyMetricsStore.calculateAndSetPortfolioDrawdown(result);
       }
     });
 

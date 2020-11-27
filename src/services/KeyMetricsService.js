@@ -19,5 +19,15 @@ const KeyMetricsService = {
     const sharpAnnulized = sharpDaily * 252 ** 0.5;
     return sharpAnnulized;
   },
+  async calculatePortfolioDrawdownTimeSeries(portfolioTimeseries) {
+    let values = portfolioTimeseries.map((timeseriesObj) => timeseriesObj.value);
+
+    const drawdownFunction = PortfolioAnalytics.drawdownFunction(values);
+
+    let result = [];
+    portfolioTimeseries.forEach((e, i) => result.push({ time: e.time, value: drawdownFunction[i] }));
+
+    return result;
+  },
 };
 export default KeyMetricsService;
