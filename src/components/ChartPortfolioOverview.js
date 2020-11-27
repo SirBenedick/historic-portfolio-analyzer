@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { createChart, PriceScaleMode } from "lightweight-charts";
 import { Paper, LinearProgress } from "@material-ui/core";
 import ChartSwitchStyle from "./ChartSwitchStyle";
-import TriggerRecalculatePortfolio from "./TriggerRecalculatePortfolio";
+import TriggerRerenderPortfolio from "./TriggerRerenderPortfolio";
 import TriggerShowVisibleLines from "./TriggerShowVisibleLines";
 import symbolDataStore from "../stores/SymbolDataStore";
 
@@ -18,7 +18,7 @@ export default class ChartPortfolioOverview extends React.Component {
     this.chart = {};
     this.lineSeriesObj = {};
 
-    this.recalculateAndRenderPortfolio = this.recalculateAndRenderPortfolio.bind(this);
+    this.rerenderPortfolio = this.rerenderPortfolio.bind(this);
     this.rerenderVisibleLines = this.rerenderVisibleLines.bind(this);
     this.switchStyle = this.switchStyle.bind(this);
     this.createGraphForSelectedSymbols = this.createGraphForSelectedSymbols.bind(this);
@@ -41,8 +41,7 @@ export default class ChartPortfolioOverview extends React.Component {
     );
   }
 
-  async recalculateAndRenderPortfolio() {
-    await symbolDataStore.calculateAndStoreHistoricPortfolioPerformance();
+  async rerenderPortfolio() {
     this.addLineSeriesData(this.props.dataStore.getSymbolSetForTicker("Portfolio"));
   }
 
@@ -120,10 +119,7 @@ export default class ChartPortfolioOverview extends React.Component {
         />
         <CalculatingProgress symbolDataStore={this.props.symbolDataStore} />
         <div ref={this.myRef} id="chart-ref"></div>
-        <TriggerRecalculatePortfolio
-          dataStore={this.props.dataStore}
-          recalculateAndRenderPortfolio={this.recalculateAndRenderPortfolio}
-        />
+        <TriggerRerenderPortfolio dataStore={this.props.dataStore} rerenderPortfolio={this.rerenderPortfolio} />
         <TriggerShowVisibleLines dataStore={this.props.dataStore} rerenderVisibleLines={this.rerenderVisibleLines} />
       </Paper>
     );

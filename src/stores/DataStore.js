@@ -19,7 +19,7 @@ class DataStore {
   pendingRequests = 0;
   appleData = [];
   portfolioStartingDate = "";
-  triggerRecalculatePortfolio = false;
+  triggerRerenderPortfolio = false;
   triggerRecalculatePortfolioTimeout = null;
   triggerRerenderVisibleLines = false;
   portfolioBuilderSetting = "ticker"; // "ticker", "name", "value", "performance_since_start", "performance_annualized"
@@ -28,7 +28,7 @@ class DataStore {
     makeObservable(this, {
       symbols: observable,
       portfolioBuilderSetting: observable,
-      triggerRecalculatePortfolio: observable,
+      triggerRerenderPortfolio: observable,
       triggerRerenderVisibleLines: observable,
       portfolioStartingDate: observable,
       toggleSymbolVisibility: action,
@@ -38,7 +38,7 @@ class DataStore {
       setPerformanceSincePortfolioStartForTicker: action,
       setYearlyPerformanceSincePortfolioStartForTicker: action,
       setEndValueForTicker: action,
-      setTriggerRecalculatePortfolio: action,
+      setTriggerRerenderPortfolio: action,
       setTriggerRerenderVisibleLines: action,
       setTotalDividendPayoutForTicker: action,
       setSharpRatioForTicker: action,
@@ -56,29 +56,30 @@ class DataStore {
     this.portfolioStartingDate = moment().subtract(1, "years").format("YYYY-MM-DD");
 
     autorun(() => {
-      // triggerRecalculatePortfolio
+      // triggerRerenderPortfolio
       const trigger = this.portfolioStartingDate;
       const trigger2 = this.totalValueOfSymbols;
 
       // Debounce
-      const debouncePortfolioRecalculation = () => {
-        this.setTriggerRecalculatePortfolio(true);
+      const debouncePortfolioRecalculation = async () => {
         console.log(
           "Autorun: triggering portfolio rercalculation" + JSON.stringify(trigger) + JSON.stringify(trigger2)
         );
+        await symbolDataStore.calculateAndStoreHistoricPortfolioPerformance();
+        this.setTriggerRerenderPortfolio(true);
       };
 
       //  Check if timeout exists, if so clear and start a new one
       if (this.triggerRecalculatePortfolioTimeout) clearTimeout(this.triggerRecalculatePortfolioTimeout);
       const timeout = setTimeout(async () => {
-        debouncePortfolioRecalculation();
+        await debouncePortfolioRecalculation();
       }, 500);
       this.triggerRecalculatePortfolioTimeout = timeout;
     });
   }
 
-  setTriggerRecalculatePortfolio(bool) {
-    this.triggerRecalculatePortfolio = bool;
+  setTriggerRerenderPortfolio(bool) {
+    this.triggerRerenderPortfolio = bool;
   }
 
   setTriggerRerenderVisibleLines(bool) {
@@ -107,7 +108,7 @@ class DataStore {
     this.setDateFetchedForTicker(symbolSetSearchResult.symbolTicker, metaData.date_fetched);
     //  TODO check if this  could be optimized
     this.setTriggerRerenderVisibleLines(true);
-    this.setTriggerRecalculatePortfolio(true);
+    this.setTriggerRerenderPortfolio(true);
   }
 
   async removeSelectedSymbol(symbolTickerToDelete) {
@@ -117,7 +118,7 @@ class DataStore {
     await symbolDataStore.removeSymbolFromMap(symbolTickerToDelete);
 
     this.setTriggerRerenderVisibleLines(true);
-    this.setTriggerRecalculatePortfolio(true);
+    this.setTriggerRerenderPortfolio(true);
   }
 
   toggleSymbolVisibility(changedSymbolbyTicker) {
