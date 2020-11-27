@@ -12,6 +12,8 @@
 
 ### Feature focused annoyance driven development
 
+###### "Make it run, make it right, make it fast" - Kent Beck [source](https://wiki.c2.com/?MakeItWorkMakeItRightMakeItFast)
+
 Only features that result in a direct increase in usability or performance will be implemented.
 There is no benefit in changing the application to suit features that might be implemented.
 Being annoyed by the current application architecture is the key indicator for needed changes. If it does not feel right change it.
@@ -48,7 +50,7 @@ Delete: Remove
   - [ ] Tab to switch to drawdownchart
 - [ ] Improve: Change Site title from "alpha" to version number
 
-#### 0.9.0
+#### 0.9.0 (miscelangelous)
 
 - Add: InfoIcon to every card with explanation
   - Description, calculation reinvestes dividends, no payout
@@ -57,6 +59,11 @@ Delete: Remove
 - Fix: Chip Dropdown menu doesnt update date of downloaded data
 - Add: Chip Dropdown delete existing data set
 - Add: Chip Dropdown full name of asset
+- Fix: Delay save of changed API key
+- Add: Random API Key generator button
+- Add: Progress of portfolio calculation
+- Add: More line colors
+- Fix: When dividend is 0 the loading indicator is shown
 
 #### Idea dump
 
