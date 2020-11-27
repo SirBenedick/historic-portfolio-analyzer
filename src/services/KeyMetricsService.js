@@ -25,7 +25,7 @@ const KeyMetricsService = {
     const drawdownFunction = PortfolioAnalytics.drawdownFunction(values);
 
     let result = [];
-    portfolioTimeseries.forEach((e, i) => result.push({ time: e.time, value: drawdownFunction[i] }));
+    portfolioTimeseries.forEach((e, i) => result.push({ time: e.time, value: drawdownFunction[i] * -100 }));
 
     return result;
   },

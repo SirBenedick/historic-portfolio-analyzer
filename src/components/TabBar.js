@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Tabs, Tab, Typography, Box, Paper } from "@material-ui/core";
 import { observer } from "mobx-react-lite";
 import ChartPortfolioOverview from "./ChartPortfolioOverview";
+import ChartDrawdown from "./ChartDrawdown";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TabBar = observer(({ dataStore, symbolDataStore, configStore }) => {
+const TabBar = observer(({ dataStore, symbolDataStore, keyMetricsStore, configStore }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -72,7 +73,7 @@ const TabBar = observer(({ dataStore, symbolDataStore, configStore }) => {
         <ChartPortfolioOverview dataStore={dataStore} configStore={configStore} symbolDataStore={symbolDataStore} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Drawdown
+        <ChartDrawdown keyMetricsStore={keyMetricsStore} />
       </TabPanel>
     </div>
   );

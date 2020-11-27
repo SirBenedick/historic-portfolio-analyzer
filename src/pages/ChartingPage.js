@@ -18,7 +18,12 @@ const ChartingPage = ({ dataStore, notificationStore, configStore, symbolDataSto
           <KeyMetricRow dataStore={dataStore} keyMetricsStore={keyMetricsStore} />
         </Grid>
         <Grid item xs={12}>
-          <TabBar dataStore={dataStore} configStore={configStore} symbolDataStore={symbolDataStore} />
+          <TabBar
+            dataStore={dataStore}
+            configStore={configStore}
+            symbolDataStore={symbolDataStore}
+            keyMetricsStore={keyMetricsStore}
+          />
         </Grid>
         <Grid item xs={12}>
           <PortfolioBuilder dataStore={dataStore} />
