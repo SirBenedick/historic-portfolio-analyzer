@@ -42,28 +42,20 @@ Read: -
 Update: Fix, Improve, Refactor, Style
 Delete: Remove
 
-#### 0.8.0
-
-- [x] Add: Drawdownchart
-  - [x] Calculate Drawdown time series store in KeyMetricsStore
-  - [x] Draw chart
-  - [x] Tab to switch to drawdownchart
-- [x] Improve: Change Site title from "alpha" to version number
-
 #### 0.9.0 (miscelangelous)
 
-- Add: InfoIcon to every card with explanation
-  - Description, calculation reinvestes dividends, no payout
-  - Shap Calculation
-  - Annulized
-- Fix: Chip Dropdown menu doesnt update date of downloaded data
-- Add: Chip Dropdown delete existing data set
-- Add: Chip Dropdown full name of asset
-- Fix: Delay save of changed API key
-- Add: Random API Key generator button
-- Add: Progress of portfolio calculation
-- Add: More line colors
-- Fix: When dividend is 0 the loading indicator is shown
+- [ ] Add: InfoIcon to every card with explanation
+  - [ ] Description, calculation reinvestes dividends, no payout
+  - [ ] Shap Calculation
+  - [ ] Annulized
+- [ ] Fix: Chip Dropdown menu doesnt update date of downloaded data
+- [ ] Add: Chip Dropdown delete existing data set
+- [ ] Add: Chip Dropdown full name of asset
+- [ ] Fix: Delay save of changed API key
+- [ ] Add: Random API Key generator button
+- [ ] Add: Progress of portfolio calculation
+- [ ] Add: More line colors
+- [ ] Fix: When dividend is 0 the loading indicator is shown
 
 #### Idea dump
 
