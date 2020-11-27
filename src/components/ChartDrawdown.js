@@ -1,57 +1,70 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 import { createChart, PriceScaleMode } from "lightweight-charts";
 import keyMetricsStore from "../stores/KeyMetricsStore";
-import { Paper } from "@material-ui/core";
+import { Paper, LinearProgress } from "@material-ui/core";
+import TriggerRerenderDrawdown from "./TriggerRerenderDrawdown";
 
 export default class ChartDrawdown extends React.Component {
   constructor(props) {
     super(props);
     this.drawdownChartRef = React.createRef();
     this.chart = {};
-    this.drawdownTimeseriesData = {};
+    this.drawdownLineSeries = null;
 
     this.addDrawdownLineSeries = this.addDrawdownLineSeries.bind(this);
+    this.rerenderDrawdown = this.rerenderDrawdown.bind(this);
   }
-  /**
-   * TODO
-   * trigger rerender
-   * color red
-   * show full width?
-   * show when is calculating
-   * label in percent
-   */
+
   async componentDidMount() {
     this.renderChart();
-
     this.addDrawdownLineSeries();
   }
 
   renderChart() {
-    console.log("rednder drawdownchart");
     if (this.drawdownChartRef.current.firstChild) {
       this.drawdownChartRef.current.removeChild(this.drawdownChartRef.current.firstChild);
       this.chart = null;
     }
     this.chart = createChart(this.drawdownChartRef.current, stylePercent);
+
+    // Create lineSeries and add it to the chart
+    this.drawdownLineSeries = this.chart.addLineSeries({
+      color: "#f44336",
+      priceLineVisible: false,
+      priceFormat: {
+        type: "custom",
+        minMove: 0.01,
+        formatter: (value) => value.toFixed(2) + "%",
+      },
+    });
   }
 
   async addDrawdownLineSeries() {
-    console.log("addDrawdownLineSeries");
-    let tempLineSeries = this.chart.addLineSeries({ color: "#f44336" });
-    this.drawdownTimeseriesData = keyMetricsStore.portfolioDrawdownTimeSeries;
-    tempLineSeries.setData(this.drawdownTimeseriesData);
+    this.drawdownLineSeries.setData(keyMetricsStore.portfolioDrawdownTimeSeries);
+  }
+
+  rerenderDrawdown() {
+    this.addDrawdownLineSeries();
   }
 
   render() {
     return (
       <Paper style={{ padding: "10px" }}>
+        <CalculatingProgress keyMetricsStore={this.props.keyMetricsStore} />
         <div ref={this.drawdownChartRef} id="chart-ref"></div>
-        {/* <TriggerRerenderPortfolio dataStore={this.props.dataStore} rerenderPortfolio={this.rerenderPortfolio} />
-        <TriggerShowVisibleLines dataStore={this.props.dataStore} rerenderVisibleLines={this.rerenderVisibleLines} /> */}
+        <TriggerRerenderDrawdown
+          keyMetricsStore={this.props.keyMetricsStore}
+          rerenderDrawdown={this.rerenderDrawdown}
+        />
       </Paper>
     );
   }
 }
+
+const CalculatingProgress = observer(({ keyMetricsStore }) => (
+  <div>{keyMetricsStore.portfolioDrawdownTimeSeries.length === 0 ? <LinearProgress /> : null}</div>
+));
 
 const stylePercent = {
   height: 300,

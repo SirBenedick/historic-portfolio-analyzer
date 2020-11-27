@@ -4,7 +4,7 @@ import KeyMetricsService from "../services/KeyMetricsService";
 
 class KeyMetricsStore {
   portfolioSharpRatio = 0;
-  portfolioDrawdownTimeSeries = null;
+  portfolioDrawdownTimeSeries = [];
 
   constructor() {
     makeObservable(this, {
@@ -29,6 +29,7 @@ class KeyMetricsStore {
   }
 
   async calculateAndSetPortfolioDrawdown(portfolioTimeseries) {
+    this.portfolioDrawdownTimeSeries = [];
     this.portfolioDrawdownTimeSeries = await KeyMetricsService.calculatePortfolioDrawdownTimeSeries(
       portfolioTimeseries
     );

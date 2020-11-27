@@ -44,10 +44,10 @@ Delete: Remove
 
 #### 0.8.0
 
-- [ ] Add: Drawdownchart
-  - [ ] Calculate Drawdown time series store in KeyMetricsStore
-  - [ ] Draw chart
-  - [ ] Tab to switch to drawdownchart
+- [x] Add: Drawdownchart
+  - [x] Calculate Drawdown time series store in KeyMetricsStore
+  - [x] Draw chart
+  - [x] Tab to switch to drawdownchart
 - [ ] Improve: Change Site title from "alpha" to version number
 
 #### 0.9.0 (miscelangelous)
