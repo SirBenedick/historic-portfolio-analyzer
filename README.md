@@ -54,7 +54,7 @@ Delete: Remove
 - [x] Add: Chip Dropdown full name of asset
 - [x] Fix: Delay save of changed API key
 - [ ] ~~Add: Random API Key generator button~~
-- [ ] Add: Progress of portfolio calculation
+- [ ] ~~Add: Progress of portfolio calculation~~ slows down view too much
 - [x] Add: More line colors
 - [x] Fix: When dividend is 0 the loading indicator is shown
 
