@@ -2,6 +2,20 @@ import React from "react";
 import { Paper, Typography, TextField, Link } from "@material-ui/core";
 
 const SettingsPage = ({ configStore }) => {
+  const [apiTimeout, setAPITimeout] = React.useState(null);
+  const handleValueChange = async (newAPIValue) => {
+    const handleAPIValueChange = async (newAPIValue) => {
+      configStore.setAlphaVantageAPITokenIDB(newAPIValue);
+    };
+
+    if (apiTimeout) clearTimeout(apiTimeout);
+    if (!newAPIValue) return;
+    const timeout = setTimeout(async () => {
+      await handleAPIValueChange(newAPIValue);
+    }, 1000);
+    setAPITimeout(timeout);
+  };
+
   return (
     <div>
       <Paper elevation={1} style={{ padding: "20px" }}>
@@ -17,7 +31,7 @@ const SettingsPage = ({ configStore }) => {
           label="API-Token"
           variant="outlined"
           defaultValue={configStore.alphaVantage.apiToken}
-          onChange={(e) => configStore.setAlphaVantageAPITokenIDB(e.target.value)}
+          onChange={(e) => handleValueChange(e.target.value)}
         />
         <Typography variant="caption" display="block" gutterBottom>
           Get your free token here:{" "}

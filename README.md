@@ -52,8 +52,8 @@ Delete: Remove
 - [x] Add: Chip Dropdown delete existing data set
 - [x] Add: Chip Dropdown reloade data
 - [x] Add: Chip Dropdown full name of asset
-- [ ] Fix: Delay save of changed API key
-- [ ] Add: Random API Key generator button
+- [x] Fix: Delay save of changed API key
+- [ ] ~~Add: Random API Key generator button~~
 - [ ] Add: Progress of portfolio calculation
 - [x] Add: More line colors
 - [x] Fix: When dividend is 0 the loading indicator is shown
