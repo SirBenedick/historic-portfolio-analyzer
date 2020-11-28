@@ -103,22 +103,42 @@ class DataStore {
     });
 
     await symbolDataStore.addSymbolToMap(symbolSetSearchResult.symbolTicker);
-    //  Get meta data and store it inside this store
-    const metaData = await symbolDataStore.getMetaDataForSymbol(symbolSetSearchResult.symbolTicker);
-    this.setDateFetchedForTicker(symbolSetSearchResult.symbolTicker, metaData.date_fetched);
-    //  TODO check if this  could be optimized
+    await this.getMetaDataAndStoreIt(symbolSetSearchResult.symbolTicker);
+
     this.setTriggerRerenderVisibleLines(true);
     this.setTriggerRerenderPortfolio(true);
   }
 
-  async removeSelectedSymbol(symbolTickerToDelete) {
-    this.removeColorInUse(this.getSymbolSetForTicker(symbolTickerToDelete).color);
-    this.symbols = this.symbols.filter((symbolSet) => symbolSet.symbolTicker !== symbolTickerToDelete);
+  async getMetaDataAndStoreIt(symbolTicker) {
+    //  Get meta data and store it inside this store
+    const metaData = await symbolDataStore.getMetaDataForSymbol(symbolTicker);
+    this.setDateFetchedForTicker(symbolTicker, metaData.date_fetched);
+  }
 
-    await symbolDataStore.removeSymbolFromMap(symbolTickerToDelete);
+  async reloadDataFor(symbolTickerToReload) {
+    await this.deleteDataSetForSymbol(symbolTickerToReload);
+    await symbolDataStore.removeSymbolFromMap(symbolTickerToReload);
+    await symbolDataStore.addSymbolToMap(symbolTickerToReload);
+    await this.getMetaDataAndStoreIt(symbolTickerToReload);
+  }
+
+  async removeAndDeleteSymbol(symbolTickerToDelete) {
+    await this.removeSelectedSymbol(symbolTickerToDelete);
+    await this.deleteDataSetForSymbol(symbolTickerToDelete);
+  }
+
+  async removeSelectedSymbol(symbolTickerToRemove) {
+    this.removeColorInUse(this.getSymbolSetForTicker(symbolTickerToRemove).color);
+    this.symbols = this.symbols.filter((symbolSet) => symbolSet.symbolTicker !== symbolTickerToRemove);
+
+    await symbolDataStore.removeSymbolFromMap(symbolTickerToRemove);
 
     this.setTriggerRerenderVisibleLines(true);
     this.setTriggerRerenderPortfolio(true);
+  }
+
+  async deleteDataSetForSymbol(symbolTickerToDelete) {
+    await symbolDataStore.deleteDataSet(symbolTickerToDelete);
   }
 
   toggleSymbolVisibility(changedSymbolbyTicker) {

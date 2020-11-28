@@ -48,10 +48,10 @@ Delete: Remove
   - [x] Description, calculation reinvestes dividends, no payout
   - [x] Shap Calculation
   - [x] Annulized
-- [ ] Fix: Chip Dropdown menu doesnt update date of downloaded data
-- [ ] Add: Chip Dropdown delete existing data set
-- [ ] Add: Chip Dropdown reloade data
-- [ ] Add: Chip Dropdown full name of asset
+- [x] Fix: Chip Dropdown menu doesnt update date of downloaded data
+- [x] Add: Chip Dropdown delete existing data set
+- [x] Add: Chip Dropdown reloade data
+- [x] Add: Chip Dropdown full name of asset
 - [ ] Fix: Delay save of changed API key
 - [ ] Add: Random API Key generator button
 - [ ] Add: Progress of portfolio calculation

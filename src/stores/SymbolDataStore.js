@@ -50,6 +50,10 @@ class SymbolDataStore {
     delete this.symbolChartTimeseriesDataMap[symbolTicker];
   }
 
+  async deleteDataSet(symbolToDelete) {
+    await idbSymbolDataStore.delete(symbolToDelete);
+  }
+
   async getSymbolTimeseriesDataFromMap(symbolTicker) {
     console.log("getSymbolTimeseriesDataFromMap: " + symbolTicker);
     if (this.symbolChartTimeseriesDataMap[symbolTicker]) return this.symbolChartTimeseriesDataMap[symbolTicker];

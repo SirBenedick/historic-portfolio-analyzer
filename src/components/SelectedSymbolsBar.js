@@ -4,7 +4,9 @@ import { Paper, Chip, Grid, Menu, MenuItem, ListItemIcon, Typography } from "@ma
 import InfoIcon from "@material-ui/icons/Info";
 import TodayIcon from "@material-ui/icons/Today";
 import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import MoneyIcon from "@material-ui/icons/Money";
+import RefreshIcon from "@material-ui/icons/Refresh";
 import { observer } from "mobx-react-lite";
 import SearchForSymbolInput from "../components/SearchForSymbolInput";
 
@@ -31,8 +33,18 @@ const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
     dataStore.toggleSymbolVisibility(symbolTickerToHide);
   };
 
-  const handleDelete = (symbolTickerToDelete) => {
-    dataStore.removeSelectedSymbol(symbolTickerToDelete);
+  const handleRemoveFromPortfolio = (symbolTickerToRemove) => {
+    dataStore.removeSelectedSymbol(symbolTickerToRemove);
+    handleClose();
+  };
+
+  const handleDeleteDataSet = (symbolTickerToDelete) => {
+    dataStore.removeAndDeleteSymbol(symbolTickerToDelete);
+    handleClose();
+  };
+
+  const handleReloadDataSet = (symbolTickerToDelete) => {
+    dataStore.reloadDataFor(symbolTickerToDelete);
     handleClose();
   };
 
@@ -53,7 +65,7 @@ const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
             <InfoIcon fontSize="small" />
           </ListItemIcon>
           <Typography variant="inherit" noWrap>
-            {menuSelectedSymbolSet ? menuSelectedSymbolSet.symbolTicker : null}
+            {menuSelectedSymbolSet ? menuSelectedSymbolSet.name : null}
           </Typography>
         </MenuItem>
         <MenuItem>
@@ -72,12 +84,29 @@ const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
             {menuSelectedSymbolSet ? menuSelectedSymbolSet.dateFetched : "-"}
           </Typography>
         </MenuItem>
-        <MenuItem onClick={() => handleDelete(menuSelectedSymbolSet.symbolTicker)}>
+        <MenuItem>{/* Empty to have some space between information above and actions below */}</MenuItem>
+        <MenuItem onClick={() => handleReloadDataSet(menuSelectedSymbolSet.symbolTicker)}>
+          <ListItemIcon>
+            <RefreshIcon fontSize="small" />
+          </ListItemIcon>
+          <Typography variant="inherit" noWrap color="primary">
+            Reload data
+          </Typography>
+        </MenuItem>
+        <MenuItem onClick={() => handleRemoveFromPortfolio(menuSelectedSymbolSet.symbolTicker)}>
           <ListItemIcon>
             <DeleteIcon fontSize="small" />
           </ListItemIcon>
           <Typography variant="inherit" noWrap color="error">
-            Remove
+            Remove from Portfolio
+          </Typography>
+        </MenuItem>
+        <MenuItem onClick={() => handleDeleteDataSet(menuSelectedSymbolSet.symbolTicker)}>
+          <ListItemIcon>
+            <DeleteForeverIcon fontSize="small" />
+          </ListItemIcon>
+          <Typography variant="inherit" noWrap color="error">
+            Delete Dataset
           </Typography>
         </MenuItem>
       </Menu>
