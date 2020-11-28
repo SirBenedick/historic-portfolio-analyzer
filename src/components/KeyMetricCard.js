@@ -59,7 +59,7 @@ const KeyMetricCard = ({
               </Typography>
             </Grid>
             <Grid item>
-              <InfoOutlinedIcon onClick={handleClickOpen} />
+              <InfoOutlinedIcon onClick={handleClickOpen} style={{ cursor: "pointer" }} />
             </Grid>
           </Grid>
           <Grid item style={{ alignSelf: "center" }}>
