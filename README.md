@@ -44,10 +44,10 @@ Delete: Remove
 
 #### 0.9.0 (miscelangelous)
 
-- [ ] Add: InfoIcon to every card with explanation
-  - [ ] Description, calculation reinvestes dividends, no payout
-  - [ ] Shap Calculation
-  - [ ] Annulized
+- [x] Add: InfoIcon to every card with explanation
+  - [x] Description, calculation reinvestes dividends, no payout
+  - [x] Shap Calculation
+  - [x] Annulized
 - [ ] Fix: Chip Dropdown menu doesnt update date of downloaded data
 - [ ] Add: Chip Dropdown delete existing data set
 - [ ] Add: Chip Dropdown reloade data
