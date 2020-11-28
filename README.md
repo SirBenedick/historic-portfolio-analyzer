@@ -50,12 +50,13 @@ Delete: Remove
   - [ ] Annulized
 - [ ] Fix: Chip Dropdown menu doesnt update date of downloaded data
 - [ ] Add: Chip Dropdown delete existing data set
+- [ ] Add: Chip Dropdown reloade data
 - [ ] Add: Chip Dropdown full name of asset
 - [ ] Fix: Delay save of changed API key
 - [ ] Add: Random API Key generator button
 - [ ] Add: Progress of portfolio calculation
 - [ ] Add: More line colors
-- [ ] Fix: When dividend is 0 the loading indicator is shown
+- [x] Fix: When dividend is 0 the loading indicator is shown
 
 #### Idea dump
 

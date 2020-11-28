@@ -47,6 +47,7 @@ const KeyIndicatorRow = observer(({ dataStore, keyMetricsStore }) => {
             titel={"Dividend"}
             description={"Dividends payed out since start"}
             value={dataStore.getSymbolSetForTicker("Portfolio").totalDividendPayout}
+            showProgress={false}
           />
         </Grid>
         <Grid item xs={2}>

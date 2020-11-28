@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
   },
 }));
-const KeyMetricCard = ({ titel, description, value = 0, showPercent = false }) => {
+const KeyMetricCard = ({ titel, description, value = 0, showPercent = false, showProgress = true }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -29,7 +29,17 @@ const KeyMetricCard = ({ titel, description, value = 0, showPercent = false }) =
           </Grid>
           <Grid item>
             <Typography variant="h3" component="h2">
-              {value ? showPercent ? performanceToPercent(value) : value.toFixed(2) : <CircularProgress />}
+              {value ? (
+                showPercent ? (
+                  performanceToPercent(value)
+                ) : (
+                  value.toFixed(2)
+                )
+              ) : showProgress ? (
+                <CircularProgress />
+              ) : (
+                value
+              )}
             </Typography>
           </Grid>
           <Grid item>
