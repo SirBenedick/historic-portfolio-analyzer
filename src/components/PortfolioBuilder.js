@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Paper } from "@material-ui/core";
 import { observer } from "mobx-react";
 
-const useStyles = makeStyles({});
+const useStyles = makeStyles({ tabellCellClickable: { cursor: "pointer" } });
 
 const PortfolioBuilder = observer(({ dataStore }) => {
   const classes = useStyles();
@@ -29,12 +29,17 @@ const PortfolioBuilder = observer(({ dataStore }) => {
         <TableHead>
           <TableRow>
             <TableCell>No.</TableCell>
-            <TableCell onClick={() => setPortfolioBuilderSetting("ticker")}>Symbol</TableCell>
-            <TableCell onClick={() => setPortfolioBuilderSetting("name")}>Name</TableCell>
+            <TableCell onClick={() => setPortfolioBuilderSetting("ticker")} className={classes.tabellCellClickable}>
+              Symbol
+            </TableCell>
+            <TableCell onClick={() => setPortfolioBuilderSetting("name")} className={classes.tabellCellClickable}>
+              Name
+            </TableCell>
             <TableCell
               id="annualized"
               align="right"
               onClick={() => setPortfolioBuilderSetting("performance_annualized")}
+              className={classes.tabellCellClickable}
             >
               Annualized Performance
             </TableCell>
@@ -42,10 +47,16 @@ const PortfolioBuilder = observer(({ dataStore }) => {
               id="performance"
               align="right"
               onClick={() => setPortfolioBuilderSetting("performance_since_start")}
+              className={classes.tabellCellClickable}
             >
               Performance since start
             </TableCell>
-            <TableCell align="right" style={{ maxWidth: "80px" }} onClick={() => setPortfolioBuilderSetting("value")}>
+            <TableCell
+              align="right"
+              style={{ maxWidth: "80px" }}
+              onClick={() => setPortfolioBuilderSetting("value")}
+              className={classes.tabellCellClickable}
+            >
               Value
             </TableCell>
           </TableRow>
