@@ -55,7 +55,7 @@ Delete: Remove
 - [ ] Fix: Delay save of changed API key
 - [ ] Add: Random API Key generator button
 - [ ] Add: Progress of portfolio calculation
-- [ ] Add: More line colors
+- [x] Add: More line colors
 - [x] Fix: When dividend is 0 the loading indicator is shown
 
 #### Idea dump
