@@ -29,39 +29,39 @@ const useStyles = makeStyles((theme) => ({
 const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [isNormalMenuOpen, setIsNormalMenuOpen] = React.useState(false);
+  const [isPortfolioMenuOpen, setIsPortfolioMenuOpen] = React.useState(false);
   const [menuSelectedSymbolSet, setMenuSelectedSymbolSet] = React.useState(null);
 
   const toggleVisibility = (symbolTickerToHide) => () => {
     dataStore.toggleSymbolVisibility(symbolTickerToHide);
   };
 
-  const handleRemoveFromPortfolio = (symbolTickerToRemove) => {
-    dataStore.removeSelectedSymbol(symbolTickerToRemove);
-    handleClose();
-  };
-
-  const handleDeleteDataSet = (symbolTickerToDelete) => {
-    dataStore.removeAndDeleteSymbol(symbolTickerToDelete);
-    handleClose();
-  };
-
-  const handleReloadDataSet = (symbolTickerToDelete) => {
-    dataStore.reloadDataFor(symbolTickerToDelete);
-    handleClose();
-  };
-
   const handleOnlyShow = (symbolTickerToShow) => {
     dataStore.setVisibilityForHideOther(symbolTickerToShow);
     handleClose();
+    handlePortfolioClose();
   };
 
   const handleMenuClick = (event, symbolSet) => {
     setMenuSelectedSymbolSet(symbolSet);
     setAnchorEl(event.currentTarget);
+    setIsNormalMenuOpen(true);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+    setIsNormalMenuOpen(false);
+  };
+
+  const handlePortfolioOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+    setIsPortfolioMenuOpen(true);
+  };
+
+  const handlePortfolioClose = () => {
+    setAnchorEl(null);
+    setIsPortfolioMenuOpen(false);
   };
 
   const isBadgeInvisible = (symbolSet) => {
@@ -94,65 +94,21 @@ const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
 
   return (
     <Paper className={classes.root}>
-      <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-        <MenuItem>
-          <ListItemIcon>
-            <InfoIcon fontSize="small" />
-          </ListItemIcon>
-          <Typography variant="inherit" noWrap>
-            {menuSelectedSymbolSet ? menuSelectedSymbolSet.name : null}
-          </Typography>
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <MoneyIcon fontSize="small" />
-          </ListItemIcon>
-          <Typography variant="inherit" noWrap>
-            {menuSelectedSymbolSet ? menuSelectedSymbolSet.currency : "-"}
-          </Typography>
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <TodayIcon fontSize="small" />
-          </ListItemIcon>
-          <Typography variant="inherit" noWrap>
-            {menuSelectedSymbolSet ? menuSelectedSymbolSet.dateFetched : "-"}
-          </Typography>
-        </MenuItem>
-        <MenuItem>{/* Empty to have some space between information above and actions below */}</MenuItem>
-        <MenuItem onClick={() => handleOnlyShow(menuSelectedSymbolSet.symbolTicker)}>
-          <ListItemIcon>
-            <VisibilityIcon fontSize="small" />
-          </ListItemIcon>
-          <Typography variant="inherit" noWrap color="primary">
-            Hide other assets
-          </Typography>
-        </MenuItem>
-        <MenuItem onClick={() => handleReloadDataSet(menuSelectedSymbolSet.symbolTicker)}>
-          <ListItemIcon>
-            <RefreshIcon fontSize="small" />
-          </ListItemIcon>
-          <Typography variant="inherit" noWrap color="primary">
-            Reload data
-          </Typography>
-        </MenuItem>
-        <MenuItem onClick={() => handleRemoveFromPortfolio(menuSelectedSymbolSet.symbolTicker)}>
-          <ListItemIcon>
-            <DeleteIcon fontSize="small" />
-          </ListItemIcon>
-          <Typography variant="inherit" noWrap color="error">
-            Remove from Portfolio
-          </Typography>
-        </MenuItem>
-        <MenuItem onClick={() => handleDeleteDataSet(menuSelectedSymbolSet.symbolTicker)}>
-          <ListItemIcon>
-            <DeleteForeverIcon fontSize="small" />
-          </ListItemIcon>
-          <Typography variant="inherit" noWrap color="error">
-            Delete Dataset
-          </Typography>
-        </MenuItem>
-      </Menu>
+      <ChipMenuPortfolio
+        anchorEl={anchorEl}
+        isPortfolioMenuOpen={isPortfolioMenuOpen}
+        handlePortfolioClose={handlePortfolioClose}
+        handleOnlyShow={handleOnlyShow}
+      />
+
+      <ChipMenuNormal
+        anchorEl={anchorEl}
+        isNormalMenuOpen={isNormalMenuOpen}
+        handleClose={handleClose}
+        handleOnlyShow={handleOnlyShow}
+        menuSelectedSymbolSet={menuSelectedSymbolSet}
+        dataStore={dataStore}
+      />
 
       <Grid container spacing={1} alignItems="center">
         <Grid item xs={8}>
@@ -170,7 +126,9 @@ const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
                     label={symbolSet.symbolTicker}
                     onClick={toggleVisibility(symbolSet.symbolTicker)}
                     onDelete={
-                      symbolSet.symbolTicker !== "Portfolio" ? (event) => handleMenuClick(event, symbolSet) : false
+                      symbolSet.symbolTicker !== "Portfolio"
+                        ? (event) => handleMenuClick(event, symbolSet)
+                        : (event) => handlePortfolioOpen(event)
                     }
                     deleteIcon={<InfoIcon />}
                     className={classes.chip}
@@ -190,4 +148,117 @@ const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
     </Paper>
   );
 });
+
+const ChipMenuPortfolio = ({ isPortfolioMenuOpen, handlePortfolioClose, handleOnlyShow, anchorEl }) => {
+  return (
+    <Menu
+      id="simple-menu-portfolio"
+      anchorEl={anchorEl}
+      keepMounted
+      open={isPortfolioMenuOpen}
+      onClose={handlePortfolioClose}
+    >
+      <MenuItem onClick={() => handleOnlyShow("Portfolio")}>
+        <ListItemIcon>
+          <VisibilityIcon fontSize="small" />
+        </ListItemIcon>
+        <Typography variant="inherit" noWrap color="primary">
+          Hide other assets
+        </Typography>
+      </MenuItem>
+    </Menu>
+  );
+};
+
+const ChipMenuNormal = ({
+  anchorEl,
+  isNormalMenuOpen,
+  handleClose,
+  handleOnlyShow,
+  menuSelectedSymbolSet,
+  dataStore,
+}) => {
+  const handleRemoveFromPortfolio = (symbolTickerToRemove) => {
+    dataStore.removeSelectedSymbol(symbolTickerToRemove);
+    handleClose();
+  };
+
+  const handleDeleteDataSet = (symbolTickerToDelete) => {
+    dataStore.removeAndDeleteSymbol(symbolTickerToDelete);
+    handleClose();
+  };
+
+  const handleReloadDataSet = (symbolTickerToDelete) => {
+    dataStore.reloadDataFor(symbolTickerToDelete);
+    handleClose();
+  };
+  return (
+    <Menu
+      id="simple-menu"
+      anchorEl={anchorEl}
+      keepMounted
+      open={isNormalMenuOpen}
+      onClose={handleClose}
+      handleOnlyShow={handleOnlyShow}
+    >
+      <MenuItem>
+        <ListItemIcon>
+          <InfoIcon fontSize="small" />
+        </ListItemIcon>
+        <Typography variant="inherit" noWrap>
+          {menuSelectedSymbolSet ? menuSelectedSymbolSet.name : null}
+        </Typography>
+      </MenuItem>
+      <MenuItem>
+        <ListItemIcon>
+          <MoneyIcon fontSize="small" />
+        </ListItemIcon>
+        <Typography variant="inherit" noWrap>
+          {menuSelectedSymbolSet ? menuSelectedSymbolSet.currency : "-"}
+        </Typography>
+      </MenuItem>
+      <MenuItem>
+        <ListItemIcon>
+          <TodayIcon fontSize="small" />
+        </ListItemIcon>
+        <Typography variant="inherit" noWrap>
+          {menuSelectedSymbolSet ? menuSelectedSymbolSet.dateFetched : "-"}
+        </Typography>
+      </MenuItem>
+      <MenuItem>{/* Empty to have some space between information above and actions below */}</MenuItem>
+      <MenuItem onClick={() => handleOnlyShow(menuSelectedSymbolSet.symbolTicker)}>
+        <ListItemIcon>
+          <VisibilityIcon fontSize="small" />
+        </ListItemIcon>
+        <Typography variant="inherit" noWrap color="primary">
+          Hide other assets
+        </Typography>
+      </MenuItem>
+      <MenuItem onClick={() => handleReloadDataSet(menuSelectedSymbolSet.symbolTicker)}>
+        <ListItemIcon>
+          <RefreshIcon fontSize="small" />
+        </ListItemIcon>
+        <Typography variant="inherit" noWrap color="primary">
+          Reload data
+        </Typography>
+      </MenuItem>
+      <MenuItem onClick={() => handleRemoveFromPortfolio(menuSelectedSymbolSet.symbolTicker)}>
+        <ListItemIcon>
+          <DeleteIcon fontSize="small" />
+        </ListItemIcon>
+        <Typography variant="inherit" noWrap color="error">
+          Remove from Portfolio
+        </Typography>
+      </MenuItem>
+      <MenuItem onClick={() => handleDeleteDataSet(menuSelectedSymbolSet.symbolTicker)}>
+        <ListItemIcon>
+          <DeleteForeverIcon fontSize="small" />
+        </ListItemIcon>
+        <Typography variant="inherit" noWrap color="error">
+          Delete Dataset
+        </Typography>
+      </MenuItem>
+    </Menu>
+  );
+};
 export default SelectedSymbolsBar;
