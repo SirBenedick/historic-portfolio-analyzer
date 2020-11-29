@@ -16,13 +16,11 @@ class DataStore {
       dateFetched: "-",
     },
   ];
-  pendingRequests = 0;
-  appleData = [];
   portfolioStartingDate = "";
-  triggerRerenderPortfolio = false;
-  triggerRecalculatePortfolioTimeout = null;
-  triggerRerenderVisibleLines = false;
   portfolioBuilderSetting = "ticker"; // "ticker", "name", "value", "performance_since_start", "performance_annualized"
+  triggerRerenderPortfolio = false;
+  triggerRerenderVisibleLines = false;
+  triggerRecalculatePortfolioTimeout = null;
 
   constructor() {
     makeObservable(this, {
@@ -79,14 +77,7 @@ class DataStore {
     });
   }
 
-  setTriggerRerenderPortfolio(bool) {
-    this.triggerRerenderPortfolio = bool;
-  }
-
-  setTriggerRerenderVisibleLines(bool) {
-    this.triggerRerenderVisibleLines = bool;
-  }
-
+  // symbols operations
   async addSymbol(symbolSetSearchResult) {
     if (!symbolSetSearchResult || !symbolSetSearchResult.symbolTicker) return false;
     this.symbols.push({
@@ -108,19 +99,6 @@ class DataStore {
 
     this.setTriggerRerenderVisibleLines(true);
     this.setTriggerRerenderPortfolio(true);
-  }
-
-  async getMetaDataAndStoreIt(symbolTicker) {
-    //  Get meta data and store it inside this store
-    const metaData = await symbolDataStore.getMetaDataForSymbol(symbolTicker);
-    this.setDateFetchedForTicker(symbolTicker, metaData.date_fetched);
-  }
-
-  async reloadDataFor(symbolTickerToReload) {
-    await this.deleteDataSetForSymbol(symbolTickerToReload);
-    await symbolDataStore.removeSymbolFromMap(symbolTickerToReload);
-    await symbolDataStore.addSymbolToMap(symbolTickerToReload);
-    await this.getMetaDataAndStoreIt(symbolTickerToReload);
   }
 
   async removeAndDeleteSymbol(symbolTickerToDelete) {
@@ -161,72 +139,6 @@ class DataStore {
       }
     });
     this.setTriggerRerenderVisibleLines(true);
-  }
-
-  setPortfolioStartingDate(date) {
-    this.portfolioStartingDate = date;
-  }
-
-  get totalValueOfSymbols() {
-    return this.symbols.reduce((pv, symbolSet) => {
-      if (symbolSet.symbolTicker !== "Portfolio") return +pv + +symbolSet.value;
-      else return pv;
-    }, 0);
-  }
-
-  async doesSymbolExist(symbolTicker) {
-    let doesExist = false;
-    this.symbols.forEach((symbolSet) => {
-      if (symbolSet.symbolTicker === symbolTicker) {
-        doesExist = true;
-      }
-    });
-    return doesExist;
-  }
-
-  getSymbolSetForTicker(symbolTicker) {
-    return this.symbols.find((symbolSet) => symbolSet.symbolTicker === symbolTicker);
-  }
-
-  get symbolsWithoutPortfolio() {
-    return this.symbols.filter((symbolSet) => symbolSet.symbolTicker !== "Portfolio");
-  }
-
-  get symbolPortfolioOnly() {
-    return this.symbols.filter((symbolSet) => symbolSet.symbolTicker === "Portfolio");
-  }
-
-  get symbolsSortedByTickerPortfolioFirst() {
-    let temp = this.symbols;
-    temp = temp.slice().sort(compareSymbolSetsByTickerPortfolioFirst);
-    return temp;
-  }
-
-  get symbolsSortedByPortfolioBuilderSetting() {
-    let temp = this.symbols;
-    if (this.portfolioBuilderSetting === "ticker") {
-      temp = temp.slice().sort(compareSymbolSetsByTicker);
-    } else if (this.portfolioBuilderSetting === "name") {
-      temp = temp.slice().sort(compareSymbolSetsByName);
-    } else if (this.portfolioBuilderSetting === "performance_annualized") {
-      temp = temp.slice().sort(compareSymbolSetsByPerformanceAnnulized);
-    } else if (this.portfolioBuilderSetting === "performance_since_start") {
-      temp = temp.slice().sort(compareSymbolSetsByPerformanceSinceStart);
-    } else if (this.portfolioBuilderSetting === "value") {
-      temp = temp.slice().sort(compareSymbolSetsByValue);
-    }
-    return temp;
-  }
-
-  get symbolsSortedByTickerWithoutPortfolio() {
-    let temp = this.symbols;
-    temp = temp.filter((symbolSet) => symbolSet.symbolTicker !== "Portfolio");
-    temp = temp.slice().sort(compareSymbolSetsByTickerPortfolioFirst);
-    return temp;
-  }
-
-  get listOfSymbolTickers() {
-    return this.symbols.map((symbolSet) => symbolSet.symbolTicker);
   }
 
   setValueForTicker(changedSymbolByTicker, value) {
@@ -292,8 +204,52 @@ class DataStore {
     });
   }
 
+  // portfolioStartingDate operations
+  setPortfolioStartingDate(date) {
+    this.portfolioStartingDate = date;
+  }
+
+  // portfolioBuilderSetting operations
   setPortfolioBuilderSetting(newVal) {
     this.portfolioBuilderSetting = newVal;
+  }
+
+  // triggerRerenderPortfolio operations
+  setTriggerRerenderPortfolio(bool) {
+    this.triggerRerenderPortfolio = bool;
+  }
+
+  // triggerRerenderVisibleLines operations
+  setTriggerRerenderVisibleLines(bool) {
+    this.triggerRerenderVisibleLines = bool;
+  }
+
+  // Helper operations
+  async getMetaDataAndStoreIt(symbolTicker) {
+    //  Get meta data and store it inside this store
+    const metaData = await symbolDataStore.getMetaDataForSymbol(symbolTicker);
+    this.setDateFetchedForTicker(symbolTicker, metaData.date_fetched);
+  }
+
+  async reloadDataFor(symbolTickerToReload) {
+    await this.deleteDataSetForSymbol(symbolTickerToReload);
+    await symbolDataStore.removeSymbolFromMap(symbolTickerToReload);
+    await symbolDataStore.addSymbolToMap(symbolTickerToReload);
+    await this.getMetaDataAndStoreIt(symbolTickerToReload);
+  }
+
+  async doesSymbolExist(symbolTicker) {
+    let doesExist = false;
+    this.symbols.forEach((symbolSet) => {
+      if (symbolSet.symbolTicker === symbolTicker) {
+        doesExist = true;
+      }
+    });
+    return doesExist;
+  }
+
+  getSymbolSetForTicker(symbolTicker) {
+    return this.symbols.find((symbolSet) => symbolSet.symbolTicker === symbolTicker);
   }
 
   nextAvailableColorValue() {
@@ -317,6 +273,55 @@ class DataStore {
         break;
       }
     }
+  }
+
+  // Computed methodes
+  get totalValueOfSymbols() {
+    return this.symbols.reduce((pv, symbolSet) => {
+      if (symbolSet.symbolTicker !== "Portfolio") return +pv + +symbolSet.value;
+      else return pv;
+    }, 0);
+  }
+
+  get symbolsWithoutPortfolio() {
+    return this.symbols.filter((symbolSet) => symbolSet.symbolTicker !== "Portfolio");
+  }
+
+  get symbolPortfolioOnly() {
+    return this.symbols.filter((symbolSet) => symbolSet.symbolTicker === "Portfolio");
+  }
+
+  get symbolsSortedByTickerPortfolioFirst() {
+    let temp = this.symbols;
+    temp = temp.slice().sort(compareSymbolSetsByTickerPortfolioFirst);
+    return temp;
+  }
+
+  get symbolsSortedByPortfolioBuilderSetting() {
+    let temp = this.symbols;
+    if (this.portfolioBuilderSetting === "ticker") {
+      temp = temp.slice().sort(compareSymbolSetsByTicker);
+    } else if (this.portfolioBuilderSetting === "name") {
+      temp = temp.slice().sort(compareSymbolSetsByName);
+    } else if (this.portfolioBuilderSetting === "performance_annualized") {
+      temp = temp.slice().sort(compareSymbolSetsByPerformanceAnnulized);
+    } else if (this.portfolioBuilderSetting === "performance_since_start") {
+      temp = temp.slice().sort(compareSymbolSetsByPerformanceSinceStart);
+    } else if (this.portfolioBuilderSetting === "value") {
+      temp = temp.slice().sort(compareSymbolSetsByValue);
+    }
+    return temp;
+  }
+
+  get symbolsSortedByTickerWithoutPortfolio() {
+    let temp = this.symbols;
+    temp = temp.filter((symbolSet) => symbolSet.symbolTicker !== "Portfolio");
+    temp = temp.slice().sort(compareSymbolSetsByTickerPortfolioFirst);
+    return temp;
+  }
+
+  get listOfSymbolTickers() {
+    return this.symbols.map((symbolSet) => symbolSet.symbolTicker);
   }
 }
 
