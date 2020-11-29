@@ -232,6 +232,7 @@ class PortfolioStore {
   }
 
   async reloadDataFor(symbolTickerToReload) {
+    this.setDateFetchedForTicker(symbolTickerToReload, "-");
     await this.deleteDataSetForSymbol(symbolTickerToReload);
     await symbolDataStore.removeSymbolFromMap(symbolTickerToReload);
     await symbolDataStore.addSymbolToMap(symbolTickerToReload);
