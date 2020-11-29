@@ -37,8 +37,12 @@ Being annoyed by the current application architecture is the key indicator for n
 
 - [x] Add: Badge when data isnt up to date on chip
 - [x] Add: Badge when data wasnt downloaded yet
-- [ ] Add: Action to chip to only show that symbol line
-- [ ] Fix: API key bug
+- [x] Add: Action to chip to only show that symbol line
+
+#### 0.9.3
+
+- [ ] Fix: API key bug, doesnt store new key
+- [ ] Add: Menu to portfolio chip, "hide others"
 
 #### 0.10.0
 

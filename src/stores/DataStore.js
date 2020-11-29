@@ -32,6 +32,7 @@ class DataStore {
       triggerRerenderVisibleLines: observable,
       portfolioStartingDate: observable,
       toggleSymbolVisibility: action,
+      setVisibilityForHideOther: action,
       addSymbol: action,
       removeSelectedSymbol: action,
       setValueForTicker: action,
@@ -146,6 +147,17 @@ class DataStore {
     this.symbols.forEach((symbol) => {
       if (symbol.symbolTicker === changedSymbolbyTicker) {
         symbol.isVisible = !symbol.isVisible;
+      }
+    });
+    this.setTriggerRerenderVisibleLines(true);
+  }
+
+  setVisibilityForHideOther(symbolToShow) {
+    this.symbols.forEach((symbol) => {
+      if (symbol.symbolTicker === symbolToShow) {
+        symbol.isVisible = true;
+      } else {
+        symbol.isVisible = false;
       }
     });
     this.setTriggerRerenderVisibleLines(true);

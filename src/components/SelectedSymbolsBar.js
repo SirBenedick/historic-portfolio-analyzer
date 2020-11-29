@@ -7,6 +7,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import MoneyIcon from "@material-ui/icons/Money";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 import { observer } from "mobx-react-lite";
 import SearchForSymbolInput from "../components/SearchForSymbolInput";
 import moment from "moment";
@@ -46,6 +47,11 @@ const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
 
   const handleReloadDataSet = (symbolTickerToDelete) => {
     dataStore.reloadDataFor(symbolTickerToDelete);
+    handleClose();
+  };
+
+  const handleOnlyShow = (symbolTickerToShow) => {
+    dataStore.setVisibilityForHideOther(symbolTickerToShow);
     handleClose();
   };
 
@@ -114,6 +120,14 @@ const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
           </Typography>
         </MenuItem>
         <MenuItem>{/* Empty to have some space between information above and actions below */}</MenuItem>
+        <MenuItem onClick={() => handleOnlyShow(menuSelectedSymbolSet.symbolTicker)}>
+          <ListItemIcon>
+            <VisibilityIcon fontSize="small" />
+          </ListItemIcon>
+          <Typography variant="inherit" noWrap color="primary">
+            Hide other assets
+          </Typography>
+        </MenuItem>
         <MenuItem onClick={() => handleReloadDataSet(menuSelectedSymbolSet.symbolTicker)}>
           <ListItemIcon>
             <RefreshIcon fontSize="small" />
