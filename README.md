@@ -33,18 +33,11 @@ Being annoyed by the current application architecture is the key indicator for n
 
 (Add, Fix, Improve, Refactor, Style, Remove)
 
-#### 0.9.1
-
-- Stop updating package\*.json!
-- Add: Screenshot to github readme
-- Improve: github readme
-- Add: github tags
-
 #### 0.9.2
 
-- Add: Badge when data isnt up to date on chip
-- Add: Badge when data wasnt downloaded yet
-- Add: Action to chip to only show that symbol line
+- [ ] Add: Badge when data isnt up to date on chip
+- [ ] Add: Badge when data wasnt downloaded yet
+- [ ] Add: Action to chip to only show that symbol line
 
 #### 0.10.0
 
