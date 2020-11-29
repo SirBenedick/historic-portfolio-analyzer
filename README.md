@@ -35,6 +35,23 @@ Being annoyed by the current application architecture is the key indicator for n
 
 #### 0.10.0
 
+- [ ] Add: Form dialog to store current portfolio configuration [form dialog](https://material-ui.com/components/dialogs/#form-dialogs)
+- [ ] Add: Simple Dialog to show stored portfolios and load one [Simple Dialog](https://material-ui.com/components/dialogs/#simple-dialogs)
+  - [ ] Show name
+  - [ ] List symbols of Portfolio
+- [ ] Add: idbPortfoliosStore
+  - [ ] Store Name (Key)
+  - [ ] Store PortfolioStore symbols
+  - [ ] Store creation date
+  - [ ] Store portfolioStartingDate
+- [ ] Add: Load idbPortfoliosStore portfolio into PortfolioStore
+
+#### 0.10.1
+
+- Add: Queue to reload requested data if request failed
+
+#### 0.11.0
+
 - [ ] Improve: Name "overview" tab to "chart"
 - [ ] Add: "Overview" tab
 - [ ] Add: Table similar to portfoliobuilder
@@ -50,10 +67,6 @@ Being annoyed by the current application architecture is the key indicator for n
 - [ ] Add: get company overview gets from idb or makes api call
 - [ ] Add: P/E to "overview" tab
 
-#### 0.11.0
-
-- Add: Store different portfolio setups to save for later and to compare
-
 #### Idea dump
 
 ##### General
@@ -64,7 +77,6 @@ Being annoyed by the current application architecture is the key indicator for n
 - Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed
 - Remove: moment.js to decrease bundle size(?)
 - Add: Choose time of entry for each position
-- Add: Store datset of fetched data, refresh if is too old
 - Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
 - Add: portfolio calculation granularity to speed up calculation
 - Add: Store for symbols to be fetched (in case API limit is reached)(set version of index db to current date)
