@@ -33,12 +33,6 @@ Being annoyed by the current application architecture is the key indicator for n
 
 (Add, Fix, Improve, Refactor, Style, Remove)
 
-#### 0.9.2
-
-- [x] Add: Badge when data isnt up to date on chip
-- [x] Add: Badge when data wasnt downloaded yet
-- [x] Add: Action to chip to only show that symbol line
-
 #### 0.9.3
 
 - [ ] Fix: API key bug, doesnt store new key
