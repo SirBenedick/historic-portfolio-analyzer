@@ -35,7 +35,7 @@ Being annoyed by the current application architecture is the key indicator for n
 
 #### 0.9.3
 
-- [ ] Fix: API key bug, doesnt store new key
+- [x] Fix: API key bug, doesnt store new key
 - [x] Add: Menu to portfolio chip, "hide others"
 
 #### 0.10.0

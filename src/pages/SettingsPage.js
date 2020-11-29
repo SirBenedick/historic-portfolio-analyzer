@@ -20,7 +20,7 @@ const SettingsPage = ({ configStore }) => {
     <div>
       <Paper elevation={1} style={{ padding: "20px" }}>
         <Typography variant="h1" gutterBottom>
-          Settings
+          Settings {configStore.alphaVantage.apiToken}
         </Typography>
 
         <Typography variant="h6" gutterBottom>

@@ -54,7 +54,7 @@ class ConfigStore {
   async setAlphaVantageAPITokenIDB(newToken) {
     await idbConfigStore.set("alphaVantagAPIToken", newToken);
     notificationStore.enqueueSnackbar({
-      message: `Stored new API-Token${this.alphaVantage.apiToken}`,
+      message: `Stored new API-Token: ${newToken}`,
       options: {
         variant: "success",
         autoHideDuration: 1000,
