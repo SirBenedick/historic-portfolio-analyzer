@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Chip, Grid, Menu, MenuItem, ListItemIcon, Typography } from "@material-ui/core";
+import { Paper, Chip, Grid, Menu, MenuItem, ListItemIcon, Typography, Badge } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
 import TodayIcon from "@material-ui/icons/Today";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -9,6 +9,7 @@ import MoneyIcon from "@material-ui/icons/Money";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import { observer } from "mobx-react-lite";
 import SearchForSymbolInput from "../components/SearchForSymbolInput";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,6 +56,34 @@ const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const isBadgeInvisible = (symbolSet) => {
+    if (symbolSet.symbolTicker === "Portfolio") return true;
+    if (symbolSet.dateFetched === "-") return false;
+
+    let dateFetched = moment(symbolSet.dateFetched);
+    let today = moment();
+
+    if (dateFetched.diff(today, "days") === 0) return false;
+    else if (today.isoWeekday() === 6 || today.isoWeekday() === 7) {
+      if (today.diff(dateFetched, "days") < 3) return true;
+    }
+    return false;
+  };
+
+  const getBadgeContent = (symbolSet) => {
+    if (symbolSet.symbolTicker === "Portfolio") return "";
+    if (symbolSet.dateFetched === "-") return "...";
+
+    let dateFetched = moment(symbolSet.dateFetched);
+    let today = moment();
+
+    if (dateFetched.diff(today, "days") === 0) return "";
+    else if (today.isoWeekday() === 6 || today.isoWeekday() === 7) {
+      if (today.diff(dateFetched, "days") < 3) return "date";
+    }
+    return "";
   };
 
   return (
@@ -116,19 +145,26 @@ const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
           <Grid container direction="row" justify="center" alignItems="center">
             {dataStore.symbolsSortedByTickerPortfolioFirst.map((symbolSet) => {
               return (
-                <Chip
-                  key={symbolSet.symbolTicker}
-                  label={symbolSet.symbolTicker}
-                  onClick={toggleVisibility(symbolSet.symbolTicker)}
-                  onDelete={
-                    symbolSet.symbolTicker !== "Portfolio" ? (event) => handleMenuClick(event, symbolSet) : false
-                  }
-                  deleteIcon={<InfoIcon />}
-                  className={classes.chip}
-                  color={symbolSet.isVisible ? "primary" : "default"}
-                  clickable={true}
-                  style={{ backgroundColor: symbolSet.isVisible ? symbolSet.color : "#eeeeee" }}
-                />
+                <Badge
+                  color="error"
+                  overlap="circle"
+                  badgeContent={getBadgeContent(symbolSet)}
+                  invisible={isBadgeInvisible(symbolSet)}
+                >
+                  <Chip
+                    key={symbolSet.symbolTicker}
+                    label={symbolSet.symbolTicker}
+                    onClick={toggleVisibility(symbolSet.symbolTicker)}
+                    onDelete={
+                      symbolSet.symbolTicker !== "Portfolio" ? (event) => handleMenuClick(event, symbolSet) : false
+                    }
+                    deleteIcon={<InfoIcon />}
+                    className={classes.chip}
+                    color={symbolSet.isVisible ? "primary" : "default"}
+                    clickable={true}
+                    style={{ backgroundColor: symbolSet.isVisible ? symbolSet.color : "#eeeeee" }}
+                  />
+                </Badge>
               );
             })}
           </Grid>

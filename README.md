@@ -35,9 +35,10 @@ Being annoyed by the current application architecture is the key indicator for n
 
 #### 0.9.2
 
-- [ ] Add: Badge when data isnt up to date on chip
-- [ ] Add: Badge when data wasnt downloaded yet
+- [x] Add: Badge when data isnt up to date on chip
+- [x] Add: Badge when data wasnt downloaded yet
 - [ ] Add: Action to chip to only show that symbol line
+- [ ] Fix: API key bug
 
 #### 0.10.0
 
