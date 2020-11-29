@@ -1,7 +1,7 @@
 import { makeObservable, observable, action, autorun } from "mobx";
 import idbConfigStore from "./idbConfigStore";
 import notificationStore from "./NotificationStore";
-import portfolioStore from "./DataStore";
+import portfolioStore from "./PortfolioStore";
 import keyMetricsStore from "./KeyMetricsStore";
 
 class ConfigStore {

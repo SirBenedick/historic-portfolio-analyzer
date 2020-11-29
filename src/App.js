@@ -19,7 +19,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import SettingsIcon from "@material-ui/icons/Settings";
 
 // Content
-import portfolioStore from "./stores/DataStore";
+import portfolioStore from "./stores/PortfolioStore";
 import notificationStore from "./stores/NotificationStore";
 import configStore from "./stores/ConfigStore";
 import symbolDataStore from "./stores/SymbolDataStore";
