@@ -82,17 +82,17 @@ const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
   };
 
   const getBadgeContent = (symbolSet) => {
-    if (symbolSet.symbolTicker === "Portfolio") return "";
+    if (symbolSet.symbolTicker === "Portfolio") return "1";
     if (symbolSet.dateFetched === "-") return "...";
 
     let dateFetched = moment(symbolSet.dateFetched);
     let today = moment();
 
-    if (today.diff(dateFetched, "days") === 0) return "";
+    if (today.diff(dateFetched, "days") === 0) return "2";
     else if (today.isoWeekday() === 6) {
-      if (today.diff(dateFetched, "days") <= 1) return "";
+      if (today.diff(dateFetched, "days") <= 1) return "3";
     } else if (today.isoWeekday() === 7) {
-      if (today.diff(dateFetched, "days") <= 2) return "";
+      if (today.diff(dateFetched, "days") <= 2) return "4";
     } else {
       return "date";
     }
