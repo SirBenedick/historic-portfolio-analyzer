@@ -29,7 +29,7 @@ class ConfigStore {
       console.log("Autorun: triggering sharp ratio rercalculation: " + JSON.stringify(trigger));
     });
   }
-
+  // isRunningSetup operations
   async startSetup() {
     console.log("startSetup");
     // Load stored API token from idbConfigStore or create a Token
@@ -50,6 +50,7 @@ class ConfigStore {
     this.isRunningSetup = bool;
   }
 
+  // alphaVantage operations
   // Store new alphaVantagAPIToken to idbConfigStore then store in mobx store
   async setAlphaVantageAPITokenIDB(newToken) {
     await idbConfigStore.set("alphaVantagAPIToken", newToken);
@@ -68,6 +69,8 @@ class ConfigStore {
     console.log("setAlphaVantageAPITokenHelper: " + newToken);
     this.alphaVantage.apiToken = newToken;
   }
+
+  // riskFreeRate operations
   setRiskFreeRate(newRate) {
     console.log("setRiskFreeRate: " + newRate);
     this.riskFreeRate = newRate;
