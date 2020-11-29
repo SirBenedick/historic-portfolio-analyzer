@@ -33,26 +33,22 @@ Being annoyed by the current application architecture is the key indicator for n
 
 (Add, Fix, Improve, Refactor, Style, Remove)
 
-#### 0.9.4
-
-- [x] Refactor: DataStore -> PortfolioStore
-
 #### 0.10.0
 
-- Improve: Name "overview" tab to "chart"
-- Add: "Overview" tab
-- Add: Table similar to portfoliobuilder
-  - Ticker
-  - Name
-  - Annualized
-  - Performance since start
-- Add: Performance 1year, 2, years, 3 years
-  - Design Storage of data
-  - Calculate
-- Add: to "overview" tab Performance 1year, 2, years, 3 years
-- Add: Fetch Company overview after add to idb, store in symbolDataStore in symbolChartTimeseriesDataMap, expand map to store data
-- Add: get company overview gets from idb or makes api call
-- Add: P/E to "overview" tab
+- [ ] Improve: Name "overview" tab to "chart"
+- [ ] Add: "Overview" tab
+- [ ] Add: Table similar to portfoliobuilder
+  - [ ] Ticker
+  - [ ] Name
+  - [ ] Annualized
+  - [ ] Performance since start
+- [ ] Add: Performance 1year, 2, years, 3 years
+  - [ ] Design Storage of data
+  - [ ] Calculate
+- [ ] Add: to "overview" tab Performance 1year, 2, years, 3 years
+- [ ] Add: Fetch Company overview after add to idb, store in symbolDataStore in symbolChartTimeseriesDataMap, expand map to store data
+- [ ] Add: get company overview gets from idb or makes api call
+- [ ] Add: P/E to "overview" tab
 
 #### 0.11.0
 
