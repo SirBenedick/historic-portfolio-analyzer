@@ -72,13 +72,13 @@ const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
     let today = moment();
 
     if (today.diff(dateFetched, "days") === 0) return true;
-    else if (today.isoWeekday() === 6) {
+    if (today.isoWeekday() === 6) {
       if (today.diff(dateFetched, "days") <= 1) return true;
-    } else if (today.isoWeekday() === 7) {
-      if (today.diff(dateFetched, "days") <= 2) return true;
-    } else {
-      return false;
     }
+    if (today.isoWeekday() === 7) {
+      if (today.diff(dateFetched, "days") <= 2) return true;
+    }
+    return false;
   };
 
   const getBadgeContent = (symbolSet) => {
@@ -89,13 +89,13 @@ const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
     let today = moment();
 
     if (today.diff(dateFetched, "days") === 0) return "2";
-    else if (today.isoWeekday() === 6) {
+    if (today.isoWeekday() === 6) {
       if (today.diff(dateFetched, "days") <= 1) return "3";
-    } else if (today.isoWeekday() === 7) {
-      if (today.diff(dateFetched, "days") <= 2) return "4";
-    } else {
-      return "date";
     }
+    if (today.isoWeekday() === 7) {
+      if (today.diff(dateFetched, "days") <= 2) return "4";
+    }
+    return "date";
   };
 
   return (
