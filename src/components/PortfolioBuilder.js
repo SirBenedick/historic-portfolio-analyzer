@@ -5,7 +5,7 @@ import { observer } from "mobx-react";
 
 const useStyles = makeStyles({ tabellCellClickable: { cursor: "pointer" } });
 
-const PortfolioBuilder = observer(({ dataStore }) => {
+const PortfolioBuilder = observer(({ portfolioStore }) => {
   const classes = useStyles();
   let index = 1;
 
@@ -20,7 +20,7 @@ const PortfolioBuilder = observer(({ dataStore }) => {
   };
 
   const setPortfolioBuilderSetting = (newVal) => {
-    dataStore.setPortfolioBuilderSetting(newVal);
+    portfolioStore.setPortfolioBuilderSetting(newVal);
   };
 
   return (
@@ -62,7 +62,7 @@ const PortfolioBuilder = observer(({ dataStore }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {dataStore.symbolsSortedByPortfolioBuilderSetting.map((symbolSet) => {
+          {portfolioStore.symbolsSortedByPortfolioBuilderSetting.map((symbolSet) => {
             return (
               <TableRow key={symbolSet.symbolTicker}>
                 <TableCell component="th" scope="row">
@@ -85,7 +85,7 @@ const PortfolioBuilder = observer(({ dataStore }) => {
                     <input
                       type="text"
                       value={symbolSet.value}
-                      onChange={(event) => dataStore.setValueForTicker(symbolSet.symbolTicker, event.target.value)}
+                      onChange={(event) => portfolioStore.setValueForTicker(symbolSet.symbolTicker, event.target.value)}
                       style={{ maxWidth: "60px" }}
                     />
                   )}
@@ -99,7 +99,7 @@ const PortfolioBuilder = observer(({ dataStore }) => {
           <TableCell />
           <TableCell />
           <TableCell align="right">
-            <Typography noWrap>Total: ${dataStore.totalValueOfSymbols}</Typography>
+            <Typography noWrap>Total: ${portfolioStore.totalValueOfSymbols}</Typography>
           </TableCell>
         </TableBody>
       </Table>

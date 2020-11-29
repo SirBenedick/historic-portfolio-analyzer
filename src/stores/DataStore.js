@@ -1,7 +1,7 @@
 import { makeObservable, observable, action, computed, autorun } from "mobx";
 import moment from "moment";
 import symbolDataStore from "./SymbolDataStore";
-class DataStore {
+class PortfolioStore {
   symbols = [
     {
       symbolTicker: "Portfolio",
@@ -434,5 +434,5 @@ const compareSymbolSetsByValue = (a, b) => {
   }
   return 0;
 };
-const dataStore = new DataStore();
-export default dataStore;
+const portfolioStore = new PortfolioStore();
+export default portfolioStore;

@@ -42,7 +42,7 @@ export default class ChartPortfolioOverview extends React.Component {
   }
 
   async rerenderPortfolio() {
-    this.addLineSeriesData(this.props.dataStore.getSymbolSetForTicker("Portfolio"));
+    this.addLineSeriesData(this.props.portfolioStore.getSymbolSetForTicker("Portfolio"));
   }
 
   rerenderVisibleLines() {
@@ -64,16 +64,16 @@ export default class ChartPortfolioOverview extends React.Component {
     console.log("createGraphForSelectedSymbols");
 
     // Remove lines for deleted symbols
-    const tempListOfAllSymbols = this.props.dataStore.listOfSymbolTickers;
+    const tempListOfAllSymbols = this.props.portfolioStore.listOfSymbolTickers;
     for (const [symbolTicker, lineSeries] of Object.entries(this.lineSeriesObj)) {
-      // Check if ticker in dataStore symbols, if then remove lineseries
+      // Check if ticker in portfolioStore symbols, if then remove lineseries
       if (!tempListOfAllSymbols.includes(symbolTicker)) {
         this.chart.removeSeries(lineSeries["series"]);
         delete this.lineSeriesObj[symbolTicker];
       }
     }
 
-    this.props.dataStore.symbols.forEach((symbolSet) => {
+    this.props.portfolioStore.symbols.forEach((symbolSet) => {
       if (symbolSet.isVisible) {
         this.addLineSeriesData(symbolSet);
       } else {
@@ -119,8 +119,14 @@ export default class ChartPortfolioOverview extends React.Component {
         />
         <CalculatingProgress symbolDataStore={this.props.symbolDataStore} />
         <div ref={this.myRef} id="chart-ref"></div>
-        <TriggerRerenderPortfolio dataStore={this.props.dataStore} rerenderPortfolio={this.rerenderPortfolio} />
-        <TriggerShowVisibleLines dataStore={this.props.dataStore} rerenderVisibleLines={this.rerenderVisibleLines} />
+        <TriggerRerenderPortfolio
+          portfolioStore={this.props.portfolioStore}
+          rerenderPortfolio={this.rerenderPortfolio}
+        />
+        <TriggerShowVisibleLines
+          portfolioStore={this.props.portfolioStore}
+          rerenderVisibleLines={this.rerenderVisibleLines}
+        />
       </Paper>
     );
   }

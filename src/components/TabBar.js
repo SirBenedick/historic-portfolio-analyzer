@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TabBar = observer(({ dataStore, symbolDataStore, keyMetricsStore, configStore }) => {
+const TabBar = observer(({ portfolioStore, symbolDataStore, keyMetricsStore, configStore }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -70,7 +70,11 @@ const TabBar = observer(({ dataStore, symbolDataStore, keyMetricsStore, configSt
       </Paper>
 
       <TabPanel value={value} index={0}>
-        <ChartPortfolioOverview dataStore={dataStore} configStore={configStore} symbolDataStore={symbolDataStore} />
+        <ChartPortfolioOverview
+          portfolioStore={portfolioStore}
+          configStore={configStore}
+          symbolDataStore={symbolDataStore}
+        />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <ChartDrawdown keyMetricsStore={keyMetricsStore} />

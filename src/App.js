@@ -19,7 +19,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import SettingsIcon from "@material-ui/icons/Settings";
 
 // Content
-import dataStore from "./stores/DataStore";
+import portfolioStore from "./stores/DataStore";
 import notificationStore from "./stores/NotificationStore";
 import configStore from "./stores/ConfigStore";
 import symbolDataStore from "./stores/SymbolDataStore";
@@ -183,7 +183,7 @@ function App() {
         <div className={classes.toolbar} />
         {pages.chartingPage.showPage ? (
           <ChartingPage
-            dataStore={dataStore}
+            portfolioStore={portfolioStore}
             notificationStore={notificationStore}
             configStore={configStore}
             symbolDataStore={symbolDataStore}

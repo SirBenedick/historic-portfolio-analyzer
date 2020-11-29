@@ -9,7 +9,7 @@ const filterOptions = createFilterOptions({
   stringify: (option) => `${option.symbolTicker}-${option.name}`,
 });
 
-const SearchForSymbolInput = observer(({ dataStore, notificationStore }) => {
+const SearchForSymbolInput = observer(({ portfolioStore, notificationStore }) => {
   const [searchOptions, setSearchOptions] = React.useState([]);
   const [isLoadingSearch, setIsLoadingSearch] = React.useState(false);
   const [searchTimeout, setSearchTimeout] = React.useState(null);
@@ -32,7 +32,7 @@ const SearchForSymbolInput = observer(({ dataStore, notificationStore }) => {
   };
 
   const handleSearchSelect = async (symbolSearchResult) => {
-    const doesExist = await dataStore.doesSymbolExist(symbolSearchResult.symbolTicker);
+    const doesExist = await portfolioStore.doesSymbolExist(symbolSearchResult.symbolTicker);
 
     if (doesExist) {
       notificationStore.enqueueSnackbar({
@@ -44,7 +44,7 @@ const SearchForSymbolInput = observer(({ dataStore, notificationStore }) => {
         key: `SYMBOL-DUPLICATE-${symbolSearchResult.symbolTicker}`,
       });
     } else {
-      dataStore.addSymbol(symbolSearchResult);
+      portfolioStore.addSymbol(symbolSearchResult);
     }
   };
 

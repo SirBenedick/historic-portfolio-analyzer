@@ -44,7 +44,7 @@ function valuetext(value) {
   return `${value}%`;
 }
 
-const ChartConfigurationCard = observer(({ configStore, dataStore }) => {
+const ChartConfigurationCard = observer(({ configStore, portfolioStore }) => {
   const classes = useStyles();
 
   return (
@@ -54,7 +54,7 @@ const ChartConfigurationCard = observer(({ configStore, dataStore }) => {
       </Typography>
       <Grid container spacing={3} xs={12} justify="center" alignItems="center">
         <Grid item xs={6} style={{ backgroundColor: "" }} className={classes.gridItem}>
-          <DatePicker dataStore={dataStore} />
+          <DatePicker portfolioStore={portfolioStore} />
         </Grid>
         <Grid item xs={6} style={{ backgroundColor: "" }} className={classes.gridItem}>
           <Typography id="discrete-slider-custom" gutterBottom>

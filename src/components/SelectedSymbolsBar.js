@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
+const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [isNormalMenuOpen, setIsNormalMenuOpen] = React.useState(false);
@@ -34,11 +34,11 @@ const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
   const [menuSelectedSymbolSet, setMenuSelectedSymbolSet] = React.useState(null);
 
   const toggleVisibility = (symbolTickerToHide) => () => {
-    dataStore.toggleSymbolVisibility(symbolTickerToHide);
+    portfolioStore.toggleSymbolVisibility(symbolTickerToHide);
   };
 
   const handleOnlyShow = (symbolTickerToShow) => {
-    dataStore.setVisibilityForHideOther(symbolTickerToShow);
+    portfolioStore.setVisibilityForHideOther(symbolTickerToShow);
     handleClose();
     handlePortfolioClose();
   };
@@ -107,13 +107,13 @@ const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
         handleClose={handleClose}
         handleOnlyShow={handleOnlyShow}
         menuSelectedSymbolSet={menuSelectedSymbolSet}
-        dataStore={dataStore}
+        portfolioStore={portfolioStore}
       />
 
       <Grid container spacing={1} alignItems="center">
         <Grid item xs={8}>
           <Grid container direction="row" justify="center" alignItems="center">
-            {dataStore.symbolsSortedByTickerPortfolioFirst.map((symbolSet) => {
+            {portfolioStore.symbolsSortedByTickerPortfolioFirst.map((symbolSet) => {
               return (
                 <Badge
                   color="error"
@@ -142,7 +142,7 @@ const SelectedSymbolsBar = observer(({ dataStore, notificationStore }) => {
           </Grid>
         </Grid>
         <Grid item xs={4}>
-          <SearchForSymbolInput dataStore={dataStore} notificationStore={notificationStore} />
+          <SearchForSymbolInput portfolioStore={portfolioStore} notificationStore={notificationStore} />
         </Grid>
       </Grid>
     </Paper>
@@ -176,20 +176,20 @@ const ChipMenuNormal = ({
   handleClose,
   handleOnlyShow,
   menuSelectedSymbolSet,
-  dataStore,
+  portfolioStore,
 }) => {
   const handleRemoveFromPortfolio = (symbolTickerToRemove) => {
-    dataStore.removeSelectedSymbol(symbolTickerToRemove);
+    portfolioStore.removeSelectedSymbol(symbolTickerToRemove);
     handleClose();
   };
 
   const handleDeleteDataSet = (symbolTickerToDelete) => {
-    dataStore.removeAndDeleteSymbol(symbolTickerToDelete);
+    portfolioStore.removeAndDeleteSymbol(symbolTickerToDelete);
     handleClose();
   };
 
   const handleReloadDataSet = (symbolTickerToDelete) => {
-    dataStore.reloadDataFor(symbolTickerToDelete);
+    portfolioStore.reloadDataFor(symbolTickerToDelete);
     handleClose();
   };
   return (

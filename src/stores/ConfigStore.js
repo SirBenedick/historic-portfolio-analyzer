@@ -1,7 +1,7 @@
 import { makeObservable, observable, action, autorun } from "mobx";
 import idbConfigStore from "./idbConfigStore";
 import notificationStore from "./NotificationStore";
-import dataStore from "./DataStore";
+import portfolioStore from "./DataStore";
 import keyMetricsStore from "./KeyMetricsStore";
 
 class ConfigStore {
@@ -40,8 +40,8 @@ class ConfigStore {
     }
 
     // Add default symbols
-    // If no deafult symbols added then dataStore trigger have to be called manually
-    dataStore.addSymbol({ symbolTicker: "AAPL", name: "Apple Inc.", region: "testRegion", currency: "USD" });
+    // If no deafult symbols added then portfolioStore trigger have to be called manually
+    portfolioStore.addSymbol({ symbolTicker: "AAPL", name: "Apple Inc.", region: "testRegion", currency: "USD" });
 
     this.setIsRunningSetup(false);
   }

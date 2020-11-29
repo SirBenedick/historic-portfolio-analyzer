@@ -1,5 +1,5 @@
 import dbPromise from "./dbPromise";
-import dataStore from "./DataStore";
+import portfolioStore from "./DataStore";
 import moment from "moment";
 import notificationStore from "./NotificationStore";
 import symbolDataStore from "./SymbolDataStore";
@@ -83,11 +83,11 @@ const idbSymbolDataStore = {
     //  Calculate for each asset the quantity at portfolio start and the performance since
     console.log("Portfolio - calculating quantity");
     let symbolQuantityMap = {};
-    let startingDate = moment(dataStore.portfolioStartingDate);
+    let startingDate = moment(portfolioStore.portfolioStartingDate);
     let endDate = moment();
     const daysSinceStart = endDate.diff(startingDate, "days") + 1;
     await Promise.all(
-      dataStore.symbolsWithoutPortfolio.map(async (symbolSet) => {
+      portfolioStore.symbolsWithoutPortfolio.map(async (symbolSet) => {
         // Get price of asset for the portfolio starting date
         let startingDatePriceValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(
           symbolSet.symbolTicker,
@@ -118,26 +118,29 @@ const idbSymbolDataStore = {
 
         // Calculate performanceSinceStart for this symbol and store the value
         const performanceSinceStart = parseFloat(endDatePriceValue) / parseFloat(startingDatePriceValue) - 1;
-        dataStore.setPerformanceSincePortfolioStartForTicker(symbolSet.symbolTicker, performanceSinceStart);
+        portfolioStore.setPerformanceSincePortfolioStartForTicker(symbolSet.symbolTicker, performanceSinceStart);
         // Calculate yearlyPerformanceSinceStart for this symbol and store the value
         const yearlyPerformanceSinceStart = performanceSinceStart * (365 / daysSinceStart);
-        dataStore.setYearlyPerformanceSincePortfolioStartForTicker(symbolSet.symbolTicker, yearlyPerformanceSinceStart);
+        portfolioStore.setYearlyPerformanceSincePortfolioStartForTicker(
+          symbolSet.symbolTicker,
+          yearlyPerformanceSinceStart
+        );
 
         // Calculate quantity for this symbol
-        const startingDateValueOfThisSymbol = dataStore.getSymbolSetForTicker(symbolSet.symbolTicker)["value"];
+        const startingDateValueOfThisSymbol = portfolioStore.getSymbolSetForTicker(symbolSet.symbolTicker)["value"];
         const quantity = parseFloat(startingDateValueOfThisSymbol) / parseFloat(startingDatePriceValue);
 
         symbolQuantityMap[symbolSet.symbolTicker] = quantity;
 
         const endValue = endDatePriceValue * quantity;
-        dataStore.setEndValueForTicker(symbolSet.symbolTicker, endValue);
+        portfolioStore.setEndValueForTicker(symbolSet.symbolTicker, endValue);
       })
     );
 
-    // Generate a list of all days between dataStore.portfolioStartingDate and today (including both days)
+    // Generate a list of all days between portfolioStore.portfolioStartingDate and today (including both days)
     console.log("Portfolio - list of dates");
     let datesToCheck = [];
-    let date = moment(dataStore.portfolioStartingDate);
+    let date = moment(portfolioStore.portfolioStartingDate);
     while (date.isBefore()) {
       datesToCheck.push(date.format("YYYY-MM-DD"));
       date.add(1, "days");
@@ -147,7 +150,7 @@ const idbSymbolDataStore = {
     console.log("Portfolio - calculating for each day");
     let tempSymbolDatasetMap = {};
     await Promise.all(
-      dataStore.symbolsWithoutPortfolio.map(async (symbolSet) => {
+      portfolioStore.symbolsWithoutPortfolio.map(async (symbolSet) => {
         let tempDataSet = await idbSymbolDataStore.getTimeSeriesDailyByTicker(symbolSet.symbolTicker);
         tempSymbolDatasetMap[symbolSet.symbolTicker] = tempDataSet;
       })
@@ -174,13 +177,16 @@ const idbSymbolDataStore = {
         // Calculate performanceSinceStart for portfolio and store the value
         const performanceSinceStartPortfolio =
           parseFloat(startingDatePriceValuePortfolio) / parseFloat(endDatePriceValuePortfolio) - 1;
-        dataStore.setPerformanceSincePortfolioStartForTicker("Portfolio", performanceSinceStartPortfolio);
+        portfolioStore.setPerformanceSincePortfolioStartForTicker("Portfolio", performanceSinceStartPortfolio);
         // Calculate yearlyPerformanceSinceStart for portfolio and store the value
         const yearlyPerformanceSinceStartPortfolio = performanceSinceStartPortfolio * (365 / daysSinceStart);
-        dataStore.setYearlyPerformanceSincePortfolioStartForTicker("Portfolio", yearlyPerformanceSinceStartPortfolio);
+        portfolioStore.setYearlyPerformanceSincePortfolioStartForTicker(
+          "Portfolio",
+          yearlyPerformanceSinceStartPortfolio
+        );
 
-        dataStore.setTotalDividendPayoutForTicker("Portfolio", sumOfDividends);
-        dataStore.setEndValueForTicker("Portfolio", startingDatePriceValuePortfolio);
+        portfolioStore.setTotalDividendPayoutForTicker("Portfolio", sumOfDividends);
+        portfolioStore.setEndValueForTicker("Portfolio", startingDatePriceValuePortfolio);
 
         // Calculate key metrics
         keyMetricsStore.calculateAndSetPortfolioSharpRatio();

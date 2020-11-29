@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
   },
 }));
-const KeyIndicatorRow = observer(({ dataStore, keyMetricsStore }) => {
+const KeyIndicatorRow = observer(({ portfolioStore, keyMetricsStore }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -30,7 +30,7 @@ const KeyIndicatorRow = observer(({ dataStore, keyMetricsStore }) => {
           <KeyMetricCard
             titel={"Peformance"}
             description={"Portfolio performance since start"}
-            value={dataStore.getSymbolSetForTicker("Portfolio").performanceSincePortfolioStart}
+            value={portfolioStore.getSymbolSetForTicker("Portfolio").performanceSincePortfolioStart}
             showPercent={true}
             dialogTitle={"Performance since start"}
             dialogText={
@@ -48,7 +48,7 @@ const KeyIndicatorRow = observer(({ dataStore, keyMetricsStore }) => {
           <KeyMetricCard
             titel={"Annualized"}
             description={"Annualized portfolio performance since start"}
-            value={dataStore.getSymbolSetForTicker("Portfolio").yearlyPerformanceSincePortfolioStart}
+            value={portfolioStore.getSymbolSetForTicker("Portfolio").yearlyPerformanceSincePortfolioStart}
             showPercent={true}
             dialogTitle={"Annualized Performance"}
             dialogText={
@@ -66,7 +66,7 @@ const KeyIndicatorRow = observer(({ dataStore, keyMetricsStore }) => {
           <KeyMetricCard
             titel={"Dividend"}
             description={"Dividends accumulated since start"}
-            value={dataStore.getSymbolSetForTicker("Portfolio").totalDividendPayout}
+            value={portfolioStore.getSymbolSetForTicker("Portfolio").totalDividendPayout}
             showProgress={false}
             dialogTitle={"Dividends"}
             dialogText={

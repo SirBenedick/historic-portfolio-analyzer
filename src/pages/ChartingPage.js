@@ -7,29 +7,29 @@ import KeyMetricRow from "../components/KeyMetricRow";
 import ChartConfigurationCard from "../components/ChartConfigurationCard";
 import TabBar from "../components/TabBar";
 
-const ChartingPage = ({ dataStore, notificationStore, configStore, symbolDataStore, keyMetricsStore }) => {
+const ChartingPage = ({ portfolioStore, notificationStore, configStore, symbolDataStore, keyMetricsStore }) => {
   return (
     <div>
       <Grid container spacing={3}>
         <Grid item xs={12} spacing={3}>
-          <SelectedSymbolsBar dataStore={dataStore} notificationStore={notificationStore} />
+          <SelectedSymbolsBar portfolioStore={portfolioStore} notificationStore={notificationStore} />
         </Grid>
         <Grid item xs={12} spacing={3}>
-          <KeyMetricRow dataStore={dataStore} keyMetricsStore={keyMetricsStore} />
+          <KeyMetricRow portfolioStore={portfolioStore} keyMetricsStore={keyMetricsStore} />
         </Grid>
         <Grid item xs={12}>
           <TabBar
-            dataStore={dataStore}
+            portfolioStore={portfolioStore}
             configStore={configStore}
             symbolDataStore={symbolDataStore}
             keyMetricsStore={keyMetricsStore}
           />
         </Grid>
         <Grid item xs={12}>
-          <PortfolioBuilder dataStore={dataStore} />
+          <PortfolioBuilder portfolioStore={portfolioStore} />
         </Grid>
         <Grid item xs={12}>
-          <ChartConfigurationCard configStore={configStore} dataStore={dataStore} />
+          <ChartConfigurationCard configStore={configStore} portfolioStore={portfolioStore} />
         </Grid>
       </Grid>
     </div>

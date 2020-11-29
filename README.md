@@ -35,7 +35,7 @@ Being annoyed by the current application architecture is the key indicator for n
 
 #### 0.9.4
 
-- Refactor: DataStore -> PortfolioStore
+- [x] Refactor: DataStore -> PortfolioStore
 
 #### 0.10.0
 

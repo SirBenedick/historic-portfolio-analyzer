@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 
-const DatePicker = observer(({ dataStore }) => {
+const DatePicker = observer(({ portfolioStore }) => {
   const handleDateChange = (date) => {
     const dateString = date.format("YYYY-MM-DD");
 
@@ -12,7 +12,7 @@ const DatePicker = observer(({ dataStore }) => {
 
     // If a match exists then set portfolioStartingDate
     if (patternDateFormat.exec(dateString)) {
-      dataStore.setPortfolioStartingDate(dateString);
+      portfolioStore.setPortfolioStartingDate(dateString);
     }
   };
 
@@ -25,7 +25,7 @@ const DatePicker = observer(({ dataStore }) => {
         margin="normal"
         id="date-picker-starting-datet"
         label="Starting date"
-        value={dataStore.portfolioStartingDate}
+        value={portfolioStore.portfolioStartingDate}
         onChange={handleDateChange}
         KeyboardButtonProps={{
           "aria-label": "change date",

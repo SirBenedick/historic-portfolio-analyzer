@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { autorun } from "mobx";
 
-const TriggerRerenderPortfolio = observer(({ dataStore, rerenderPortfolio }) => {
+const TriggerRerenderPortfolio = observer(({ portfolioStore, rerenderPortfolio }) => {
   useEffect(() =>
     autorun(() => {
       console.log("Trigger - TriggerRecalculatePortfolio");
-      if (dataStore.triggerRerenderPortfolio) rerenderPortfolio();
-      dataStore.setTriggerRerenderPortfolio(false);
+      if (portfolioStore.triggerRerenderPortfolio) rerenderPortfolio();
+      portfolioStore.setTriggerRerenderPortfolio(false);
     })
   );
 
