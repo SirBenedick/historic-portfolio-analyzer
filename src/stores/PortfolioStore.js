@@ -22,6 +22,7 @@ class PortfolioStore {
   triggerRerenderPortfolio = false;
   triggerRerenderVisibleLines = false;
   triggerRecalculatePortfolioTimeout = null;
+  disableTriggerAutorun = false;
 
   constructor() {
     makeObservable(this, {
@@ -30,9 +31,12 @@ class PortfolioStore {
       triggerRerenderPortfolio: observable,
       triggerRerenderVisibleLines: observable,
       portfolioStartingDate: observable,
+      disableTriggerAutorun: observable,
       toggleSymbolVisibility: action,
       setVisibilityForHideOther: action,
       addSymbol: action,
+      addSymbolFromSavedPortfolio: action,
+      resetStore: action,
       removeSelectedSymbol: action,
       setValueForTicker: action,
       setPerformanceSincePortfolioStartForTicker: action,
@@ -44,6 +48,7 @@ class PortfolioStore {
       setSharpRatioForTicker: action,
       setPortfolioStartingDate: action,
       setPortfolioBuilderSetting: action,
+      loadSavedPortfolio: action,
       totalValueOfSymbols: computed,
       listOfSymbolTickers: computed,
       symbolsWithoutPortfolio: computed,
@@ -56,25 +61,27 @@ class PortfolioStore {
     this.portfolioStartingDate = moment().subtract(1, "years").format("YYYY-MM-DD");
 
     autorun(() => {
-      // triggerRerenderPortfolio
-      const trigger = this.portfolioStartingDate;
-      const trigger2 = this.totalValueOfSymbols;
+      if (!this.disableTriggerAutorun) {
+        // triggerRerenderPortfolio
+        const trigger = this.portfolioStartingDate;
+        const trigger2 = this.totalValueOfSymbols;
 
-      // Debounce
-      const debouncePortfolioRecalculation = async () => {
-        console.log(
-          "Autorun: triggering portfolio rercalculation" + JSON.stringify(trigger) + JSON.stringify(trigger2)
-        );
-        await symbolDataStore.calculateAndStoreHistoricPortfolioPerformance();
-        this.setTriggerRerenderPortfolio(true);
-      };
+        // Debounce
+        const debouncePortfolioRecalculation = async () => {
+          console.log(
+            "Autorun: triggering portfolio rercalculation" + JSON.stringify(trigger) + JSON.stringify(trigger2)
+          );
+          await symbolDataStore.calculateAndStoreHistoricPortfolioPerformance();
+          this.setTriggerRerenderPortfolio(true);
+        };
 
-      //  Check if timeout exists, if so clear and start a new one
-      if (this.triggerRecalculatePortfolioTimeout) clearTimeout(this.triggerRecalculatePortfolioTimeout);
-      const timeout = setTimeout(async () => {
-        await debouncePortfolioRecalculation();
-      }, 500);
-      this.triggerRecalculatePortfolioTimeout = timeout;
+        //  Check if timeout exists, if so clear and start a new one
+        if (this.triggerRecalculatePortfolioTimeout) clearTimeout(this.triggerRecalculatePortfolioTimeout);
+        const timeout = setTimeout(async () => {
+          await debouncePortfolioRecalculation();
+        }, 500);
+        this.triggerRecalculatePortfolioTimeout = timeout;
+      }
     });
   }
 
@@ -102,6 +109,14 @@ class PortfolioStore {
     this.setTriggerRerenderPortfolio(true);
   }
 
+  async addSymbolFromSavedPortfolio(symbolSet) {
+    if (!symbolSet || !symbolSet.symbolTicker) return false;
+    this.symbols.push(symbolSet);
+
+    await symbolDataStore.addSymbolToMap(symbolSet.symbolTicker);
+    await this.getMetaDataAndStoreIt(symbolSet.symbolTicker);
+  }
+
   async removeAndDeleteSymbol(symbolTickerToDelete) {
     await this.removeSelectedSymbol(symbolTickerToDelete);
     await this.deleteDataSetForSymbol(symbolTickerToDelete);
@@ -119,6 +134,30 @@ class PortfolioStore {
 
   async deleteDataSetForSymbol(symbolTickerToDelete) {
     await symbolDataStore.deleteDataSet(symbolTickerToDelete);
+  }
+
+  async resetStore() {
+    // Clear colors
+    this.symbols.forEach((symbolSet) => this.removeColorInUse(symbolSet.color));
+    // Reset symbols
+    this.symbols = [
+      {
+        symbolTicker: "Portfolio",
+        name: "Portfolio",
+        isVisible: true,
+        value: 0,
+        currency: "USD",
+        performanceSincePortfolioStart: 1,
+        annualizedPerformanceSincePortfolioStartForTicker: 1,
+        color: this.nextAvailableColorValue(),
+        endValue: 0,
+        dateFetched: "-",
+      },
+    ];
+    // Reset portfolioStartingDate
+    this.portfolioStartingDate = moment().subtract(1, "years").format("YYYY-MM-DD");
+    // Reset symbolDataStore
+    await symbolDataStore.resetStore();
   }
 
   toggleSymbolVisibility(changedSymbolbyTicker) {
@@ -309,12 +348,35 @@ class PortfolioStore {
       name: name,
       creationDate: moment().format(),
       portfolioStartingDate: this.portfolioStartingDate,
-      symbol: toJS(this.symbols),
+      symbols: toJS(this.symbols),
     });
   }
 
   async getListOfAllSavedPortfolioNames() {
     return await idbPortfoliosStore.keys();
+  }
+
+  async loadSavedPortfolio(portfolioName) {
+    console.log("loadSavedPortfolio");
+    this.disableTriggerAutorun = true;
+    const savedPortfolio = await idbPortfoliosStore.get(portfolioName);
+    if (!savedPortfolio) {
+      console.log("Failed to load portfolio: " + portfolioName);
+      this.disableTriggerAutorun = false;
+      return;
+    }
+
+    await this.resetStore();
+    // Remove defaultPortfolio from symbols
+    this.symbols = [];
+    this.setPortfolioStartingDate(savedPortfolio.portfolioStartingDate);
+
+    await savedPortfolio.symbols.forEach((symbolSet) => this.addSymbolFromSavedPortfolio(symbolSet));
+
+    // Trigger line and recalculation
+    this.disableTriggerAutorun = false;
+    this.setTriggerRerenderVisibleLines(true);
+    this.setTriggerRerenderPortfolio(true);
   }
 
   nextAvailableColorValue() {
@@ -450,5 +512,6 @@ const compareSymbolSetsByValue = (a, b) => {
   }
   return 0;
 };
+
 const portfolioStore = new PortfolioStore();
 export default portfolioStore;

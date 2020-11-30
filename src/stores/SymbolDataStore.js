@@ -14,6 +14,7 @@ class SymbolDataStore {
       setIsCalculatingPortfolioPerformance: action,
       addSymbolToMap: action,
       removeSymbolFromMap: action,
+      resetStore: action,
       setTimeseriesForTicker: action,
     });
   }
@@ -54,6 +55,11 @@ class SymbolDataStore {
     await idbSymbolDataStore.delete(symbolToDelete);
   }
 
+  async resetStore() {
+    this.isCalculatingPortfolioPerformance = false;
+    this.symbolChartTimeseriesDataMap = { Portfolio: [] };
+  }
+
   async getSymbolTimeseriesDataFromMap(symbolTicker) {
     console.log("getSymbolTimeseriesDataFromMap: " + symbolTicker);
     if (this.symbolChartTimeseriesDataMap[symbolTicker]) return this.symbolChartTimeseriesDataMap[symbolTicker];
@@ -80,7 +86,7 @@ class SymbolDataStore {
 
   async getMetaDataForSymbol(symbolTicker) {
     const data = await idbSymbolDataStore.get(symbolTicker);
-    return data.meta_data;
+    return data ? data.meta_data : false;
   }
 }
 

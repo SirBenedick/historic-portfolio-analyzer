@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
   },
 }));
+
 const KeyIndicatorRow = observer(({ portfolioStore, keyMetricsStore }) => {
   const classes = useStyles();
   return (
@@ -30,7 +31,11 @@ const KeyIndicatorRow = observer(({ portfolioStore, keyMetricsStore }) => {
           <KeyMetricCard
             titel={"Peformance"}
             description={"Portfolio performance since start"}
-            value={portfolioStore.getSymbolSetForTicker("Portfolio").performanceSincePortfolioStart}
+            value={
+              portfolioStore.getSymbolSetForTicker("Portfolio")
+                ? portfolioStore.getSymbolSetForTicker("Portfolio").performanceSincePortfolioStart
+                : 0
+            }
             showPercent={true}
             dialogTitle={"Performance since start"}
             dialogText={
@@ -48,7 +53,11 @@ const KeyIndicatorRow = observer(({ portfolioStore, keyMetricsStore }) => {
           <KeyMetricCard
             titel={"Annualized"}
             description={"Annualized portfolio performance since start"}
-            value={portfolioStore.getSymbolSetForTicker("Portfolio").annualizedPerformanceSincePortfolioStartForTicker}
+            value={
+              portfolioStore.getSymbolSetForTicker("Portfolio")
+                ? portfolioStore.getSymbolSetForTicker("Portfolio").annualizedPerformanceSincePortfolioStartForTicker
+                : 0
+            }
             showPercent={true}
             dialogTitle={"Annualized Performance"}
             dialogText={
@@ -66,7 +75,11 @@ const KeyIndicatorRow = observer(({ portfolioStore, keyMetricsStore }) => {
           <KeyMetricCard
             titel={"Dividend"}
             description={"Dividends accumulated since start"}
-            value={portfolioStore.getSymbolSetForTicker("Portfolio").totalDividendPayout}
+            value={
+              portfolioStore.getSymbolSetForTicker("Portfolio")
+                ? portfolioStore.getSymbolSetForTicker("Portfolio").totalDividendPayout
+                : 0
+            }
             showProgress={false}
             dialogTitle={"Dividends"}
             dialogText={

@@ -44,13 +44,18 @@ Being annoyed by the current application architecture is the key indicator for n
   - [x] Store PortfolioStore symbols
   - [x] Store creation date
   - [x] Store portfolioStartingDate
-- [ ] Add: Load idbPortfoliosStore portfolio into PortfolioStore
-  - [ ] Add: new function to add each saved symbol and fetch data
-- Fix: PortfolioList doesnt update after new portfolio is added
+- [x] Add: Load idbPortfoliosStore portfolio into PortfolioStore
+  - [x] Add: new function to add each saved symbol and fetch data
+- [x] Fix: PortfolioList doesnt update after new portfolio is added
 
 #### 0.10.1
 
-- Add: Queue to reload requested data if request failed
+- [ ] Improve: Loading of portfolio, fetches all the data again
+- [ ] Refactor: saved portfolio -> stored
+- [ ] Add: Queue to reload requested data if request failed
+- [ ] Improve: PortfolioStore annualizedPerformanceSincePortfolioStartForTicker rename
+- [ ] Improve: PortfolioStore make colors its own object/class
+- [ ] Improve: DRY PortfolioStore default Portfolio
 
 #### 0.11.0
 

@@ -16,8 +16,8 @@ const DialogPortfolioSaveForm = ({ open, onClose, portfolioStore, notificationSt
     notificationStore.enqueueSnackbar({
       message: `Saved current Portfolio: ${portfolioName}`,
       options: {
-        variant: "info",
-        autoHideDuration: 1500,
+        variant: "success",
+        autoHideDuration: 2000,
       },
       key: `STORED-${portfolioName}`,
     });
