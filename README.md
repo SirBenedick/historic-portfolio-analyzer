@@ -33,21 +33,6 @@ Being annoyed by the current application architecture is the key indicator for n
 
 (Add, Fix, Improve, Refactor, Style, Remove)
 
-#### 0.10.0
-
-- [x] Add: Form dialog to store current portfolio configuration [form dialog](https://material-ui.com/components/dialogs/#form-dialogs)
-- [x] Add: Simple Dialog to show stored portfolios and load one [Simple Dialog](https://material-ui.com/components/dialogs/#simple-dialogs)
-  - [x] Show name
-  - [ ] ~~List symbols of Portfolio~~(Show creation date)
-- [x] Add: idbPortfoliosStore
-  - [x] Store Name (Key)
-  - [x] Store PortfolioStore symbols
-  - [x] Store creation date
-  - [x] Store portfolioStartingDate
-- [x] Add: Load idbPortfoliosStore portfolio into PortfolioStore
-  - [x] Add: new function to add each saved symbol and fetch data
-- [x] Fix: PortfolioList doesnt update after new portfolio is added
-
 #### 0.10.1
 
 - [ ] Improve: Loading of portfolio, fetches all the data again
