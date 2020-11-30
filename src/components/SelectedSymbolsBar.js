@@ -128,12 +128,14 @@ const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
         portfolioStore={portfolioStore}
       />
 
-      <DialogPortfolioList
-        selectedValue={selectedPortfolioValue}
-        open={openDialogPortfolioList}
-        onClose={handleDialogPortfolioListClose}
-        portfolioStore={portfolioStore}
-      />
+      {openDialogPortfolioList && (
+        <DialogPortfolioList
+          selectedValue={selectedPortfolioValue}
+          open={openDialogPortfolioList}
+          onClose={handleDialogPortfolioListClose}
+          portfolioStore={portfolioStore}
+        />
+      )}
 
       <DialogPortfolioSaveForm
         open={openDialogPortfolioSaveForm}

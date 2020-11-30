@@ -6,7 +6,7 @@ const DialogPortfolioList = ({ onClose, selectedValue, open, portfolioStore }) =
 
   useEffect(() => {
     getPortfolios();
-  }, portfolios);
+  }, []);
 
   const getPortfolios = async () => {
     const _portfolios = await portfolioStore.getListOfAllSavedPortfolioNames();
