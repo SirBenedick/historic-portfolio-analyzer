@@ -11,7 +11,7 @@ class PortfolioStore {
       value: 0,
       currency: "USD",
       performanceSincePortfolioStart: 1,
-      annualizedPerformanceSincePortfolioStartForTicker: 1,
+      annualizedPerformanceSincePortfolioStart: 1,
       color: this.nextAvailableColorValue(),
       endValue: 0,
       dateFetched: "-",
@@ -93,7 +93,7 @@ class PortfolioStore {
       name: symbolSetSearchResult.name,
       currency: symbolSetSearchResult.currency,
       performanceSincePortfolioStart: 1,
-      annualizedPerformanceSincePortfolioStartForTicker: 1,
+      annualizedPerformanceSincePortfolioStart: 1,
       isVisible: true,
       value: 100,
       endValue: 0,
@@ -148,7 +148,7 @@ class PortfolioStore {
         value: 0,
         currency: "USD",
         performanceSincePortfolioStart: 1,
-        annualizedPerformanceSincePortfolioStartForTicker: 1,
+        annualizedPerformanceSincePortfolioStart: 1,
         color: this.nextAvailableColorValue(),
         endValue: 0,
         dateFetched: "-",
@@ -212,7 +212,7 @@ class PortfolioStore {
     console.log("Updating setAnnualizedPerformanceSincePortfolioStartForTicker: " + value);
     this.symbols.forEach((symbol) => {
       if (symbol.symbolTicker === changedSymbolByTicker) {
-        symbol.annualizedPerformanceSincePortfolioStartForTicker = value;
+        symbol.annualizedPerformanceSincePortfolioStart = value;
       }
     });
   }
@@ -477,10 +477,10 @@ const compareSymbolSetsByTickerPortfolioFirst = (a, b) => {
   return 0;
 };
 const compareSymbolSetsByPerformanceAnnulized = (a, b) => {
-  if (a.annualizedPerformanceSincePortfolioStartForTicker > b.annualizedPerformanceSincePortfolioStartForTicker) {
+  if (a.annualizedPerformanceSincePortfolioStart > b.annualizedPerformanceSincePortfolioStart) {
     return -1;
   }
-  if (a.annualizedPerformanceSincePortfolioStartForTicker < b.annualizedPerformanceSincePortfolioStartForTicker) {
+  if (a.annualizedPerformanceSincePortfolioStart < b.annualizedPerformanceSincePortfolioStart) {
     return 1;
   }
   return 0;

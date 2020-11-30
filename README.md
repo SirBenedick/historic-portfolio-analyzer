@@ -38,7 +38,7 @@ Being annoyed by the current application architecture is the key indicator for n
 - [ ] Improve: Loading of portfolio, fetches all the data again
 - [ ] Refactor: saved portfolio -> stored
 - [ ] Add: Queue to reload requested data if request failed
-- [ ] Improve: PortfolioStore annualizedPerformanceSincePortfolioStartForTicker rename
+- [x] Improve: PortfolioStore annualizedPerformanceSincePortfolioStart rename
 - [ ] Improve: PortfolioStore make colors its own object/class
 - [ ] Improve: DRY PortfolioStore default Portfolio
 - [ ] Add: Divider to Chip menu [divider](https://material-ui.com/components/lists/#simple-list)

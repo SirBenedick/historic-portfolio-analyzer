@@ -75,7 +75,7 @@ const PortfolioBuilder = observer(({ portfolioStore }) => {
                   {symbolSet.name === "Portfolio" ? <b>{symbolSet.name}</b> : symbolSet.name}
                 </TableCell>
                 <TableCell align="right">
-                  {performanceToPercent(symbolSet.annualizedPerformanceSincePortfolioStartForTicker)}
+                  {performanceToPercent(symbolSet.annualizedPerformanceSincePortfolioStart)}
                 </TableCell>
                 <TableCell align="right">{performanceToPercent(symbolSet.performanceSincePortfolioStart)}</TableCell>
                 <TableCell align="right">

@@ -55,7 +55,7 @@ const KeyIndicatorRow = observer(({ portfolioStore, keyMetricsStore }) => {
             description={"Annualized portfolio performance since start"}
             value={
               portfolioStore.getSymbolSetForTicker("Portfolio")
-                ? portfolioStore.getSymbolSetForTicker("Portfolio").annualizedPerformanceSincePortfolioStartForTicker
+                ? portfolioStore.getSymbolSetForTicker("Portfolio").annualizedPerformanceSincePortfolioStart
                 : 0
             }
             showPercent={true}
