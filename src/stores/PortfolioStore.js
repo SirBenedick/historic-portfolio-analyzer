@@ -224,6 +224,55 @@ class PortfolioStore {
     this.triggerRerenderVisibleLines = bool;
   }
 
+  // Computed methodes
+  get totalValueOfSymbols() {
+    return this.symbols.reduce((pv, symbolSet) => {
+      if (symbolSet.symbolTicker !== "Portfolio") return +pv + +symbolSet.value;
+      else return pv;
+    }, 0);
+  }
+
+  get symbolsWithoutPortfolio() {
+    return this.symbols.filter((symbolSet) => symbolSet.symbolTicker !== "Portfolio");
+  }
+
+  get symbolPortfolioOnly() {
+    return this.symbols.filter((symbolSet) => symbolSet.symbolTicker === "Portfolio");
+  }
+
+  get symbolsSortedByTickerPortfolioFirst() {
+    let temp = this.symbols;
+    temp = temp.slice().sort(compareSymbolSetsByTickerPortfolioFirst);
+    return temp;
+  }
+
+  get symbolsSortedByPortfolioBuilderSetting() {
+    let temp = this.symbols;
+    if (this.portfolioBuilderSetting === "ticker") {
+      temp = temp.slice().sort(compareSymbolSetsByTicker);
+    } else if (this.portfolioBuilderSetting === "name") {
+      temp = temp.slice().sort(compareSymbolSetsByName);
+    } else if (this.portfolioBuilderSetting === "performance_annualized") {
+      temp = temp.slice().sort(compareSymbolSetsByPerformanceAnnulized);
+    } else if (this.portfolioBuilderSetting === "performance_since_start") {
+      temp = temp.slice().sort(compareSymbolSetsByPerformanceSinceStart);
+    } else if (this.portfolioBuilderSetting === "value") {
+      temp = temp.slice().sort(compareSymbolSetsByValue);
+    }
+    return temp;
+  }
+
+  get symbolsSortedByTickerWithoutPortfolio() {
+    let temp = this.symbols;
+    temp = temp.filter((symbolSet) => symbolSet.symbolTicker !== "Portfolio");
+    temp = temp.slice().sort(compareSymbolSetsByTickerPortfolioFirst);
+    return temp;
+  }
+
+  get listOfSymbolTickers() {
+    return this.symbols.map((symbolSet) => symbolSet.symbolTicker);
+  }
+
   // Helper operations
   async getMetaDataAndStoreIt(symbolTicker) {
     //  Get meta data and store it inside this store
@@ -274,55 +323,6 @@ class PortfolioStore {
         break;
       }
     }
-  }
-
-  // Computed methodes
-  get totalValueOfSymbols() {
-    return this.symbols.reduce((pv, symbolSet) => {
-      if (symbolSet.symbolTicker !== "Portfolio") return +pv + +symbolSet.value;
-      else return pv;
-    }, 0);
-  }
-
-  get symbolsWithoutPortfolio() {
-    return this.symbols.filter((symbolSet) => symbolSet.symbolTicker !== "Portfolio");
-  }
-
-  get symbolPortfolioOnly() {
-    return this.symbols.filter((symbolSet) => symbolSet.symbolTicker === "Portfolio");
-  }
-
-  get symbolsSortedByTickerPortfolioFirst() {
-    let temp = this.symbols;
-    temp = temp.slice().sort(compareSymbolSetsByTickerPortfolioFirst);
-    return temp;
-  }
-
-  get symbolsSortedByPortfolioBuilderSetting() {
-    let temp = this.symbols;
-    if (this.portfolioBuilderSetting === "ticker") {
-      temp = temp.slice().sort(compareSymbolSetsByTicker);
-    } else if (this.portfolioBuilderSetting === "name") {
-      temp = temp.slice().sort(compareSymbolSetsByName);
-    } else if (this.portfolioBuilderSetting === "performance_annualized") {
-      temp = temp.slice().sort(compareSymbolSetsByPerformanceAnnulized);
-    } else if (this.portfolioBuilderSetting === "performance_since_start") {
-      temp = temp.slice().sort(compareSymbolSetsByPerformanceSinceStart);
-    } else if (this.portfolioBuilderSetting === "value") {
-      temp = temp.slice().sort(compareSymbolSetsByValue);
-    }
-    return temp;
-  }
-
-  get symbolsSortedByTickerWithoutPortfolio() {
-    let temp = this.symbols;
-    temp = temp.filter((symbolSet) => symbolSet.symbolTicker !== "Portfolio");
-    temp = temp.slice().sort(compareSymbolSetsByTickerPortfolioFirst);
-    return temp;
-  }
-
-  get listOfSymbolTickers() {
-    return this.symbols.map((symbolSet) => symbolSet.symbolTicker);
   }
 }
 
