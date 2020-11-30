@@ -1,5 +1,6 @@
-import { makeObservable, observable, action, computed, autorun } from "mobx";
+import { makeObservable, observable, action, computed, autorun, toJS } from "mobx";
 import moment from "moment";
+import idbPortfoliosStore from "./idbPortfoliosStore";
 import symbolDataStore from "./SymbolDataStore";
 class PortfolioStore {
   symbols = [
@@ -10,7 +11,7 @@ class PortfolioStore {
       value: 0,
       currency: "USD",
       performanceSincePortfolioStart: 1,
-      yearlyPerformanceSincePortfolioStart: 1,
+      annualizedPerformanceSincePortfolioStartForTicker: 1,
       color: this.nextAvailableColorValue(),
       endValue: 0,
       dateFetched: "-",
@@ -35,7 +36,7 @@ class PortfolioStore {
       removeSelectedSymbol: action,
       setValueForTicker: action,
       setPerformanceSincePortfolioStartForTicker: action,
-      setYearlyPerformanceSincePortfolioStartForTicker: action,
+      setAnnualizedPerformanceSincePortfolioStartForTicker: action,
       setEndValueForTicker: action,
       setTriggerRerenderPortfolio: action,
       setTriggerRerenderVisibleLines: action,
@@ -85,7 +86,7 @@ class PortfolioStore {
       name: symbolSetSearchResult.name,
       currency: symbolSetSearchResult.currency,
       performanceSincePortfolioStart: 1,
-      yearlyPerformanceSincePortfolioStart: 1,
+      annualizedPerformanceSincePortfolioStartForTicker: 1,
       isVisible: true,
       value: 100,
       endValue: 0,
@@ -168,11 +169,11 @@ class PortfolioStore {
     });
   }
 
-  setYearlyPerformanceSincePortfolioStartForTicker(changedSymbolByTicker, value) {
-    console.log("Updating setYearlyPerformanceSincePortfolioStartForTicker: " + value);
+  setAnnualizedPerformanceSincePortfolioStartForTicker(changedSymbolByTicker, value) {
+    console.log("Updating setAnnualizedPerformanceSincePortfolioStartForTicker: " + value);
     this.symbols.forEach((symbol) => {
       if (symbol.symbolTicker === changedSymbolByTicker) {
-        symbol.yearlyPerformanceSincePortfolioStart = value;
+        symbol.annualizedPerformanceSincePortfolioStartForTicker = value;
       }
     });
   }
@@ -302,6 +303,16 @@ class PortfolioStore {
     return this.symbols.find((symbolSet) => symbolSet.symbolTicker === symbolTicker);
   }
 
+  async saveCurrentPortfolio(name) {
+    console.log("saveCurrentPortfolio");
+    await idbPortfoliosStore.set({
+      name: name,
+      creationDate: moment().format(),
+      portfolioStartingDate: this.portfolioStartingDate,
+      symbol: toJS(this.symbols),
+    });
+  }
+
   nextAvailableColorValue() {
     let availableColorValue = null;
     for (let index = 0; index < chartColorsForSeries.length; index++) {
@@ -400,10 +411,10 @@ const compareSymbolSetsByTickerPortfolioFirst = (a, b) => {
   return 0;
 };
 const compareSymbolSetsByPerformanceAnnulized = (a, b) => {
-  if (a.yearlyPerformanceSincePortfolioStart > b.yearlyPerformanceSincePortfolioStart) {
+  if (a.annualizedPerformanceSincePortfolioStartForTicker > b.annualizedPerformanceSincePortfolioStartForTicker) {
     return -1;
   }
-  if (a.yearlyPerformanceSincePortfolioStart < b.yearlyPerformanceSincePortfolioStart) {
+  if (a.annualizedPerformanceSincePortfolioStartForTicker < b.annualizedPerformanceSincePortfolioStartForTicker) {
     return 1;
   }
   return 0;

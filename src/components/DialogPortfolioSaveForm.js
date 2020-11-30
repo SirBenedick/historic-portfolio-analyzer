@@ -7,7 +7,23 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-const DialogPortfolioSaveForm = ({ open, onClose }) => {
+const DialogPortfolioSaveForm = ({ open, onClose, portfolioStore, notificationStore }) => {
+  const [portfolioName, setPortfolioName] = React.useState("");
+
+  const handleSavePortfolio = async () => {
+    console.log(portfolioName);
+    await portfolioStore.saveCurrentPortfolio(portfolioName);
+    notificationStore.enqueueSnackbar({
+      message: `Saved current Portfolio: ${portfolioName}`,
+      options: {
+        variant: "info",
+        autoHideDuration: 1500,
+      },
+      key: `STORED-${portfolioName}`,
+    });
+    onClose();
+  };
+
   return (
     <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">Save the current Portfolio</DialogTitle>
@@ -15,13 +31,21 @@ const DialogPortfolioSaveForm = ({ open, onClose }) => {
         <DialogContentText>
           XXXXXX To subscribe to this website, please enter your email address here. We will send updates occasionally.
         </DialogContentText>
-        <TextField autoFocus margin="dense" id="name" label="Portfolio Name" type="texts" fullWidth />
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Portfolio Name"
+          type="texts"
+          fullWidth
+          onChange={(e) => setPortfolioName(e.target.value)}
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={handleSavePortfolio} color="primary">
           Save
         </Button>
       </DialogActions>

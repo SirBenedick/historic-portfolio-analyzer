@@ -4,8 +4,8 @@ const idbPortfoliosStore = {
   async get(key) {
     return (await dbPromise).get("portfoliosStore", key);
   },
-  async set(key, val) {
-    return (await dbPromise).put("portfoliosStore", val, key);
+  async set(val) {
+    return (await dbPromise).put("portfoliosStore", val);
   },
   async delete(key) {
     return (await dbPromise).delete("portfoliosStore", key);

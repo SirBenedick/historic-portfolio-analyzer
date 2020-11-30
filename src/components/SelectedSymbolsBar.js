@@ -133,7 +133,12 @@ const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
         open={openDialogPortfolioList}
         onClose={handleDialogPortfolioListClose}
       />
-      <DialogPortfolioSaveForm open={openDialogPortfolioSaveForm} onClose={handleDialogPortfolioSaveFormClose} />
+      <DialogPortfolioSaveForm
+        open={openDialogPortfolioSaveForm}
+        onClose={handleDialogPortfolioSaveFormClose}
+        portfolioStore={portfolioStore}
+        notificationStore={notificationStore}
+      />
 
       <Grid container spacing={1} alignItems="center">
         <Grid item xs={2}>
