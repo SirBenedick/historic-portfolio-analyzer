@@ -33,20 +33,11 @@ Being annoyed by the current application architecture is the key indicator for n
 
 (Add, Fix, Improve, Refactor, Style, Remove)
 
-#### 0.10.1
-
-- [x] Improve: Loading of portfolio, fetches all the data again
-- [x] Refactor: saved portfolio -> stored
-- [ ] ~~Add: Queue to reload requested data if request failed~~
-- [x] Improve: PortfolioStore annualizedPerformanceSincePortfolioStart rename
-- [x] Improve: PortfolioStore make colors its own object/class
-- [x] Improve: DRY PortfolioStore default Portfolio
-- [x] Add: Divider to Chip menu [divider](https://material-ui.com/components/lists/#simple-list)
-
 #### 0.10.2
 
-- Add: Delete option for saved portfolio
-- Improve: Porttfolio always has the same color, add to defaultPortfolio and take away fromm colorarray
+- [ ] Add: Delete option for saved portfolio
+- [ ] Improve: Portfolio always has the same color, add to defaultPortfolio and take away fromm colorarray
+- [ ] Fix: Chip Badge says data is to old on mondays
 
 #### 0.11.0
 
@@ -69,8 +60,7 @@ Being annoyed by the current application architecture is the key indicator for n
 
 ##### General
 
-- Add: link with symbols ttto send to friends and directly see the same portfolio
-- Fix: Chip Badge says data is to old on mondays
+- Add: link with symbols to send to friends and directly see the same portfolio
 - Improve: Material UI Theming, where is primary etc. defined
 - Add: KeyMetrics Tab for all keymetrics from analytics_js
 - Add timeframe for all data
