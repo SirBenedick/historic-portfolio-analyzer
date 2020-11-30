@@ -313,6 +313,10 @@ class PortfolioStore {
     });
   }
 
+  async getListOfAllSavedPortfolioNames() {
+    return await idbPortfoliosStore.keys();
+  }
+
   nextAvailableColorValue() {
     let availableColorValue = null;
     for (let index = 0; index < chartColorsForSeries.length; index++) {
