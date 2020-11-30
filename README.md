@@ -40,7 +40,7 @@ Being annoyed by the current application architecture is the key indicator for n
 - [ ] Add: Queue to reload requested data if request failed
 - [x] Improve: PortfolioStore annualizedPerformanceSincePortfolioStart rename
 - [x] Improve: PortfolioStore make colors its own object/class
-- [ ] Improve: DRY PortfolioStore default Portfolio
+- [x] Improve: DRY PortfolioStore default Portfolio
 - [ ] Add: Divider to Chip menu [divider](https://material-ui.com/components/lists/#simple-list)
 
 #### 0.11.0

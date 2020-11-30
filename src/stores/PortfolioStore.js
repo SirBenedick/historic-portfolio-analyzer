@@ -3,20 +3,7 @@ import moment from "moment";
 import idbPortfoliosStore from "./idbPortfoliosStore";
 import symbolDataStore from "./SymbolDataStore";
 class PortfolioStore {
-  symbols = [
-    {
-      symbolTicker: "Portfolio",
-      name: "Portfolio",
-      isVisible: true,
-      value: 0,
-      currency: "USD",
-      performanceSincePortfolioStart: 1,
-      annualizedPerformanceSincePortfolioStart: 1,
-      color: chartColors.nextAvailableColorValue(),
-      endValue: 0,
-      dateFetched: "-",
-    },
-  ];
+  symbols = [defaultPortfolio];
   portfolioStartingDate = "";
   portfolioBuilderSetting = "ticker"; // "ticker", "name", "value", "performance_since_start", "performance_annualized"
   triggerRerenderPortfolio = false;
@@ -140,20 +127,7 @@ class PortfolioStore {
     // Clear colors
     this.symbols.forEach((symbolSet) => chartColors.removeColorInUse(symbolSet.color));
     // Reset symbols
-    this.symbols = [
-      {
-        symbolTicker: "Portfolio",
-        name: "Portfolio",
-        isVisible: true,
-        value: 0,
-        currency: "USD",
-        performanceSincePortfolioStart: 1,
-        annualizedPerformanceSincePortfolioStart: 1,
-        color: chartColors.nextAvailableColorValue(),
-        endValue: 0,
-        dateFetched: "-",
-      },
-    ];
+    this.symbols = [defaultPortfolio];
     // Reset portfolioStartingDate
     this.portfolioStartingDate = moment().subtract(1, "years").format("YYYY-MM-DD");
     // Reset symbolDataStore
@@ -455,6 +429,18 @@ const chartColors = {
   ],
 };
 
+const defaultPortfolio = {
+  symbolTicker: "Portfolio",
+  name: "Portfolio",
+  isVisible: true,
+  value: 0,
+  currency: "USD",
+  performanceSincePortfolioStart: 1,
+  annualizedPerformanceSincePortfolioStart: 1,
+  color: chartColors.nextAvailableColorValue(),
+  endValue: 0,
+  dateFetched: "-",
+};
 const compareSymbolSetsByTicker = (a, b) => {
   if (a.symbolTicker < b.symbolTicker) {
     return -1;
