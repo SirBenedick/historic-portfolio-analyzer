@@ -26,11 +26,9 @@ const DialogPortfolioSaveForm = ({ open, onClose, portfolioStore, notificationSt
 
   return (
     <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
-      <DialogTitle id="form-dialog-title">Save the current Portfolio</DialogTitle>
+      <DialogTitle id="form-dialog-title">Save Portfolio</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          XXXXXX To subscribe to this website, please enter your email address here. We will send updates occasionally.
-        </DialogContentText>
+        <DialogContentText>Save the current Portfolio to reuse later.</DialogContentText>
         <TextField
           autoFocus
           margin="dense"
