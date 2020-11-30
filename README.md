@@ -35,11 +35,11 @@ Being annoyed by the current application architecture is the key indicator for n
 
 #### 0.10.0
 
-- [ ] Add: Form dialog to store current portfolio configuration [form dialog](https://material-ui.com/components/dialogs/#form-dialogs)
-- [ ] Add: Simple Dialog to show stored portfolios and load one [Simple Dialog](https://material-ui.com/components/dialogs/#simple-dialogs)
+- [x] Add: Form dialog to store current portfolio configuration [form dialog](https://material-ui.com/components/dialogs/#form-dialogs)
+- [x] Add: Simple Dialog to show stored portfolios and load one [Simple Dialog](https://material-ui.com/components/dialogs/#simple-dialogs)
   - [ ] Show name
   - [ ] List symbols of Portfolio
-- [ ] Add: idbPortfoliosStore
+- [x] Add: idbPortfoliosStore
   - [ ] Store Name (Key)
   - [ ] Store PortfolioStore symbols
   - [ ] Store creation date
