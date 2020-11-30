@@ -1,16 +1,20 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Chip, Grid, Menu, MenuItem, ListItemIcon, Typography, Badge } from "@material-ui/core";
+import { Paper, Chip, Grid, Menu, MenuItem, ListItemIcon, Typography, Badge, IconButton } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
 import TodayIcon from "@material-ui/icons/Today";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import MoneyIcon from "@material-ui/icons/Money";
+import SaveIcon from "@material-ui/icons/Save";
+import FolderIcon from "@material-ui/icons/Folder";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { observer } from "mobx-react-lite";
 import SearchForSymbolInput from "../components/SearchForSymbolInput";
 import moment from "moment";
+import DialogPortfolioList from "./DialogPortfolioList";
+import DialogPortfolioSaveForm from "./DialogPortfolioSaveForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +36,9 @@ const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
   const [isNormalMenuOpen, setIsNormalMenuOpen] = React.useState(false);
   const [isPortfolioMenuOpen, setIsPortfolioMenuOpen] = React.useState(false);
   const [menuSelectedSymbolSet, setMenuSelectedSymbolSet] = React.useState(null);
+  const [openDialogPortfolioList, setOpenDialogPortfolioList] = React.useState(false);
+  const [selectedPortfolioValue, setSelectedPortfolioValue] = React.useState();
+  const [openDialogPortfolioSaveForm, setOpenDialogPortfolioSaveForm] = React.useState(false);
 
   const toggleVisibility = (symbolTickerToHide) => () => {
     portfolioStore.toggleSymbolVisibility(symbolTickerToHide);
@@ -86,6 +93,23 @@ const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
     return "date";
   };
 
+  const handleDialogPortfolioListOpen = () => {
+    setOpenDialogPortfolioList(true);
+  };
+
+  const handleDialogPortfolioListClose = (value) => {
+    setOpenDialogPortfolioList(false);
+    setSelectedPortfolioValue(value);
+  };
+
+  const handleDialogPortfolioSaveFormOpen = () => {
+    setOpenDialogPortfolioSaveForm(true);
+  };
+
+  const handleDialogPortfolioSaveFormClose = () => {
+    setOpenDialogPortfolioSaveForm(false);
+  };
+
   return (
     <Paper className={classes.root}>
       <ChipMenuPortfolio
@@ -104,8 +128,23 @@ const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
         portfolioStore={portfolioStore}
       />
 
+      <DialogPortfolioList
+        selectedValue={selectedPortfolioValue}
+        open={openDialogPortfolioList}
+        onClose={handleDialogPortfolioListClose}
+      />
+      <DialogPortfolioSaveForm open={openDialogPortfolioSaveForm} onClose={handleDialogPortfolioSaveFormClose} />
+
       <Grid container spacing={1} alignItems="center">
-        <Grid item xs={8}>
+        <Grid item xs={2}>
+          <IconButton component="span" onClick={handleDialogPortfolioListOpen}>
+            <FolderIcon />
+          </IconButton>
+          <IconButton component="span" onClick={handleDialogPortfolioSaveFormOpen}>
+            <SaveIcon />
+          </IconButton>
+        </Grid>
+        <Grid item xs={6}>
           <Grid container direction="row" justify="center" alignItems="center">
             {portfolioStore.symbolsSortedByTickerPortfolioFirst.map((symbolSet) => {
               return (
@@ -255,4 +294,5 @@ const ChipMenuNormal = ({
     </Menu>
   );
 };
+
 export default SelectedSymbolsBar;
