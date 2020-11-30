@@ -353,7 +353,7 @@ class PortfolioStore {
   }
 
   async getListOfAllSavedPortfolioNames() {
-    return await idbPortfoliosStore.getInfoOfAllStoredPortfolios();
+    return await idbPortfoliosStore.getInfoOfAllSavedPortfolios();
   }
 
   async loadSavedPortfolio(portfolioName) {

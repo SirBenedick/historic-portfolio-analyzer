@@ -36,7 +36,7 @@ Being annoyed by the current application architecture is the key indicator for n
 #### 0.10.1
 
 - [ ] Improve: Loading of portfolio, fetches all the data again
-- [ ] Refactor: saved portfolio -> stored
+- [x] Refactor: saved portfolio -> stored
 - [ ] Add: Queue to reload requested data if request failed
 - [x] Improve: PortfolioStore annualizedPerformanceSincePortfolioStart rename
 - [x] Improve: PortfolioStore make colors its own object/class

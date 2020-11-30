@@ -16,12 +16,12 @@ const idbPortfoliosStore = {
   async keys() {
     return (await dbPromise).getAllKeys("portfoliosStore");
   },
-  async getInfoOfAllStoredPortfolios() {
-    const allStoredPortfolioNames = await this.keys();
-    const getStoredPortfolio = allStoredPortfolioNames.map(async (name) => {
+  async getInfoOfAllSavedPortfolios() {
+    const allSavedPortfolioNames = await this.keys();
+    const getSavedPortfolio = allSavedPortfolioNames.map(async (name) => {
       return await this.get(name);
     });
-    return Promise.all(getStoredPortfolio);
+    return Promise.all(getSavedPortfolio);
   },
 };
 
