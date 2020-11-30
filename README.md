@@ -35,9 +35,15 @@ Being annoyed by the current application architecture is the key indicator for n
 
 #### 0.10.2
 
+- [x] Fix build problems
+
+#### 0.10.3
+
 - [ ] Add: Delete option for saved portfolio
 - [ ] Improve: Portfolio always has the same color, add to defaultPortfolio and take away fromm colorarray
 - [ ] Fix: Chip Badge says data is to old on mondays
+- [ ] Improve: Show text when no portfolios were stored yet
+- [ ] Improve: first time page loads portfolio isnt calculated
 
 #### 0.11.0
 
