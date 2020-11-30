@@ -16,6 +16,13 @@ const idbPortfoliosStore = {
   async keys() {
     return (await dbPromise).getAllKeys("portfoliosStore");
   },
+  async getInfoOfAllStoredPortfolios() {
+    const allStoredPortfolioNames = await this.keys();
+    const getStoredPortfolio = allStoredPortfolioNames.map(async (name) => {
+      return await this.get(name);
+    });
+    return Promise.all(getStoredPortfolio);
+  },
 };
 
 export default idbPortfoliosStore;

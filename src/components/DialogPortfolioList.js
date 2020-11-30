@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Dialog, DialogTitle, List, ListItem, ListItemText } from "@material-ui/core";
+import { Dialog, DialogTitle, List, ListItem, ListItemText, ListItemAvatar, Avatar } from "@material-ui/core";
+import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 
 const DialogPortfolioList = ({ onClose, selectedValue, open, portfolioStore }) => {
   const [portfolios, setPortfolios] = useState([]);
@@ -26,9 +27,14 @@ const DialogPortfolioList = ({ onClose, selectedValue, open, portfolioStore }) =
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
       <DialogTitle id="simple-dialog-title">Load a saved Portfolio</DialogTitle>
       <List>
-        {portfolios.map((name) => (
-          <ListItem button onClick={() => handleLoadPortfolio(name)} key={name}>
-            <ListItemText primary={name} />
+        {portfolios.map((storedPortfolio) => (
+          <ListItem button onClick={() => handleLoadPortfolio(storedPortfolio.name)} key={storedPortfolio.name}>
+            <ListItemAvatar>
+              <Avatar>
+                <DonutLargeIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={storedPortfolio.name} secondary={storedPortfolio.creationDate} />
           </ListItem>
         ))}
       </List>

@@ -38,7 +38,7 @@ Being annoyed by the current application architecture is the key indicator for n
 - [x] Add: Form dialog to store current portfolio configuration [form dialog](https://material-ui.com/components/dialogs/#form-dialogs)
 - [x] Add: Simple Dialog to show stored portfolios and load one [Simple Dialog](https://material-ui.com/components/dialogs/#simple-dialogs)
   - [x] Show name
-  - [ ] List symbols of Portfolio
+  - [ ] ~~List symbols of Portfolio~~(Show creation date)
 - [x] Add: idbPortfoliosStore
   - [x] Store Name (Key)
   - [x] Store PortfolioStore symbols
@@ -56,6 +56,7 @@ Being annoyed by the current application architecture is the key indicator for n
 - [ ] Improve: PortfolioStore annualizedPerformanceSincePortfolioStartForTicker rename
 - [ ] Improve: PortfolioStore make colors its own object/class
 - [ ] Improve: DRY PortfolioStore default Portfolio
+- [ ] Add: Divider to Chip menu [divider](https://material-ui.com/components/lists/#simple-list)
 
 #### 0.11.0
 
