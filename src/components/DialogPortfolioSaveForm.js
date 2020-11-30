@@ -34,7 +34,7 @@ const DialogPortfolioSaveForm = ({ open, onClose, portfolioStore, notificationSt
           margin="dense"
           id="name"
           label="Portfolio Name"
-          type="texts"
+          type="text"
           fullWidth
           onChange={(e) => setPortfolioName(e.target.value)}
         />
