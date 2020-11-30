@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
   chip: {
     margin: theme.spacing(0.5),
   },
+  divider: { backgroundColor: "#829baf", width: "100%", height: "2px" },
 }));
 
 const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
@@ -220,6 +221,7 @@ const ChipMenuNormal = ({
   menuSelectedSymbolSet,
   portfolioStore,
 }) => {
+  const classes = useStyles();
   const handleRemoveFromPortfolio = (symbolTickerToRemove) => {
     portfolioStore.removeSelectedSymbol(symbolTickerToRemove);
     handleClose();
@@ -267,7 +269,9 @@ const ChipMenuNormal = ({
           {menuSelectedSymbolSet ? menuSelectedSymbolSet.dateFetched : "-"}
         </Typography>
       </MenuItem>
-      <MenuItem>{/* Empty to have some space between information above and actions below */}</MenuItem>
+      <MenuItem>
+        <span className={classes.divider} />
+      </MenuItem>
       <MenuItem onClick={() => handleOnlyShow(menuSelectedSymbolSet.symbolTicker)}>
         <ListItemIcon>
           <VisibilityIcon fontSize="small" />
