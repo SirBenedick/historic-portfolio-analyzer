@@ -33,10 +33,6 @@ Being annoyed by the current application architecture is the key indicator for n
 
 (Add, Fix, Improve, Refactor, Style, Remove)
 
-#### 0.10.2
-
-- [x] Fix build problems
-
 #### 0.10.3
 
 - [ ] Add: Delete option for saved portfolio
