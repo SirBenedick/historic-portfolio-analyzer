@@ -48,7 +48,7 @@ const KeyIndicatorRow = observer(({ portfolioStore, keyMetricsStore }) => {
           <KeyMetricCard
             titel={"Annualized"}
             description={"Annualized portfolio performance since start"}
-            value={portfolioStore.getSymbolSetForTicker("Portfolio").yearlyPerformanceSincePortfolioStart}
+            value={portfolioStore.getSymbolSetForTicker("Portfolio").annualizedPerformanceSincePortfolioStartForTicker}
             showPercent={true}
             dialogTitle={"Annualized Performance"}
             dialogText={

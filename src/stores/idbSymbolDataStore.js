@@ -121,7 +121,7 @@ const idbSymbolDataStore = {
         portfolioStore.setPerformanceSincePortfolioStartForTicker(symbolSet.symbolTicker, performanceSinceStart);
         // Calculate yearlyPerformanceSinceStart for this symbol and store the value
         const yearlyPerformanceSinceStart = performanceSinceStart * (365 / daysSinceStart);
-        portfolioStore.setYearlyPerformanceSincePortfolioStartForTicker(
+        portfolioStore.setAnnualizedPerformanceSincePortfolioStartForTicker(
           symbolSet.symbolTicker,
           yearlyPerformanceSinceStart
         );
@@ -180,7 +180,7 @@ const idbSymbolDataStore = {
         portfolioStore.setPerformanceSincePortfolioStartForTicker("Portfolio", performanceSinceStartPortfolio);
         // Calculate yearlyPerformanceSinceStart for portfolio and store the value
         const yearlyPerformanceSinceStartPortfolio = performanceSinceStartPortfolio * (365 / daysSinceStart);
-        portfolioStore.setYearlyPerformanceSincePortfolioStartForTicker(
+        portfolioStore.setAnnualizedPerformanceSincePortfolioStartForTicker(
           "Portfolio",
           yearlyPerformanceSinceStartPortfolio
         );
