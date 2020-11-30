@@ -6,7 +6,7 @@ const TriggerShowVisibleLines = observer(({ portfolioStore, rerenderVisibleLines
   useEffect(() =>
     autorun(() => {
       console.log("Trigger - TriggerShowVisibleLines");
-      if (portfolioStore.triggerRerenderVisibleLines) rerenderVisibleLines();
+      if (portfolioStore.triggerRerenderVisibleLines && portfolioStore.areTriggersEnabled) rerenderVisibleLines();
       portfolioStore.setTriggerRerenderVisibleLines(false);
     })
   );

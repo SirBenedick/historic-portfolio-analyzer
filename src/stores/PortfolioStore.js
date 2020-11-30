@@ -9,7 +9,7 @@ class PortfolioStore {
   triggerRerenderPortfolio = false;
   triggerRerenderVisibleLines = false;
   triggerRecalculatePortfolioTimeout = null;
-  disableTriggerAutorun = false;
+  areTriggersEnabled = true;
 
   constructor() {
     makeObservable(this, {
@@ -18,7 +18,7 @@ class PortfolioStore {
       triggerRerenderPortfolio: observable,
       triggerRerenderVisibleLines: observable,
       portfolioStartingDate: observable,
-      disableTriggerAutorun: observable,
+      areTriggersEnabled: observable,
       toggleSymbolVisibility: action,
       setVisibilityForHideOther: action,
       addSymbol: action,
@@ -35,6 +35,7 @@ class PortfolioStore {
       setSharpRatioForTicker: action,
       setPortfolioStartingDate: action,
       setPortfolioBuilderSetting: action,
+      setAreTriggersEnabled: action,
       loadSavedPortfolio: action,
       totalValueOfSymbols: computed,
       listOfSymbolTickers: computed,
@@ -48,7 +49,7 @@ class PortfolioStore {
     this.portfolioStartingDate = moment().subtract(1, "years").format("YYYY-MM-DD");
 
     autorun(() => {
-      if (!this.disableTriggerAutorun) {
+      if (this.areTriggersEnabled) {
         // triggerRerenderPortfolio
         const trigger = this.portfolioStartingDate;
         const trigger2 = this.totalValueOfSymbols;
@@ -228,6 +229,10 @@ class PortfolioStore {
     this.portfolioBuilderSetting = newVal;
   }
 
+  // areTriggersEnabled operations
+  setAreTriggersEnabled(val) {
+    this.areTriggersEnabled = val;
+  }
   // triggerRerenderPortfolio operations
   setTriggerRerenderPortfolio(bool) {
     this.triggerRerenderPortfolio = bool;
@@ -331,12 +336,12 @@ class PortfolioStore {
   }
 
   async loadSavedPortfolio(portfolioName) {
-    console.log("loadSavedPortfolio");
-    this.disableTriggerAutorun = true;
+    console.log("loadSavedPortfolio: " + portfolioName);
+    this.setAreTriggersEnabled(false);
     const savedPortfolio = await idbPortfoliosStore.get(portfolioName);
     if (!savedPortfolio) {
       console.log("Failed to load portfolio: " + portfolioName);
-      this.disableTriggerAutorun = false;
+      this.areTriggersEnabled = false;
       return;
     }
 
@@ -345,10 +350,13 @@ class PortfolioStore {
     this.symbols = [];
     this.setPortfolioStartingDate(savedPortfolio.portfolioStartingDate);
 
-    await savedPortfolio.symbols.forEach((symbolSet) => this.addSymbolFromSavedPortfolio(symbolSet));
-
+    await Promise.all(
+      savedPortfolio.symbols.map(async (symbolSet) => {
+        await this.addSymbolFromSavedPortfolio(symbolSet);
+      })
+    );
     // Trigger line and recalculation
-    this.disableTriggerAutorun = false;
+    this.setAreTriggersEnabled(true);
     this.setTriggerRerenderVisibleLines(true);
     this.setTriggerRerenderPortfolio(true);
   }

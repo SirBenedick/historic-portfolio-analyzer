@@ -25,6 +25,8 @@ class SymbolDataStore {
 
   async addSymbolToMap(symbolTicker) {
     console.log("addSymbolToMap: " + symbolTicker);
+    if (symbolTicker === "Portfolio") return false;
+
     const dataForSymbol = await idbSymbolDataStore.getTimeSeriesDailyByTickerFormated(symbolTicker);
     if (dataForSymbol) {
       this.setTimeseriesForTicker(symbolTicker, dataForSymbol);

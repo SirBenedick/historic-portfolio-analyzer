@@ -6,7 +6,7 @@ const TriggerRerenderPortfolio = observer(({ portfolioStore, rerenderPortfolio }
   useEffect(() =>
     autorun(() => {
       console.log("Trigger - TriggerRerenderPortfolio");
-      if (portfolioStore.triggerRerenderPortfolio) rerenderPortfolio();
+      if (portfolioStore.triggerRerenderPortfolio && portfolioStore.areTriggersEnabled) rerenderPortfolio();
       portfolioStore.setTriggerRerenderPortfolio(false);
     })
   );
