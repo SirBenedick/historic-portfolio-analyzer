@@ -38,8 +38,8 @@ Being annoyed by the current application architecture is the key indicator for n
 - [ ] Add: Delete option for saved portfolio
 - [x] Improve: Portfolio always has the same color, add to defaultPortfolio and take away fromm colorarray
 - [x] Fix: Chip Badge says data is to old on mondays
-- [ ] Fix: Chip Badge isnt shown when api call failed and no date was set
-- [ ] Improve: Show text when no portfolios were stored yet
+- [x] Fix: Chip Badge isnt shown when api call failed and no date was set
+- [x] Improve: Show text when no portfolios were stored yet
 - [x] Improve: first time page loads portfolio isnt calculated
 
 #### 0.11.0
