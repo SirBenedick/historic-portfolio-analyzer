@@ -1,17 +1,4 @@
-export const defaultPortfolio = {
-  symbolTicker: "Portfolio",
-  name: "Portfolio",
-  isVisible: true,
-  value: 0,
-  currency: "USD",
-  performanceSincePortfolioStart: 1,
-  annualizedPerformanceSincePortfolioStart: 1,
-  color: "#3f51b5",
-  endValue: 0,
-  dateFetched: "-",
-};
-
-export const chartColors = {
+const chartColors = {
   nextAvailableColorValue() {
     let availableColorValue = null;
     for (let index = 0; index < this.chartColorsForSeries.length; index++) {
@@ -85,3 +72,5 @@ export const chartColors = {
     { colorValue: "#8561c5", isBegingUsed: false },
   ],
 };
+
+export default chartColors;
