@@ -11,7 +11,6 @@ const DialogPortfolioSaveForm = ({ open, onClose, portfolioStore, notificationSt
   const [portfolioName, setPortfolioName] = React.useState("");
 
   const handleSavePortfolio = async () => {
-    console.log(portfolioName);
     await portfolioStore.saveCurrentPortfolio(portfolioName);
     notificationStore.enqueueSnackbar({
       message: `Saved current Portfolio: ${portfolioName}`,
