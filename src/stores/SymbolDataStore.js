@@ -4,7 +4,7 @@ import configStore from "./ConfigStore";
 import notificationStore from "./NotificationStore";
 import FetchDataService from "../services/FetchDataService";
 class SymbolDataStore {
-  isCalculatingPortfolioPerformance = false;
+  isCalculatingPortfolioPerformance = true;
   symbolChartTimeseriesDataMap = { Portfolio: [] };
 
   constructor() {

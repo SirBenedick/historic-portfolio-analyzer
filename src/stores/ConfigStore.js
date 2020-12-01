@@ -41,12 +41,13 @@ class ConfigStore {
 
     // Add default symbols
     // If no deafult symbols added then portfolioStore trigger have to be called manually
-    portfolioStore.addSymbol({ symbolTicker: "AAPL", name: "Apple Inc.", region: "testRegion", currency: "USD" });
+    await portfolioStore.addSymbol({ symbolTicker: "AAPL", name: "Apple Inc.", region: "testRegion", currency: "USD" });
 
-    this.setIsRunningSetup(false);
+    await this.setIsRunningSetup(false);
+    portfolioStore.initStoreAfterConfigSetupIsComplete();
   }
 
-  setIsRunningSetup(bool) {
+  async setIsRunningSetup(bool) {
     this.isRunningSetup = bool;
   }
 

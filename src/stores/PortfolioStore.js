@@ -11,7 +11,7 @@ class PortfolioStore {
   triggerRerenderPortfolio = false;
   triggerRerenderVisibleLines = false;
   triggerRecalculatePortfolioTimeout = null;
-  areTriggersEnabled = true;
+  areTriggersEnabled = false;
 
   constructor() {
     makeObservable(this, {
@@ -21,6 +21,7 @@ class PortfolioStore {
       triggerRerenderVisibleLines: observable,
       portfolioStartingDate: observable,
       areTriggersEnabled: observable,
+      initStoreAfterConfigSetupIsComplete: action,
       toggleSymbolVisibility: action,
       setVisibilityForHideOther: action,
       addSymbol: action,
@@ -73,6 +74,12 @@ class PortfolioStore {
         this.triggerRecalculatePortfolioTimeout = timeout;
       }
     });
+  }
+
+  initStoreAfterConfigSetupIsComplete() {
+    this.setAreTriggersEnabled(true);
+    this.setTriggerRerenderPortfolio();
+    this.setTriggerRerenderPortfolio();
   }
 
   // symbols operations
