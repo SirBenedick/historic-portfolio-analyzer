@@ -151,6 +151,7 @@ const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
           open={openDialogPortfolioList}
           onClose={handleDialogPortfolioListClose}
           portfolioStore={portfolioStore}
+          notificationStore={notificationStore}
         />
       )}
 

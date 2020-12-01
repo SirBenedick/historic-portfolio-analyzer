@@ -377,6 +377,9 @@ class PortfolioStore {
     this.setTriggerRerenderVisibleLines(true);
     this.setTriggerRerenderPortfolio(true);
   }
+  async deleteSavedPortfolio(portfolioName) {
+    await idbPortfoliosStore.delete(portfolioName);
+  }
 }
 
 const portfolioStore = new PortfolioStore();
