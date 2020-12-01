@@ -75,22 +75,38 @@ const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
   const isBadgeInvisible = (symbolSet) => {
     if (symbolSet.symbolTicker === "Portfolio") return true;
     if (symbolSet.dateFetched === "-") return false;
+    if (!symbolSet.dateFetched) return false;
 
+    // If date exists then check the diffrence from today since data was fetched
     let dateFetched = moment(symbolSet.dateFetched);
     let today = moment();
 
-    if (today.diff(dateFetched, "days") === 0) return true;
-    if (today.isoWeekday() === 6) {
-      if (today.diff(dateFetched, "days") <= 1) return true;
-    }
-    if (today.isoWeekday() === 7) {
-      if (today.diff(dateFetched, "days") <= 2) return true;
+    if (today.diff(dateFetched, "days") <= 1) return true;
+
+    const isoWeekday = today.isoWeekday();
+    switch (isoWeekday) {
+      // Saturday
+      case 6:
+        if (today.diff(dateFetched, "days") <= 1) return true;
+        break;
+      // Sunday
+      case 7:
+        if (today.diff(dateFetched, "days") <= 2) return true;
+        break;
+      // Monday
+      case 1:
+        if (today.diff(dateFetched, "days") <= 3) return true;
+        break;
+
+      default:
+        break;
     }
     return false;
   };
 
   const getBadgeContent = (symbolSet) => {
     if (symbolSet.dateFetched === "-") return "...";
+    if (!symbolSet.dateFetched) return "...";
     return "date";
   };
 
