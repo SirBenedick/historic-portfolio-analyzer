@@ -36,8 +36,43 @@ Being annoyed by the current application architecture is the key indicator for n
 #### 0.10.4 (WIP)
 
 - Improve: Save portfolio with enter not just button press
+- Improve: Saving a portfolio can ignore the start date
+- Try: Loading a tone of symbols first time --> handle Failed API calls in queue
+- Add: Reload all data button
 
-#### 0.11.0
+#### Next Steps
+
+##### Short term
+
+###### Idea dump
+
+- Improve: Material UI Theming, where is primary etc. defined
+- Add: KeyMetrics Tab for all keymetrics from analytics_js
+- Add timeframe for all data
+- Add: Setting to fetch monthly data, or daily
+- Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed
+- Remove: moment.js to decrease bundle size(?)
+- Add: Choose time of entry for each position
+- Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
+- Add: portfolio calculation granularity to speed up calculation
+- Add: Store for symbols to be fetched (in case API limit is reached)(set version of index db to current date)
+
+###### Metrics
+
+- Add: Sortino Ratio
+- Add: Jensen-Alpha
+- Add: tooltip with link to ratio definition
+- Add: Heatmap for daily/weekly/montly return
+- Add: Card performance weighted compared to single asset and market
+
+##### Long term
+
+###### Share capability
+
+- Add: link with symbols to send to friends and directly see the same portfolio
+- Add: share button to loaded list
+
+###### Portfolio overview tab
 
 - [ ] Improve: Name "overview" tab to "chart"
 - [ ] Add: "Overview" tab
@@ -54,36 +89,12 @@ Being annoyed by the current application architecture is the key indicator for n
 - [ ] Add: get company overview gets from idb or makes api call
 - [ ] Add: P/E to "overview" tab
 
-#### 0.12.0 (WIP)
+###### Compare stored portfolios
 
-- Add: link with symbols to send to friends and directly see the same portfolio
-- Add: share button to loaded list
+- Add: Comparison page to compare multiple portfolio configuration
 
-#### Idea dump
+###### Change API call to IEX Cloud
 
-##### General
+###### Switch to typescript
 
-- Improve: Material UI Theming, where is primary etc. defined
-- Add: KeyMetrics Tab for all keymetrics from analytics_js
-- Add timeframe for all data
-- Add: Setting to fetch monthly data, or daily
-- Fix: symbolDataStore.isCalculatingPortfolioPerformance stays true when api failed
-- Remove: moment.js to decrease bundle size(?)
-- Add: Choose time of entry for each position
-- Add: Store meta data for symbol in symbolstore (change data flow, (full name, currency, region)
-- Add: portfolio calculation granularity to speed up calculation
-- Add: Store for symbols to be fetched (in case API limit is reached)(set version of index db to current date)
-
-##### Metrics
-
-- Add: Sortino Ratio
-- Add: Jensen-Alpha
-- Add: tooltip with link to ratio definition
-- Add: Heatmap for daily/weekly/montly return
-- Add: Card performance weighted compared to single asset and market
-
-##### Long Term
-
-- Add: Different Backends to call stock data from different sources
-- Improve: Swtich to typescript
-- Improve: Add testing for components
+###### Add testing
