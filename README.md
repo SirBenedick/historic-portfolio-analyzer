@@ -39,6 +39,7 @@ Being annoyed by the current application architecture is the key indicator for n
 - Improve: Saving a portfolio can ignore the start date
 - Try: Loading a tone of symbols first time --> handle Failed API calls in queue
 - Add: Reload all data button
+- Style: Increase Chart height
 
 #### Next Steps
 
@@ -46,6 +47,7 @@ Being annoyed by the current application architecture is the key indicator for n
 
 ###### Idea dump
 
+- Add: Chip Menu click on name directs to finance page of symbol
 - Improve: Material UI Theming, where is primary etc. defined
 - Add: KeyMetrics Tab for all keymetrics from analytics_js
 - Add timeframe for all data
