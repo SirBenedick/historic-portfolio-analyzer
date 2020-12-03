@@ -111,3 +111,9 @@ Being annoyed by the current application architecture is the key indicator for n
 ###### Switch to typescript
 
 ###### Add testing
+
+###### Add correlation tab matrix
+
+- Calculatet correlation
+- Add tab
+- create matrix
