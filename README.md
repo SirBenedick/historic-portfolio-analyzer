@@ -36,7 +36,7 @@ Being annoyed by the current application architecture is the key indicator for n
 #### 0.10.4 (WIP)
 
 - [x] Improve: Save portfolio with enter not just button press
-- [ ] Improve: Saving a portfolio can ignore the start date
+- [x] Improve: Saving a portfolio can ignore the start date
 - [ ] Try: Loading a tone of symbols first time --> handle Failed API calls in queue
 - [ ] Add: Reload all data button
 - [ ] Style: Increase Chart height
