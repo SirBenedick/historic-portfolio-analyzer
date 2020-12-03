@@ -33,28 +33,23 @@ Being annoyed by the current application architecture is the key indicator for n
 
 (Add, Fix, Improve, Refactor, Style, Remove)
 
-#### 0.10.4 (WIP)
-
-- [x] Improve: Save portfolio with enter not just button press
-- [x] Improve: Saving a portfolio can ignore the start date
-- [x] Try: Loading a tone of symbols first time --> handle Failed API calls in queue
-- [x] Add: Reload all data button
-- [x] Style: Increase Chart height
-
 #### 0.11.0
 
-- Add: link with symbols to send to friends and directly see the same portfolio
-- Add: share button to loaded list
-- querystring : import queryString from "query-string";
-  queryString.parse('foo=1,2,3', {arrayFormat: 'comma'});
-- App.js add useffect, load params, if "command" == load_portfolio
-  const value = queryString.parse(window.location.search);
+Load
+
+- import queryString from "query-string";
+- Add: useEffect to App.js, load params, if "command" == load_portfolio
+  Info: queryString.parse('foo=1,2,3', {arrayFormat: 'comma'});
+  Info: queryString.parse(window.location.search);
   const token = value.token;
-- PortfolioStore add function addSymbolsFromURL
+- Add: PortfolioStore addSymbolsFromURL()
 - Add only symbols
-- Add: Share Button
+
+Share
+
+- Add Share button to load/save/buttons
 - generate URL:
-  queryString.stringify({foo: [1, 2, 3]}, {arrayFormat: 'comma'});
+- queryString.stringify({foo: [1, 2, 3]}, {arrayFormat: 'comma'});
 - copy URL to clipboard
 
 #### Next Steps
@@ -114,6 +109,6 @@ Being annoyed by the current application architecture is the key indicator for n
 
 ###### Add correlation tab matrix
 
-- Calculatet correlation
+- Calculate correlation
 - Add tab
-- create matrix
+- Create matrix
