@@ -67,7 +67,7 @@ const CalculatingProgress = observer(({ keyMetricsStore }) => (
 ));
 
 const stylePercent = {
-  height: 300,
+  height: 400,
   rightPriceScale: {
     scaleMargins: {
       top: 0.1,

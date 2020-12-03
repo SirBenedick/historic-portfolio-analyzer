@@ -137,7 +137,7 @@ const CalculatingProgress = observer(({ symbolDataStore }) => (
 ));
 
 const styleAbsolut = {
-  height: 300,
+  height: 400,
   rightPriceScale: {
     scaleMargins: {
       top: 0.1,
@@ -148,7 +148,7 @@ const styleAbsolut = {
   },
 };
 const stylePercent = {
-  height: 300,
+  height: 400,
   rightPriceScale: {
     scaleMargins: {
       top: 0.1,

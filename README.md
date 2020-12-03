@@ -33,12 +33,24 @@ Being annoyed by the current application architecture is the key indicator for n
 
 (Add, Fix, Improve, Refactor, Style, Remove)
 
-#### 0.10.4 (WIP)
+#### 0.11.0
 
-- Improve: Save portfolio with enter not just button press
-- Improve: Saving a portfolio can ignore the start date
-- Try: Loading a tone of symbols first time --> handle Failed API calls in queue
-- Add: Reload all data button
+Load
+
+- import queryString from "query-string";
+- Add: useEffect to App.js, load params, if "command" == load_portfolio
+  Info: queryString.parse('foo=1,2,3', {arrayFormat: 'comma'});
+  Info: queryString.parse(window.location.search);
+  const token = value.token;
+- Add: PortfolioStore addSymbolsFromURL()
+- Add only symbols
+
+Share
+
+- Add Share button to load/save/buttons
+- generate URL:
+- queryString.stringify({foo: [1, 2, 3]}, {arrayFormat: 'comma'});
+- copy URL to clipboard
 
 #### Next Steps
 
@@ -46,6 +58,7 @@ Being annoyed by the current application architecture is the key indicator for n
 
 ###### Idea dump
 
+- Add: Chip Menu click on name directs to finance page of symbol
 - Improve: Material UI Theming, where is primary etc. defined
 - Add: KeyMetrics Tab for all keymetrics from analytics_js
 - Add timeframe for all data
@@ -66,11 +79,6 @@ Being annoyed by the current application architecture is the key indicator for n
 - Add: Card performance weighted compared to single asset and market
 
 ##### Long term
-
-###### Share capability
-
-- Add: link with symbols to send to friends and directly see the same portfolio
-- Add: share button to loaded list
 
 ###### Portfolio overview tab
 
@@ -98,3 +106,9 @@ Being annoyed by the current application architecture is the key indicator for n
 ###### Switch to typescript
 
 ###### Add testing
+
+###### Add correlation tab matrix
+
+- Calculate correlation
+- Add tab
+- Create matrix

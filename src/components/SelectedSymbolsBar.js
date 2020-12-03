@@ -45,12 +45,6 @@ const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
     portfolioStore.toggleSymbolVisibility(symbolTickerToHide);
   };
 
-  const handleOnlyShow = (symbolTickerToShow) => {
-    portfolioStore.setVisibilityForHideOther(symbolTickerToShow);
-    handleClose();
-    handlePortfolioClose();
-  };
-
   const handleMenuClick = (event, symbolSet) => {
     setMenuSelectedSymbolSet(symbolSet);
     setAnchorEl(event.currentTarget);
@@ -133,14 +127,13 @@ const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
         anchorEl={anchorEl}
         isPortfolioMenuOpen={isPortfolioMenuOpen}
         handlePortfolioClose={handlePortfolioClose}
-        handleOnlyShow={handleOnlyShow}
+        portfolioStore={portfolioStore}
       />
 
       <ChipMenuNormal
         anchorEl={anchorEl}
         isNormalMenuOpen={isNormalMenuOpen}
         handleClose={handleClose}
-        handleOnlyShow={handleOnlyShow}
         menuSelectedSymbolSet={menuSelectedSymbolSet}
         portfolioStore={portfolioStore}
       />
@@ -209,7 +202,17 @@ const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
   );
 });
 
-const ChipMenuPortfolio = ({ isPortfolioMenuOpen, handlePortfolioClose, handleOnlyShow, anchorEl }) => {
+const ChipMenuPortfolio = ({ isPortfolioMenuOpen, handlePortfolioClose, anchorEl, portfolioStore }) => {
+  const handleOnlyShow = (symbolTickerToShow) => {
+    portfolioStore.setVisibilityForHideOther(symbolTickerToShow);
+    handlePortfolioClose();
+  };
+
+  const handleReloadAllData = () => {
+    portfolioStore.reloadAllDataOfPortfolio();
+    handlePortfolioClose();
+  };
+
   return (
     <Menu
       id="simple-menu-portfolio"
@@ -226,18 +229,19 @@ const ChipMenuPortfolio = ({ isPortfolioMenuOpen, handlePortfolioClose, handleOn
           Hide other assets
         </Typography>
       </MenuItem>
+      <MenuItem onClick={() => handleReloadAllData()}>
+        <ListItemIcon>
+          <RefreshIcon fontSize="small" />
+        </ListItemIcon>
+        <Typography variant="inherit" noWrap color="primary">
+          Reload all data
+        </Typography>
+      </MenuItem>
     </Menu>
   );
 };
 
-const ChipMenuNormal = ({
-  anchorEl,
-  isNormalMenuOpen,
-  handleClose,
-  handleOnlyShow,
-  menuSelectedSymbolSet,
-  portfolioStore,
-}) => {
+const ChipMenuNormal = ({ anchorEl, isNormalMenuOpen, handleClose, menuSelectedSymbolSet, portfolioStore }) => {
   const classes = useStyles();
   const handleRemoveFromPortfolio = (symbolTickerToRemove) => {
     portfolioStore.removeSelectedSymbol(symbolTickerToRemove);
@@ -253,6 +257,12 @@ const ChipMenuNormal = ({
     portfolioStore.reloadDataFor(symbolTickerToDelete);
     handleClose();
   };
+
+  const handleOnlyShow = (symbolTickerToShow) => {
+    portfolioStore.setVisibilityForHideOther(symbolTickerToShow);
+    handleClose();
+  };
+
   return (
     <Menu
       id="simple-menu"

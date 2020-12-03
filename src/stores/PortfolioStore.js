@@ -34,9 +34,10 @@ class PortfolioStore {
       setVisibilityForHideOther: action,
       addSymbol: action,
       addSymbolFromSavedPortfolio: action,
-      resetStore: action,
+      resetSymbols: action,
       removeSelectedSymbol: action,
       setValueForTicker: action,
+      setDateFetchedForTicker: action,
       setPerformanceSincePortfolioStartForTicker: action,
       setAnnualizedPerformanceSincePortfolioStartForTicker: action,
       setEndValueForTicker: action,
@@ -141,13 +142,11 @@ class PortfolioStore {
     await symbolDataStore.deleteDataSet(symbolTickerToDelete);
   }
 
-  async resetStore() {
+  async resetSymbols() {
     // Clear colors
     this.symbols.forEach((symbolSet) => chartColors.removeColorInUse(symbolSet.color));
     // Reset symbols
     this.symbols = [defaultPortfolio];
-    // Reset portfolioStartingDate
-    this.portfolioStartingDate = moment().subtract(1, "years").format("YYYY-MM-DD");
     // Reset symbolDataStore
     await symbolDataStore.resetStore();
   }
@@ -324,6 +323,10 @@ class PortfolioStore {
     await this.getMetaDataAndStoreIt(symbolTickerToReload);
   }
 
+  async reloadAllDataOfPortfolio() {
+    this.symbolsWithoutPortfolio.forEach((symbolSet) => this.reloadDataFor(symbolSet.symbolTicker));
+  }
+
   async doesSymbolExist(symbolTicker) {
     let doesExist = false;
     this.symbols.forEach((symbolSet) => {
@@ -340,11 +343,22 @@ class PortfolioStore {
 
   async saveCurrentPortfolio(name) {
     console.log("saveCurrentPortfolio");
+    // Reset calculated fields to 0 --> UI shows calculating
     await idbPortfoliosStore.set({
       name: name,
       creationDate: moment().format(),
-      portfolioStartingDate: this.portfolioStartingDate,
-      symbols: toJS(this.symbols),
+      symbols: toJS(this.symbols).map((symbolSet) => ({
+        symbolTicker: symbolSet.symbolTicker,
+        name: symbolSet.name,
+        isVisible: true,
+        value: symbolSet.value,
+        currency: symbolSet.currency,
+        performanceSincePortfolioStart: 0,
+        annualizedPerformanceSincePortfolioStart: 0,
+        color: symbolSet.color,
+        endValue: 0,
+        dateFetched: "-",
+      })),
     });
   }
 
@@ -358,14 +372,13 @@ class PortfolioStore {
     const savedPortfolio = await idbPortfoliosStore.get(portfolioName);
     if (!savedPortfolio) {
       console.log("Failed to load portfolio: " + portfolioName);
-      this.areTriggersEnabled = false;
+      this.setAreTriggersEnabled(true);
       return;
     }
 
-    await this.resetStore();
+    await this.resetSymbols();
     // Remove defaultPortfolio from symbols
     this.symbols = [];
-    this.setPortfolioStartingDate(savedPortfolio.portfolioStartingDate);
 
     await Promise.all(
       savedPortfolio.symbols.map(async (symbolSet) => {

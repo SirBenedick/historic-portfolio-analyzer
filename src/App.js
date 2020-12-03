@@ -138,7 +138,7 @@ function App() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Historic-Portfolio-Analyzer (0.10.3)
+            Historic-Portfolio-Analyzer (0.10.4)
           </Typography>
         </Toolbar>
       </AppBar>

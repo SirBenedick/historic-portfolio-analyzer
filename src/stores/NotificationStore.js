@@ -7,6 +7,7 @@ const NotificationStore = function () {
       API_TOKEN_MISSING: "API_TOKEN_MISSING",
       PORTFOLIO_CALCULATING: "PORTFOLIO_CALCULATING",
       API_TOKEN_STORED: "API_TOKEN_STORED",
+      API_FAILED_RETRY: "API_FAILED_RETRY",
     },
 
     enqueueSnackbar: action((note) => {
