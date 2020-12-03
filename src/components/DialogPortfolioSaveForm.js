@@ -23,6 +23,12 @@ const DialogPortfolioSaveForm = ({ open, onClose, portfolioStore, notificationSt
     onClose();
   };
 
+  const checkIfEnterKeyPressed = (e) => {
+    if (e.keyCode == 13) {
+      handleSavePortfolio();
+    }
+  };
+
   return (
     <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">Save Portfolio</DialogTitle>
@@ -36,6 +42,7 @@ const DialogPortfolioSaveForm = ({ open, onClose, portfolioStore, notificationSt
           type="text"
           fullWidth
           onChange={(e) => setPortfolioName(e.target.value)}
+          onKeyDown={checkIfEnterKeyPressed}
         />
       </DialogContent>
       <DialogActions>
