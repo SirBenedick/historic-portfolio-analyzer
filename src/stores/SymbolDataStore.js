@@ -70,7 +70,7 @@ class SymbolDataStore {
           }
         })
       );
-      if (this.symbolFetchQueue.length == 0) {
+      if (this.symbolFetchQueue.length === 0) {
         portfolioStore.setTriggerRerenderPortfolio(true);
         portfolioStore.setTriggerRerenderVisibleLines(true);
         this.calculateAndStoreHistoricPortfolioPerformance();

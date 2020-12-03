@@ -2,7 +2,7 @@ import configStore from "../stores/ConfigStore";
 import PortfolioAnalytics from "portfolio-analytics";
 
 const KeyMetricsService = {
-  async calculateAndStoreSharpRatio(timeseries) {
+  async calculateSharpRatio(timeseries) {
     const riskFreeRate = configStore.riskFreeRate / 100 + 1;
 
     // Create lists for PortfolioAnalytics.sharpRatio()

@@ -37,6 +37,7 @@ class PortfolioStore {
       resetSymbols: action,
       removeSelectedSymbol: action,
       setValueForTicker: action,
+      setDateFetchedForTicker: action,
       setPerformanceSincePortfolioStartForTicker: action,
       setAnnualizedPerformanceSincePortfolioStartForTicker: action,
       setEndValueForTicker: action,

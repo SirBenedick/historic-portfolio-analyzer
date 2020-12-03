@@ -24,7 +24,7 @@ const DialogPortfolioSaveForm = ({ open, onClose, portfolioStore, notificationSt
   };
 
   const checkIfEnterKeyPressed = (e) => {
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
       handleSavePortfolio();
     }
   };

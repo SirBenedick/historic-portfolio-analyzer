@@ -21,8 +21,7 @@ class KeyMetricsStore {
     const timeseries = await symbolDataStore.getSymbolTimeseriesDataFromMap("Portfolio");
 
     if (timeseries.length !== 0) {
-      const res = await KeyMetricsService.calculateAndStoreSharpRatio(timeseries);
-      this.portfolioSharpRatio = res;
+      this.portfolioSharpRatio = await KeyMetricsService.calculateSharpRatio(timeseries);
     } else {
       this.portfolioSharpRatio = 0;
     }
