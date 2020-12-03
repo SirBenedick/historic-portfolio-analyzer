@@ -41,6 +41,22 @@ Being annoyed by the current application architecture is the key indicator for n
 - Add: Reload all data button
 - Style: Increase Chart height
 
+#### 0.11.0
+
+- Add: link with symbols to send to friends and directly see the same portfolio
+- Add: share button to loaded list
+- querystring : import queryString from "query-string";
+  queryString.parse('foo=1,2,3', {arrayFormat: 'comma'});
+- App.js add useffect, load params, if "command" == load_portfolio
+  const value = queryString.parse(window.location.search);
+  const token = value.token;
+- PortfolioStore add function addSymbolsFromURL
+- Add only symbols
+- Add: Share Button
+- generate URL:
+  queryString.stringify({foo: [1, 2, 3]}, {arrayFormat: 'comma'});
+- copy URL to clipboard
+
 #### Next Steps
 
 ##### Short term
@@ -68,11 +84,6 @@ Being annoyed by the current application architecture is the key indicator for n
 - Add: Card performance weighted compared to single asset and market
 
 ##### Long term
-
-###### Share capability
-
-- Add: link with symbols to send to friends and directly see the same portfolio
-- Add: share button to loaded list
 
 ###### Portfolio overview tab
 
