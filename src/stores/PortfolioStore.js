@@ -323,6 +323,10 @@ class PortfolioStore {
     await this.getMetaDataAndStoreIt(symbolTickerToReload);
   }
 
+  async reloadAllDataOfPortfolio() {
+    this.symbolsWithoutPortfolio.forEach((symbolSet) => this.reloadDataFor(symbolSet.symbolTicker));
+  }
+
   async doesSymbolExist(symbolTicker) {
     let doesExist = false;
     this.symbols.forEach((symbolSet) => {
