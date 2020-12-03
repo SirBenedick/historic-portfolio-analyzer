@@ -49,10 +49,11 @@ const FetchDataService = {
           },
           key: `FETCHING-SUCCESS-${symbolTicker}`,
         });
-        return symbolTicker;
+        return true;
       }
     } catch (error) {
       console.log(Object.keys(error), error.message);
+      return false;
     }
   },
   async searchAlphaVantageByKeywords(keywords) {
