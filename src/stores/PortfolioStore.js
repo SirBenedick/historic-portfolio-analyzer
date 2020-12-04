@@ -1,5 +1,6 @@
 import { makeObservable, observable, action, computed, autorun, toJS } from "mobx";
 import moment from "moment";
+import queryString from "query-string";
 import idbPortfoliosStore from "./idbPortfoliosStore";
 import symbolDataStore from "./SymbolDataStore";
 import chartColors from "../helper/chartColors";
@@ -407,6 +408,24 @@ class PortfolioStore {
     this.setAreTriggersEnabled(true);
     this.setTriggerRerenderVisibleLines(true);
     this.setTriggerRerenderPortfolio(true);
+  }
+
+  generateURLForPortfolio() {
+    let tickers = [];
+    let names = [];
+    let currencies = [];
+    this.symbolsWithoutPortfolio.forEach((symbolSet) => {
+      tickers.push(symbolSet.symbolTicker);
+      names.push(symbolSet.name);
+      currencies.push(symbolSet.currency);
+    });
+
+    const currentURL = window.location.origin + window.location.pathname;
+    const generatedURL = queryString.stringifyUrl(
+      { url: currentURL, query: { command: "load_portfolio", ticker: tickers, name: names, currency: currencies } },
+      { arrayFormat: "comma" }
+    );
+    return generatedURL;
   }
 }
 

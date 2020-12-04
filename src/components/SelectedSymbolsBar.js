@@ -15,6 +15,7 @@ import SearchForSymbolInput from "../components/SearchForSymbolInput";
 import moment from "moment";
 import DialogPortfolioList from "./DialogPortfolioList";
 import DialogPortfolioSaveForm from "./DialogPortfolioSaveForm";
+import ShareIcon from "@material-ui/icons/Share";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -121,6 +122,35 @@ const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
     setOpenDialogPortfolioSaveForm(false);
   };
 
+  const handleSharePortfolioButton = () => {
+    // Generate URL
+    const urlToPortfolio = portfolioStore.generateURLForPortfolio();
+
+    // Copy to clipboard
+    navigator.clipboard.writeText(urlToPortfolio).then(
+      function () {
+        notificationStore.enqueueSnackbar({
+          message: `Copied URL to clipboard`,
+          options: {
+            variant: "info",
+            autoHideDuration: 4000,
+          },
+          key: notificationStore.keys.COPIED_URL_TO_CLIPBOARD,
+        });
+      },
+      function (err) {
+        notificationStore.enqueueSnackbar({
+          message: `Failed to copy URL to clipboard`,
+          options: {
+            variant: "error",
+            autoHideDuration: 4000,
+          },
+          key: notificationStore.keys.COPIED_URL_TO_CLIPBOARD,
+        });
+      }
+    );
+  };
+
   return (
     <Paper className={classes.root}>
       <ChipMenuPortfolio
@@ -162,6 +192,9 @@ const SelectedSymbolsBar = observer(({ portfolioStore, notificationStore }) => {
           </IconButton>
           <IconButton component="span" onClick={handleDialogPortfolioSaveFormOpen}>
             <SaveIcon />
+          </IconButton>
+          <IconButton component="span" onClick={handleSharePortfolioButton}>
+            <ShareIcon />
           </IconButton>
         </Grid>
         <Grid item xs={6}>

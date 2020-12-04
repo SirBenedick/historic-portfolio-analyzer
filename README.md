@@ -37,14 +37,7 @@ Being annoyed by the current application architecture is the key indicator for n
 
 [x] Load
 
-Share
-
-- Add Share button to load/save/buttons
-- generate URL:
-- queryString.stringify({foo: [1, 2, 3]}, {arrayFormat: 'comma'});
-- copy URL to clipboard
-
-- Get company overview
+[x] Share
 
 #### 0.11.1
 
