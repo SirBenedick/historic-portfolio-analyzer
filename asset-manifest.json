@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/historic-portfolio-analyzer/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/historic-portfolio-analyzer/static/js/main.38ed0d92.chunk.js",
-    "main.js.map": "/historic-portfolio-analyzer/static/js/main.38ed0d92.chunk.js.map",
-    "runtime-main.js": "/historic-portfolio-analyzer/static/js/runtime-main.122453ef.js",
-    "runtime-main.js.map": "/historic-portfolio-analyzer/static/js/runtime-main.122453ef.js.map",
-    "static/js/2.583e3375.chunk.js": "/historic-portfolio-analyzer/static/js/2.583e3375.chunk.js",
-    "static/js/2.583e3375.chunk.js.map": "/historic-portfolio-analyzer/static/js/2.583e3375.chunk.js.map",
-    "static/js/3.bdc89358.chunk.js": "/historic-portfolio-analyzer/static/js/3.bdc89358.chunk.js",
-    "static/js/3.bdc89358.chunk.js.map": "/historic-portfolio-analyzer/static/js/3.bdc89358.chunk.js.map",
+    "main.js": "/historic-portfolio-analyzer/static/js/main.3aa556bc.chunk.js",
+    "main.js.map": "/historic-portfolio-analyzer/static/js/main.3aa556bc.chunk.js.map",
+    "runtime-main.js": "/historic-portfolio-analyzer/static/js/runtime-main.e6980844.js",
+    "runtime-main.js.map": "/historic-portfolio-analyzer/static/js/runtime-main.e6980844.js.map",
+    "static/js/2.5865cc54.chunk.js": "/historic-portfolio-analyzer/static/js/2.5865cc54.chunk.js",
+    "static/js/2.5865cc54.chunk.js.map": "/historic-portfolio-analyzer/static/js/2.5865cc54.chunk.js.map",
+    "static/js/3.5b4880fb.chunk.js": "/historic-portfolio-analyzer/static/js/3.5b4880fb.chunk.js",
+    "static/js/3.5b4880fb.chunk.js.map": "/historic-portfolio-analyzer/static/js/3.5b4880fb.chunk.js.map",
     "index.html": "/historic-portfolio-analyzer/index.html",
     "static/css/main.6dea0f05.chunk.css.map": "/historic-portfolio-analyzer/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.583e3375.chunk.js.LICENSE.txt": "/historic-portfolio-analyzer/static/js/2.583e3375.chunk.js.LICENSE.txt"
+    "static/js/2.5865cc54.chunk.js.LICENSE.txt": "/historic-portfolio-analyzer/static/js/2.5865cc54.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.122453ef.js",
-    "static/js/2.583e3375.chunk.js",
+    "static/js/runtime-main.e6980844.js",
+    "static/js/2.5865cc54.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.38ed0d92.chunk.js"
+    "static/js/main.3aa556bc.chunk.js"
   ]
 }
