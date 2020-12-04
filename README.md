@@ -52,6 +52,11 @@ Share
 - queryString.stringify({foo: [1, 2, 3]}, {arrayFormat: 'comma'});
 - copy URL to clipboard
 
+#### 0.11.1
+
+- Fix: Catch saving of a portfolio with empty name
+- Improve: Github readme new screenshot
+
 #### Next Steps
 
 ##### Short term
