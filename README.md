@@ -33,12 +33,6 @@ Being annoyed by the current application architecture is the key indicator for n
 
 (Add, Fix, Improve, Refactor, Style, Remove)
 
-#### 0.11.0
-
-[x] Load
-
-[x] Share
-
 #### 0.11.1
 
 - Fix: Catch saving of a portfolio with empty name
