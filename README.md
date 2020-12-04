@@ -33,24 +33,10 @@ Being annoyed by the current application architecture is the key indicator for n
 
 (Add, Fix, Improve, Refactor, Style, Remove)
 
-#### 0.11.0
+#### 0.11.1
 
-Load
-
-- import queryString from "query-string";
-- Add: useEffect to App.js, load params, if "command" == load_portfolio
-  Info: queryString.parse('foo=1,2,3', {arrayFormat: 'comma'});
-  Info: queryString.parse(window.location.search);
-  const token = value.token;
-- Add: PortfolioStore addSymbolsFromURL()
-- Add only symbols
-
-Share
-
-- Add Share button to load/save/buttons
-- generate URL:
-- queryString.stringify({foo: [1, 2, 3]}, {arrayFormat: 'comma'});
-- copy URL to clipboard
+- Fix: Catch saving of a portfolio with empty name
+- Improve: Github readme new screenshot
 
 #### Next Steps
 
