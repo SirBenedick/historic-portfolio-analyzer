@@ -3,7 +3,7 @@ import idbConfigStore from "./idbConfigStore";
 import notificationStore from "./NotificationStore";
 import portfolioStore from "./PortfolioStore";
 import keyMetricsStore from "./KeyMetricsStore";
-
+import queryString from "query-string";
 class ConfigStore {
   alphaVantage = { url: "https://www.alphavantage.co/query", apiToken: "" };
   isRunningSetup = true;
@@ -39,9 +39,38 @@ class ConfigStore {
       await this.setAlphaVantageAPITokenIDB(fakeToken(16));
     }
 
-    // Add default symbols
-    // If no deafult symbols added then portfolioStore trigger have to be called manually
-    await portfolioStore.addSymbol({ symbolTicker: "AAPL", name: "Apple Inc.", region: "testRegion", currency: "USD" });
+    // Check if open page with default portfolio or load based on query parameters
+    const urlParameters = queryString.parse(window.location.search, { arrayFormat: "comma" });
+    if (urlParameters.command === "load_portfolio") {
+      if (urlParameters.ticker && urlParameters.ticker.length !== 0) {
+        let symbols = [];
+        if (Array.isArray(urlParameters.ticker)) {
+          for (let index = 0; index < urlParameters.ticker.length; index++) {
+            symbols.push({
+              symbolTicker: urlParameters.ticker[index],
+              name: urlParameters.name[index],
+              currency: urlParameters.currency[index],
+            });
+          }
+        } else {
+          symbols.push({
+            symbolTicker: urlParameters.ticker,
+            name: urlParameters.name,
+            currency: urlParameters.currency,
+          });
+        }
+        await portfolioStore.loadPortfolioFromUrl(symbols);
+      }
+    } else {
+      // Add default symbols
+      // If no deafult symbols added then portfolioStore trigger have to be called manually
+      await portfolioStore.addSymbol({
+        symbolTicker: "AAPL",
+        name: "Apple Inc.",
+        region: "testRegion",
+        currency: "USD",
+      });
+    }
 
     await this.setIsRunningSetup(false);
     portfolioStore.initStoreAfterConfigSetupIsComplete();

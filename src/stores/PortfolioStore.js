@@ -390,8 +390,23 @@ class PortfolioStore {
     this.setTriggerRerenderVisibleLines(true);
     this.setTriggerRerenderPortfolio(true);
   }
+
   async deleteSavedPortfolio(portfolioName) {
     await idbPortfoliosStore.delete(portfolioName);
+  }
+
+  // Example queries
+  // http://localhost:3000/historic-portfolio-analyzer?command=load_portfolio&ticker=INTC&name=Intel&currency=USD
+  // http://localhost:3000/historic-portfolio-analyzer?command=load_portfolio&ticker=INTC,IBM&name=Intel,iBusiness&currency=USD,USD
+  async loadPortfolioFromUrl(newSymbols) {
+    this.setAreTriggersEnabled(false);
+    await this.resetSymbols();
+
+    await Promise.all(newSymbols.map(async (symbolSet) => this.addSymbol(symbolSet)));
+
+    this.setAreTriggersEnabled(true);
+    this.setTriggerRerenderVisibleLines(true);
+    this.setTriggerRerenderPortfolio(true);
   }
 }
 
