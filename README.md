@@ -33,17 +33,13 @@ Being annoyed by the current application architecture is the key indicator for n
 
 (Add, Fix, Improve, Refactor, Style, Remove)
 
-#### 0.11.1
-
-- Fix: Catch saving of a portfolio with empty name
-- Improve: Github readme new screenshot
-
 #### Next Steps
 
 ##### Short term
 
 ###### Idea dump
 
+- Fix: Catch saving of a portfolio with empty name
 - Add: Chip Menu click on name directs to finance page of symbol
 - Improve: Material UI Theming, where is primary etc. defined
 - Add: KeyMetrics Tab for all keymetrics from analytics_js
