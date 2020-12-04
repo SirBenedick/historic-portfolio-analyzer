@@ -42,21 +42,21 @@ class ConfigStore {
     // Check if open page with default portfolio or load based on query parameters
     const urlParameters = queryString.parse(window.location.search, { arrayFormat: "comma" });
     if (urlParameters.command === "load_portfolio") {
-      if (urlParameters.ticker && urlParameters.ticker.length !== 0) {
+      if (urlParameters.tickers && urlParameters.tickers.length !== 0) {
         let symbols = [];
-        if (Array.isArray(urlParameters.ticker)) {
-          for (let index = 0; index < urlParameters.ticker.length; index++) {
+        if (Array.isArray(urlParameters.tickers)) {
+          for (let index = 0; index < urlParameters.tickers.length; index++) {
             symbols.push({
-              symbolTicker: urlParameters.ticker[index],
-              name: urlParameters.name[index],
-              currency: urlParameters.currency[index],
+              symbolTicker: urlParameters.tickers[index],
+              name: urlParameters.names[index],
+              currency: urlParameters.currencies[index],
             });
           }
         } else {
           symbols.push({
-            symbolTicker: urlParameters.ticker,
-            name: urlParameters.name,
-            currency: urlParameters.currency,
+            symbolTicker: urlParameters.tickers,
+            name: urlParameters.names,
+            currency: urlParameters.currencies,
           });
         }
         await portfolioStore.loadPortfolioFromUrl(symbols);

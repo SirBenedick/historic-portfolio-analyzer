@@ -396,9 +396,6 @@ class PortfolioStore {
     await idbPortfoliosStore.delete(portfolioName);
   }
 
-  // Example queries
-  // http://localhost:3000/historic-portfolio-analyzer?command=load_portfolio&ticker=INTC&name=Intel&currency=USD
-  // http://localhost:3000/historic-portfolio-analyzer?command=load_portfolio&ticker=INTC,IBM&name=Intel,iBusiness&currency=USD,USD
   async loadPortfolioFromUrl(newSymbols) {
     this.setAreTriggersEnabled(false);
     await this.resetSymbols();
@@ -422,7 +419,7 @@ class PortfolioStore {
 
     const currentURL = window.location.origin + window.location.pathname;
     const generatedURL = queryString.stringifyUrl(
-      { url: currentURL, query: { command: "load_portfolio", ticker: tickers, name: names, currency: currencies } },
+      { url: currentURL, query: { command: "load_portfolio", tickers: tickers, names: names, currencies: currencies } },
       { arrayFormat: "comma" }
     );
     return generatedURL;
