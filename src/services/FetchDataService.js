@@ -19,7 +19,7 @@ const FetchDataService = {
       //  Call API
       const res = await axios.get(configStore.alphaVantage.url, {
         params: {
-          function: configStore.alphaVantageConstants.TIME_SERIES_DAILY_ADJUSTED,
+          function: configStore.alphaVantageConstants.TIME_SERIES_DAILY,
           symbol: symbolTicker,
           outputsize: "full",
           apikey: configStore.alphaVantage.apiToken,

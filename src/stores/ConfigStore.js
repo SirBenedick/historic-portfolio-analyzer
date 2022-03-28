@@ -7,7 +7,7 @@ import queryString from "query-string";
 class ConfigStore {
   alphaVantage = { url: "https://www.alphavantage.co/query", apiToken: "" };
   isRunningSetup = true;
-  alphaVantageConstants = { SYMBOL_SEARCH: "SYMBOL_SEARCH", TIME_SERIES_DAILY_ADJUSTED: "TIME_SERIES_DAILY_ADJUSTED" };
+  alphaVantageConstants = { SYMBOL_SEARCH: "SYMBOL_SEARCH", TIME_SERIES_DAILY: "TIME_SERIES_DAILY" };
   riskFreeRate = 1;
 
   constructor() {
