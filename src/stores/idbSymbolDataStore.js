@@ -36,10 +36,10 @@ const idbSymbolDataStore = {
   async keys() {
     return (await dbPromise).getAllKeys("symbolDataStore");
   },
-  async getCloseByTickerAndDate(key, date) {
+  async getAdjustedCloseByTickerAndDate(key, date) {
     const data = await this.get(key);
     if (data && "time_series_daily" in data) {
-      if (data["time_series_daily"][date]) return data["time_series_daily"][date]["4. close"];
+      if (data["time_series_daily"][date]) return data["time_series_daily"][date]["5. adjusted close"];
     }
     return false;
   },
@@ -89,28 +89,28 @@ const idbSymbolDataStore = {
     await Promise.all(
       portfolioStore.symbolsWithoutPortfolio.map(async (symbolSet) => {
         // Get price of asset for the portfolio starting date
-        let startingDatePriceValue = await idbSymbolDataStore.getCloseByTickerAndDate(
+        let startingDatePriceValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(
           symbolSet.symbolTicker,
           startingDate.format("YYYY-MM-DD")
         );
 
         while (!startingDatePriceValue) {
           startingDate.add(1, "days");
-          startingDatePriceValue = await idbSymbolDataStore.getCloseByTickerAndDate(
+          startingDatePriceValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(
             symbolSet.symbolTicker,
             startingDate.format("YYYY-MM-DD")
           );
         }
 
         // Get price of asset for the portfolio end date
-        let endDatePriceValue = await idbSymbolDataStore.getCloseByTickerAndDate(
+        let endDatePriceValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(
           symbolSet.symbolTicker,
           endDate.format("YYYY-MM-DD")
         );
 
         while (!endDatePriceValue) {
           endDate.subtract(1, "days");
-          endDatePriceValue = await idbSymbolDataStore.getCloseByTickerAndDate(
+          endDatePriceValue = await idbSymbolDataStore.getAdjustedCloseByTickerAndDate(
             symbolSet.symbolTicker,
             endDate.format("YYYY-MM-DD")
           );
@@ -157,14 +157,14 @@ const idbSymbolDataStore = {
     );
 
     let result = [];
-    let sumOfDividends = -1;
+    let sumOfDividends = 0;
     datesToCheck.forEach((date) => {
       let tempSumForDate = 0;
       for (const [symbolTicker, dataset] of Object.entries(tempSymbolDatasetMap)) {
         if (dataset && !(date in dataset)) return;
-        // const dividend = dataset[date]["7. dividend amount"]; // works only with alphavantage premium and api call to daily adjusted
-        // sumOfDividends += dividend * symbolQuantityMap[symbolTicker];
-        const stockValue = dataset[date]["4. close"];
+        const dividend = dataset[date]["7. dividend amount"];
+        sumOfDividends += dividend * symbolQuantityMap[symbolTicker];
+        const stockValue = dataset[date]["5. adjusted close"];
         tempSumForDate += stockValue * symbolQuantityMap[symbolTicker];
       }
       if (tempSumForDate) result.push({ time: date, value: tempSumForDate });
@@ -204,7 +204,7 @@ const idbSymbolDataStore = {
 const formateDataToChartFormat = (symbolData) => {
   let temp = [];
   for (const [key, dailyInformation] of Object.entries(symbolData["time_series_daily"])) {
-    temp.push({ time: String(key), value: parseFloat(dailyInformation["4. close"]) });
+    temp.push({ time: String(key), value: parseFloat(dailyInformation["5. adjusted close"]) });
   }
   return temp.reverse();
 };

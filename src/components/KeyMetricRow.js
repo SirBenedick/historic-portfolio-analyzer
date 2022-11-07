@@ -84,9 +84,6 @@ const KeyIndicatorRow = observer(({ portfolioStore, keyMetricsStore }) => {
             dialogTitle={"Dividends"}
             dialogText={
               <div>
-                <Typography color="error">
-                  Notice: Dividends can not be calculated with a free API-token from Alphavantage, a paid premium version is needed...
-                </Typography>
                 <Typography>
                   Total amount of dividends since portfolio start based on the amount of each share.
                 </Typography>
